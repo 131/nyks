@@ -1,5 +1,5 @@
 nyks provide a set of "missing" stuffs in nodejs basic api.
-All thoses function will eventually end up in the official API :-).
+All those functions will eventually end up in the official API :-).
 
 
 # Natives
@@ -12,7 +12,7 @@ child_process.exec equivalent for windowed applications.
 
 ## fs
 * require('fs').deleteFolderRecursive(path);
-Recurive folder deletion
+Recursive folder deletion
 
 
 # Natives
@@ -31,7 +31,7 @@ Return boolean
 
 
 * String.prototype.stripEnd(str)
-Return trimed string of "str" if present (else, leave untouched)
+Return trimmed string of "str" if present (else, leave untouched)
 
 
 # zero_functions
