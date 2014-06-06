@@ -6,6 +6,14 @@ Buffer.implement({
   }
 });
 
+Object.sort = function(that, keys){
+  var o = {};
+  Array.each(keys, function(k){
+    if(k in that) o[k] = that[k]; 
+  });
+  return o;
+};
+
 String.implement({
   startsWith: function(str){
      return (this.indexOf(str) === 0);

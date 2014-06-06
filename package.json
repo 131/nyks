@@ -1,6 +1,6 @@
 {
   "name": "nyks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "nodejs exupery style",
   "keywords": [
     "mootools",
@@ -8,11 +8,9 @@
     "api"
   ],
   "dependencies": {
-      "mootools": "*",
-      "mootools-more" : "*",
-      "ini" : "*"
+    "mootools": "*",
+    "mootools-more": "*",
   },
-
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
   "author": {

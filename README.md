@@ -16,6 +16,10 @@ Recursive folder deletion
 
 
 # Natives
+## Object
+* Object.sort(obj, keys)
+Return a new object based on obj's existings keys
+
 ## Buffer
 * Buffer.prototype.indexOf(byte)
 Binary search of byte
