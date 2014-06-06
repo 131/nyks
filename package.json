@@ -9,7 +9,7 @@
   ],
   "dependencies": {
     "mootools": "*",
-    "mootools-more": "*",
+    "mootools-more": "*"
   },
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
