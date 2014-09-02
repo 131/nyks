@@ -6,6 +6,14 @@ Buffer.implement({
   }
 });
 
+Object.combine = function(list, values) { 
+  if (list == null) return {};
+  var result = {};
+  for (var i = 0, length = list.length; i < length; i++)
+    result[list[i]] = values[i];
+  return result;
+};
+
 Object.sort = function(that, keys){
   var o = {};
   Array.each(keys, function(k){
