@@ -31,7 +31,11 @@ String.implement({
   },
 
   stripEnd:function(end){
-    return this.endsWith(end) ? this.substr(0, this.length - end.length) : end;
+    return this.endsWith(end) ? this.substr(0, this.length - end.length) : this.toString();
+  },
+
+  stripStart:function(start){
+    return this.startsWith(start) ? this.substr(start.length) : this.toString();
   },
 });
 
