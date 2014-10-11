@@ -14,6 +14,19 @@ child_process.exec equivalent for windowed applications.
 * require('fs').deleteFolderRecursive(path);
 Recursive folder deletion
 
+* require('fs').md5FileSync(file_path)
+Return md5 checksum of a file
+
+* require('fs').filesizeSync(path);
+Filesize sync
+
+* require('fs').tmppath (ext)
+Return a unique file path in OS temp dir
+
+* require('fs').renameCross(src, dest, callback)
+Rename src to dest (even on cross devices)
+
+
 
 # Natives
 ## Object
