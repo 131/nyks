@@ -47,6 +47,13 @@ Return boolean
 Return boolean
 
 
+* String.prototype.replaces(dict)
+Replace key => value in current string
+
+* String.prototype.rreplaces(dict)
+Recursive (iterative) replaces
+
+
 * String.prototype.stripEnd(str)
 Return trimmed string of "str" if present (else, leave untouched)
 

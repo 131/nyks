@@ -23,6 +23,24 @@ Object.sort = function(that, keys){
 };
 
 String.implement({
+  replaces : function(hash){
+    var self = this;
+    Object.each(hash, function(v, k){
+      self = self.replace(k, v);
+    });
+    return self;
+  },
+
+    //recursive version of replaces
+  rreplaces : function(hash){
+    var tmp = "", i = this;
+    do {
+        tmp = i;
+        i = i.replaces(hash);
+    } while(tmp != i);
+    return tmp;
+  },
+
   startsWith: function(str){
      return (this.indexOf(str) === 0);
   },
