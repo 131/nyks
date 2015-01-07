@@ -38,6 +38,9 @@ Return a new object based on obj's existings keys
 Binary search of byte
 Return -1 if not found
 
+## Array
+* Array.prototype.diff(array)
+Exclude one array from another
 
 ## String
 * String.prototype.startsWith(str)
@@ -61,3 +64,6 @@ Return trimmed string of "str" if present (else, leave untouched)
 # zero_functions
 * bool(val)
 Return boolean value of *val with "f", "false", "n" and "no" casted as "false" (case insensitive)
+
+* guid()
+Return a guid
