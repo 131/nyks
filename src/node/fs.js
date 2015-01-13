@@ -10,6 +10,16 @@ fs.md5FileSync = function(file_path){
   return md5.digest('hex');
 }
 
+fs.md5File = function (file_path, callback){
+  var shasum = crypto.createHash('md5');
+  var s = fs.ReadStream(file_path);
+  s.on('data', shasum.update.bind(shasum));
+  s.on('end', function() {
+    callback(null, shasum.digest('hex'));
+  });
+}
+
+
 fs.filesizeSync = function(file_path){
   return fs.statSync(file_path)["size"];
 }
@@ -24,6 +34,10 @@ fs.renameCross = function(src, dst, callback){
     callback();
   });
 }
+
+
+
+
 
 fs.tmppath = function(ext){
   ext = ext || "tmp";

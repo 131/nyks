@@ -14,6 +14,7 @@ child_process.exec equivalent for windowed applications.
 * require('fs').deleteFolderRecursive(path);
 Recursive folder deletion
 
+* require('fs').md5File(file_path, callback)
 * require('fs').md5FileSync(file_path)
 Return md5 checksum of a file
 
@@ -26,6 +27,9 @@ Return a unique file path in OS temp dir
 * require('fs').renameCross(src, dest, callback)
 Rename src to dest (even on cross devices)
 
+## http
+* require('http').downloadFile(url, file_path, callback)
+Download a remote file
 
 
 # Natives
