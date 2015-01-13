@@ -1,3 +1,4 @@
+var fs = require('fs');
 var http = require('http');
 
 http.downloadFile = function(remote_url, file_path, callback){

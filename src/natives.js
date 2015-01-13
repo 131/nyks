@@ -80,3 +80,7 @@ Array.implement({
 });
 
 
+if (!Date.now) {
+  Date.now = function() { return new Date().getTime() / 1000; }
+}
+

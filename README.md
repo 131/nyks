@@ -9,6 +9,9 @@ All those functions will eventually end up in the official API :-).
 
 child_process.exec equivalent for windowed applications.
 
+## Date
+* Date.now()
+Return current unix timestamp, in seconds, as float
 
 ## fs
 * require('fs').deleteFolderRecursive(path);
