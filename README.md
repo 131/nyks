@@ -32,13 +32,20 @@ Rename src to dest (even on cross devices)
 
 ## http
 * require('http').downloadFile(url, file_path, callback)
-Download a remote file
+Download a remote file to a local file
+
+* require('http').json(url, callback)
+Fetch a remote JSON object
+
 
 
 # Natives
 ## Object
 * Object.sort(obj, keys)
 Return a new object based on obj's existings keys
+* Object.column(obj, column_key, index_key)
+Column mode of obj (see http://php.net/manual/fr/function.array-column.php)
+
 
 ## Buffer
 * Buffer.prototype.indexOf(byte)
