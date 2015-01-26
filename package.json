@@ -8,6 +8,8 @@
     "api"
   ],
   "dependencies": {
+    "mootools": "~1.5.1",
+    "mootools-more": "~1.5.1"
   },
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
