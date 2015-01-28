@@ -23,14 +23,10 @@ cp.passthru = function(cmd, options, chain){
       return chain(err, exit);
     });
   });
-
+  ps.stdout.pipe(process.stdout);
+  ps.stderr.pipe(process.stderr);
   ps.stdout.on("data", function(data){
     _ret = data.toString();
-    console.log(data.toString());
-  });
-
-  ps.stderr.on("data", function(data){
-    console.err(data.toString())
   });
 
   ps.on('close', function(exit) {
