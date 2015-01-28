@@ -6,8 +6,12 @@ All those functions will eventually end up in the official API :-).
 
 ## child_process
 * require('child_process').exec_window(cmd, args, callback);
-
 child_process.exec equivalent for windowed applications.
+
+* require('child_process').passthru(cmd, args, callback);
+* require('child_process').passthru(cmd, {args:args,env:env}, callback);
+callback(err, exit_code, last_stdout_line);
+
 
 ## path
 * path.which

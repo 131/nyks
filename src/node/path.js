@@ -3,16 +3,22 @@ var path = require('path');
 
 
 path.which = function(bin){
-  var binpath, paths = process.env.PATH.split(path.delimiter);
+  var binpath,
+      paths = process.env.PATH.split(path.delimiter),
+      exts  = process.env.PATHEXT.split(path.delimiter);
+
+    exts = exts.filter(function(val){
+      return !!val;
+    });
+    exts.push(""); //handle direct bin calls
+
   for(var i = 0; i <paths.length; i++) {
-    var full = [path.join(paths[i], bin), path.join(paths[i], bin +".exe")];
-
-    if(fs.existsSync(full[0]))
-      return full[0];
-
-    if(fs.existsSync(full[1]))
-      return full[1];
-
+    var ext, _full, full = path.join(paths[i], bin);
+    for(ext = 0; ext < exts.length; ext++) {
+      _full = full + exts[ext];
+      if(fs.existsSync(_full))
+        return _full;
+    }
   };
-  return bin;
+  return false;
 };
