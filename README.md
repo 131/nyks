@@ -9,9 +9,9 @@ All those functions will eventually end up in the official API :-).
 
 child_process.exec equivalent for windowed applications.
 
-## Date
-* Date.now()
-Return current unix timestamp, in seconds, as float
+## path
+* path.which
+Return full path of a binary in env PATH
 
 ## fs
 * require('fs').deleteFolderRecursive(path);
