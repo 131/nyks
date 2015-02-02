@@ -10,6 +10,16 @@ fs.md5FileSync = function(file_path){
   return md5.digest('hex');
 }
 
+
+fs.isFileSync = function(file_path){
+ return fs.statSync(file_path).isFile();
+}
+
+fs.isDirectorySync = function(file_path){
+ return fs.statSync(file_path).isDirectory();
+}
+
+
 fs.md5File = function (file_path, callback){
   var shasum = crypto.createHash('md5');
   var s = fs.ReadStream(file_path);
@@ -22,6 +32,9 @@ fs.md5File = function (file_path, callback){
 
 fs.filesizeSync = function(file_path){
   return fs.statSync(file_path)["size"];
+}
+fs.filemtimeSync = function(file_path){
+  return fs.statSync(file_path)["mtime"];
 }
 
 

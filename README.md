@@ -17,6 +17,10 @@ callback(err, exit_code, last_stdout_line);
 * path.which
 Return full path of a binary in env PATH
 
+## util
+* require('util').md5(string)
+Return a hex encoded md5 hash
+
 ## fs
 * require('fs').deleteFolderRecursive(path);
 Recursive folder deletion
@@ -26,7 +30,9 @@ Recursive folder deletion
 Return md5 checksum of a file
 
 * require('fs').filesizeSync(path);
-Filesize sync
+* require('fs').filemtimeSync(path);
+* require('fs').isFileSync(path)
+* require('fs').isDirectorySync(path)
 
 * require('fs').tmppath (ext)
 Return a unique file path in OS temp dir
@@ -77,6 +83,9 @@ Recursive (iterative) replaces
 
 * String.prototype.stripEnd(str)
 Return trimmed string of "str" if present (else, leave untouched)
+
+* String.prototype.rot13()
+Rot13 of current string
 
 
 # zero_functions
