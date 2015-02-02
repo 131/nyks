@@ -16,6 +16,8 @@ callback(err, exit_code, last_stdout_line);
 ## path
 * path.which
 Return full path of a binary in env PATH
+* path.extend_PATH(path[,path2, ..]);
+Extend system PATH with new directory
 
 ## util
 * require('util').md5(string)

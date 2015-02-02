@@ -1,6 +1,10 @@
 var fs = require('fs');
 var path = require('path');
 
+path.extend_PATH = function(npath){
+  var paths = process.env.PATH.split(path.delimiter).concat(Array.from(arguments));
+  return process.env.PATH = paths.join(path.delimiter);
+}
 
 path.which = function(bin){
   var binpath,
