@@ -90,6 +90,9 @@ Return trimmed string of "str" if present (else, leave untouched)
 * String.prototype.rot13()
 Rot13 of current string
 
+* String.prototype.trimchars(chars)
+Trim (from begining & end) specific chars from a string
+
 
 # zero_functions
 * bool(val)

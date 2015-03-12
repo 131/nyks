@@ -37,6 +37,10 @@ String.implement({
     return this.replace(/[a-zA-Z]/g, function(a){
       return String.fromCharCode( ((a=a.charCodeAt())<91?78:110)>a ? a+13 : a-13 );
     });
+  },
+
+  trimchars:function(chars){
+    return this.replace(new RegExp("^["+chars+"]+"), "").replace(new RegExp("["+chars+"]+$"), "");
   }
 
 });
