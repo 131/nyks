@@ -19,9 +19,9 @@ http.downloadFile = function(remote_url, file_path, callback){
 
 
 
-http.json = function(remote_url, callback){
+http.json = function(remote_url, callback, error){
   var body = '';
-  var req = http.get(remote_url, function(res){
+  http.get(remote_url, function(res){
     if (res.statusCode != 200)
       return;
 
@@ -32,6 +32,6 @@ http.json = function(remote_url, callback){
     res.on('end', function () {
       callback(JSON.parse(body));
     });
-  });
+  }).on('error', error);
 
 }
