@@ -57,7 +57,8 @@ Fetch a remote JSON object
 Return a new object based on obj's existings keys
 * Object.column(obj, column_key, index_key)
 Column mode of obj (see http://php.net/manual/fr/function.array-column.php)
-
+* Object.set(obj, k, v)
+Set an object property value (mostly for callback/map usage)
 
 ## Buffer
 * Buffer.prototype.indexOf(byte)

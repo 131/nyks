@@ -22,3 +22,9 @@ Object.column = function(that, column_key, index_key){
   });
   return o;
 }
+
+
+Object.set = function(that, k, v){
+  that[k] = v;
+  return that;
+}
