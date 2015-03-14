@@ -57,11 +57,17 @@ Fetch a remote JSON object
 # Natives
 ## Object
 * Object.sort(obj, keys)
-Return a new object based on obj's existings keys
+Return a new object based on obj's existings keys (see Object.subset)
+
 * Object.column(obj, column_key, index_key)
 Column mode of obj (see http://php.net/manual/fr/function.array-column.php)
+
 * Object.set(obj, k, v)
 Set an object property value (mostly for callback/map usage)
+
+* Object.mask_join(obj, glue, mask)
+Apply join(glue, map(obj, util.format(mask, k, v)));
+
 
 ## Buffer
 * Buffer.prototype.indexOf(byte)

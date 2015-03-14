@@ -1,3 +1,5 @@
+var util = require('util');
+
 Object.combine = function(list, values) { 
   if (list == null) return {};
   var result = {};
@@ -28,3 +30,11 @@ Object.set = function(that, k, v){
   that[k] = v;
   return that;
 }
+
+Object.mask_join = function(that, glue, format) {
+  var out = [];
+  Object.each(that, function(v, k){
+    out.push( util.format(format, k, v));
+  });
+  return out.join(glue);
+};
