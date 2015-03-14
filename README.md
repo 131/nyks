@@ -22,6 +22,9 @@ Extend system PATH with new directory
 ## util
 * require('util').md5(string)
 Return a hex encoded md5 hash
+* require('util').parseargs(process.argv.splice(2))
+Command line args parser, aligned on yks patterns
+
 
 ## fs
 * require('fs').deleteFolderRecursive(path);
