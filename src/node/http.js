@@ -18,8 +18,7 @@ http.downloadFile = function(remote_url, file_path, callback){
 }
 
 
-
-http.json = function(remote_url, callback, error){
+http.JSON = function(remote_url, callback){
   var body = '';
   http.get(remote_url, function(res){
     if (res.statusCode != 200)
@@ -30,8 +29,16 @@ http.json = function(remote_url, callback, error){
     });
 
     res.on('end', function () {
-      callback(JSON.parse(body));
+      callback(null, JSON.parse(body));
     });
-  }).on('error', error);
+  }).on('error', callback);
+}
 
+//deprecated pollyfill
+http.json = function(remote_url, callback, error) {
+  http.JSON(remote_url, function(err, data) {
+    if(err)
+      return error(err);
+    return callback(data);
+  });
 }
