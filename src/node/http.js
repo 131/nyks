@@ -4,11 +4,12 @@ var fs = require('fs'),
 
 
 var download = function(transport, remote_url, file_path, callback){
-    var file = fs.createWriteStream(file_path);
 
     var request = transport(remote_url, function(response) {
       if (response.statusCode != 200)
         return callback( {error: "Invalid http exit code", code: response.statusCode });
+
+      var file = fs.createWriteStream(file_path);
 
       file.on('finish', function () {
         file.close(function(){
