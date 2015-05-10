@@ -40,7 +40,9 @@ https.downloadFile = function(remote_url, file_path, callback){
 
 http.JSON = function(remote_url, callback){
   var body = '';
-  http.get(remote_url, function(res){
+  var transport = remote_url.startsWith('https://') ? https : http;
+
+  transport.get(remote_url, function(res){
     if (res.statusCode != 200)
       return;
 
