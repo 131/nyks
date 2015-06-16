@@ -9,7 +9,8 @@
   ],
   "dependencies": {
     "mootools": "^1.5.1",
-    "mootools-more": "^1.5.1"
+    "mootools-more": "^1.5.1",
+    "ps-tree": "^1.0.0"
   },
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
