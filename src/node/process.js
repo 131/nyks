@@ -14,5 +14,4 @@ process.killRecursive = function (pid, signal, callback) {
         });
         callback();
     });
-  } 
 };
