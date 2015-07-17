@@ -54,6 +54,14 @@ Fetch a remote JSON object
 
 
 
+# RSA
+## Utils
+* rsa/pemme(str, armor)
+Create a PEM encoded armor around a desired string (chunk size 65)
+
+
+
+
 # Natives
 ## Object
 * Object.sort(obj, keys)
@@ -79,6 +87,11 @@ Return -1 if not found
 Exclude one array from another
 
 ## String
+
+* string/chunk(basestr, chunksize)
+Split a string into chunk of specified size.
+
+
 * String.prototype.startsWith(str)
 Return boolean
 
