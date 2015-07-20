@@ -54,10 +54,16 @@ Fetch a remote JSON object
 
 
 
-# RSA
+# Crypt
 ## Utils
-* rsa/pemme(str, armor)
+* crypt/pemme(str, armor)
 Create a PEM encoded armor around a desired string (chunk size 65)
+
+* crypt/md5 (body)
+Return the base md5 bash
+
+* crypt/openssh2pem(body)
+Return the PEM version of an openssh public key (yeah !)
 
 
 
