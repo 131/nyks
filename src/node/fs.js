@@ -49,28 +49,8 @@ fs.renameCross = function(src, dst, callback){
 }
 
 
-
-
-
-fs.tmppath = function(ext){
-  ext = ext || "tmp";
-  var abc   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var rand = (abc + abc + abc ).split("").shuffle().slice(0,8).join("");
-  var fname = ext + "-" + rand + "." + ext;
-  var file_path = os.tmpdir() + "/" +fname;
-  if(fs.existsSync(file_path))
-    return fs.tmppath(ext);
-  return file_path;
-}
-
-
-fs.mkdirpSync = function(file_path){
-  if( fs.existsSync(file_path) ) 
-    return file_path;
-  fs.mkdirpSync(path.dirname(file_path));
-  fs.mkdirSync(file_path);
-  return file_path;
-}
+fs.tmppath    = require('../../fs/tmppath');
+fs.mkdirpSync = require('../../fs/mkdirpSync');
 
 fs.deleteFolderRecursive = function(file_path) {
     var files = [];
