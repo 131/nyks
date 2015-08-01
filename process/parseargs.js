@@ -1,13 +1,7 @@
-var util   = require('util'),
-    crypto = require('crypto');
+var util   = require('util');
 
 
-util.md5 = function(str){
-  return crypto.createHash('md5').update(str).digest('hex');
-}
-
-
-process.parseargs = util.parseargs = function(argv){
+module.exports = function(argv){
   if(arguments.length == 0)
      argv = process.argv.slice(2);
 
