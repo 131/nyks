@@ -1,4 +1,4 @@
-var indexOfc : function(buf, chr) {
+var indexOfc = function(buf, chr) {
   for (var i = 0; i < buf.length ; i++)
    if(buf[i] ==chr) return i;
   return -1;
