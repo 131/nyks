@@ -1,10 +1,14 @@
 "use strict";
 
 var expect = require('expect.js')
-var stripStart = require('../string/stripStart.js')
-var stripEnd = require('../string/stripEnd.js')
-var replaces = require('../string/replaces.js')
-var rreplaces = require('../string/rreplaces.js')
+var stripStart = require('../string/stripStart')
+var stripEnd = require('../string/stripEnd')
+var replaces = require('../string/replaces')
+var rreplaces = require('../string/rreplaces')
+var rot13 = require('../string/rot13')
+var chunk = require('../string/chunk')
+
+
 
 
 describe("strings functions", function(){
@@ -34,6 +38,20 @@ describe("strings functions", function(){
     });
 
 
+    it("shoult test rot13", function(){
+        expect(rot13("a")).to.be("n");
+        expect(rot13("A")).to.be("N");
+        expect(rot13("n")).to.be("a");
+      
+    });
+
+    it("shoult test chunk", function(){
+        expect(chunk("abc",1)).to.eql(["a","b", "c"]);
+        expect(chunk("abc")).to.eql(["a","b", "c"]);
+        expect(chunk("abc",2)).to.eql(["ab", "c"]);
+        expect(chunk("abc",0)).to.eql(["abc"]);
+      
+    });
 
 
     it("should test stripStart", function(){

@@ -1,15 +1,16 @@
-var indexOfc = function(buf, chr) {
-  for (var i = 0; i < buf.length ; i++)
+var indexOfc = function(buf, chr, offset) {
+  for (var i = offset||0; i < buf.length ; i++)
    if(buf[i] ==chr) return i;
   return -1;
 }
+
 
 
 module.exports = function(buf, search, offset) {
   if(typeof search == "string")
     search = new Buffer(search);
   else if(typeof search == "number")
-    search = new Buffer([search]);
+    return indexOfc(buf, search, offset);
 
   offset = offset||0
 
@@ -26,6 +27,7 @@ module.exports = function(buf, search, offset) {
     }
   }
 
-  if (s > -1 && buf.length - s < search.length) return -1;
+  if (s > -1 && buf.length - s < search.length)
+    return -1;
   return s;
 }

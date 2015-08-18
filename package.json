@@ -12,7 +12,8 @@
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "istanbul": "~0.3.18"
   },
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
@@ -26,7 +27,7 @@
     "url": "git@github.com:131/nyks.git"
   },
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha -C test/*"
+    "test": " node node_modules/istanbul/lib/cli.js  cover node_modules/mocha/bin/_mocha test/"
   },
   "readme": "# nyks toolkit\r\n\r\nExtend nodejs & javascript native API of missing functions.\r\n",
   "readmeFilename": "README.md",
