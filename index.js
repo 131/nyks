@@ -1,6 +1,3 @@
-require('mootools');
-require('mootools-more');
-
 require('./src/mts/Events.Pseudos.js');
 require('./src/natives.js');
 require('./src/node/child_process.js');
