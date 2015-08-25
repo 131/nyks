@@ -1,3 +1,4 @@
+"use strict";
 
 var str_chunk = require('../string/chunk');
 

@@ -1,3 +1,5 @@
+"use strict";
+
 var startsWith = require('mout/string/startsWith');
 
 module.exports = function(str, start){

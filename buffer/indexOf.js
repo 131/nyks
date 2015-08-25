@@ -1,3 +1,5 @@
+"use strict";
+
 var indexOfc = function(buf, chr, offset) {
   for (var i = offset||0; i < buf.length ; i++)
    if(buf[i] ==chr) return i;

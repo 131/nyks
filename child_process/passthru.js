@@ -1,3 +1,5 @@
+"use strict";
+
 var cp = require('child_process');
 
   //callback(err, exit, lastline);

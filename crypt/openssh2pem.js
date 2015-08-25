@@ -1,3 +1,5 @@
+"use strict";
+
 var ASN_LONG_LEN  = 0x80, SSH_RSA = 'ssh-rsa';
 
 function ASN_len(s) {

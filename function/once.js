@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = function(fn) {
   var f = function () {
     if (f.called) return f.value

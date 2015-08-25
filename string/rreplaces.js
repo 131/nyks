@@ -1,3 +1,5 @@
+"use strict";
+
     //recursive version of replaces
 var replaces = require('./replaces');
 

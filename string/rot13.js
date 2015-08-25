@@ -1,3 +1,5 @@
+"use strict";
+
 // http://stackoverflow.com/q/617647
 module.exports = function(str) {
   return str.replace(/[a-zA-Z]/g, function(a){

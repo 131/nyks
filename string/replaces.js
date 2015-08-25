@@ -1,3 +1,5 @@
+"use strict";
+
 var forIn = require('mout/object/forIn');
 
     //note that items are only replaced one time, use rreplaces if needed

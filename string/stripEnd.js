@@ -1,3 +1,5 @@
+"use strict";
+
 var endsWith = require('mout/string/endsWith');
 
 module.exports = function(str, end){

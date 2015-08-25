@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = function(str, chunkSize){
   if(chunkSize <= 0)
     return [str];
