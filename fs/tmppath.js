@@ -13,6 +13,7 @@ function deleteOnExit(file_path) {
   if (!exitListenerAttached) {
     console.log("Registering for cleanup");
     process.on('exit', cleanupFilesSync);
+    process.on('fsgc', cleanupFilesSync); //force cleanup
       //makes sure exit is called event on sigint \o/
     process.on('SIGINT', process.exit);
     exitListenerAttached = true;
@@ -23,6 +24,7 @@ function deleteOnExit(file_path) {
 
 
 function cleanupFilesSync() {
+  var toDelete;
   while ((toDelete = filesToDelete.shift()) !== undefined) {
     if(fs.existsSync(toDelete))
       fs.unlinkSync(toDelete);
@@ -32,8 +34,8 @@ function cleanupFilesSync() {
   
 
 
-var tmppath = module.exports = function(ext, len, trash){
-  len = len || 8; ext = ext || "tmp";
+var tmppath = module.exports = function(ext, trash, len){
+  ext = ext || "tmp"; len = len || 8;
   if(trash === undefined) trash = true;
 
 
@@ -41,7 +43,7 @@ var tmppath = module.exports = function(ext, len, trash){
   var fname = ext + "-" + body + "." + ext;
   var file_path = path.join(os.tmpdir(), fname);
 
-  var fullpath = fs.existsSync(file_path) ? tmppath(ext) : file_path;
+  var fullpath = fs.existsSync(file_path) ? tmppath(ext, trash, len + 1) : file_path;
   if(trash)
     deleteOnExit(fullpath);
 

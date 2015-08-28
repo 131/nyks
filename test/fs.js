@@ -8,6 +8,7 @@ var deleteFolderRecursive= require('../fs/deleteFolderRecursive')
 var md5File= require('../fs/md5File')
 var isFileSync = require('../fs/isFileSync')
 var isDirectorySync = require('../fs/isDirectorySync')
+var tmppath = require('../fs/tmppath')
 
 
 
@@ -67,8 +68,32 @@ describe("FS functions", function(){
         done();
       });
 
+    });
 
 
+    it("should test tmppath", function(){
+      var tpath = tmppath("too"), tpath2 = tmppath(), tpath3 = tmppath("foo", false);
+      fs.writeFileSync(tpath, "ping");
+      fs.writeFileSync(tpath3, "ping");
+      expect("" + fs.readFileSync(tpath)).to.be("ping");
+
+      expect(fs.existsSync(tpath2)).not.to.be.ok();
+
+      //fake exit event emit
+      process.emit("fsgc");
+
+      expect(fs.existsSync(tpath)).not.to.be.ok();
+      expect(fs.existsSync(tpath3)).to.be.ok();
+      fs.unlinkSync(tpath3);
+    });
+
+    it("should test tmppath stress", function(){
+      //this create too many files for tmppath to handle, it swap to a bigger file length
+      for(var b, a=0; a<100; a++) {
+        b = tmppath("foo", true, 1);
+        expect(fs.existsSync(b)).not.to.be.ok();
+        fs.writeFileSync(b, "dummy");
+      }
     });
 
 
