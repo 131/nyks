@@ -6,6 +6,7 @@ var expect = require('expect.js')
 var mkdirpSync= require('../fs/mkdirpSync')
 var deleteFolderRecursive= require('../fs/deleteFolderRecursive')
 var md5File= require('../fs/md5File')
+var md5FileSync = require('../fs/md5FileSync')
 var isFileSync = require('../fs/isFileSync')
 var isDirectorySync = require('../fs/isDirectorySync')
 var tmppath = require('../fs/tmppath')
@@ -69,6 +70,23 @@ describe("FS functions", function(){
       });
 
     });
+
+
+
+    it("should test md5FileSync", function(){
+      var file = "dummy";
+
+      fs.writeFileSync(file, "bar");
+
+      expect(isFileSync(file)).to.be.ok();
+      expect(isDirectorySync(file)).not.to.be.ok();
+
+      var hash = md5FileSync(file);
+      expect(hash).to.be("37b51d194a7513e45b56f6524f2d51f2");
+      fs.unlinkSync(file);
+
+    });
+
 
 
     it("should test tmppath", function(){
