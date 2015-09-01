@@ -27,104 +27,71 @@ Command line args parser, aligned on yks patterns
 
 
 ## fs
-* require('fs').deleteFolderRecursive(path);
+* require('nyks/fs/deleteFolderRecursive')(path);
 Recursive folder deletion
 
-* require('fs').md5File(file_path, callback)
-* require('fs').md5FileSync(file_path)
+* require('nyks/fs/md5File')(file_path, callback)
+* require('nyks/fs/md5FileSync')(file_path)
 Return md5 checksum of a file
 
-* require('fs').filesizeSync(path);
-* require('fs').filemtimeSync(path);
-* require('fs').isFileSync(path)
-* require('fs').isDirectorySync(path)
+* require('nyks/fs/filesizeSync')(path);
+* require('nyks/fs/filemtimeSync')(path);
+* require('nyks/fs/isFileSync')(path)
+* require('nyks/fs/isDirectorySync')(path)
 
-* require('fs').tmppath (ext)
+* require('nyks/fs/tmppath')(ext)
 Return a unique file path in OS temp dir
 
-* require('fs').renameCross(src, dest, callback)
-Rename src to dest (even on cross devices)
-
-## http
-* require('http').downloadFile(url, file_path, callback)
-Download a remote file to a local file
-
-* require('http').json(url, callback)
-Fetch a remote JSON object
 
 
 
 # Crypt
 ## Utils
-* crypt/pemme(str, armor)
+* require('nyks/crypt/pemme')(str, armor)
 Create a PEM encoded armor around a desired string (chunk size 65)
 
-* crypt/md5 (body)
+* require('nyks/crypt/md5') (body)
 Return the base md5 bash
 
-* crypt/openssh2pem(body)
+* require('nyks/crypt/openssh2pem')(body)
 Return the PEM version of an openssh public key (yeah !)
-
-
 
 
 # Natives
 ## Object
-* Object.sort(obj, keys)
-Return a new object based on obj's existings keys (see Object.subset)
-
-* Object.column(obj, column_key, index_key)
-Column mode of obj (see http://php.net/manual/fr/function.array-column.php)
-
-* Object.set(obj, k, v)
-Set an object property value (mostly for callback/map usage)
-
-* Object.mask_join(obj, glue, mask)
-Apply join(glue, map(obj, util.format(mask, k, v)));
+* require('nyks/object/combine')(keys, values)
+Creates an object by using one array for keys and another for its values
 
 
 ## Buffer
-* Buffer.prototype.indexOf(byte)
+* require('nyks/buffer/indexOf')(byte)
 Binary search of byte
 Return -1 if not found
 
-## Array
-* Array.prototype.diff(array)
-Exclude one array from another
-
 ## String
 
-* string/chunk(basestr, chunksize)
+* require('nyks/string/chunk')(basestr, chunksize)
 Split a string into chunk of specified size.
 
 
-* String.prototype.startsWith(str)
+* require('nyks/string/startsWith')(str)
 Return boolean
 
-* String.prototype.endsWith(str)
+* require('nyks/string/endsWith')(str)
 Return boolean
 
 
-* String.prototype.replaces(dict)
+* require('nyks/string/replaces')(dict)
 Replace key => value in current string
 
-* String.prototype.rreplaces(dict)
+* require('nyks/string/rreplaces')(dict)
 Recursive (iterative) replaces
 
 
-* String.prototype.stripEnd(str)
+* require('nyks/string/stripEnd')(str)
 Return trimmed string of "str" if present (else, leave untouched)
 
-* String.prototype.rot13()
+* require('nyks/string/rot13')()
 Rot13 of current string
 
-* String.prototype.trimchars(chars)
-Trim (from begining & end) specific chars from a string
 
-
-# zero_functions
-* bool(val)
-Return boolean value of *val with "f", "false", "n" and "no" casted as "false" (case insensitive)
-
-* guid()
-Return a guid
