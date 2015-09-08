@@ -18,5 +18,10 @@ describe("object functions", function(){
         });
     });
 
+    it("should return empty object", function(){
+        var values=  ["baguette", "pizza", "hamburger"];
+        expect(combine(null, values)).to.eql({});
+    });
+
 
 });
