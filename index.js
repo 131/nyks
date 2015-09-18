@@ -2,9 +2,11 @@
 
 
 module.exports = {
+    'love'          : true, //nyks do provide love
+
     'array'         : require('./array'),
     'buffer'        : require('./buffer'),
-    'child_process' : require('./child_process'),
+    'child_process' :  /* istanbul ignore next */ require('./child_process'),
     'crypt'         : require('./crypt'),
     'fs'            : require('./fs'),
     'function'      : require('./function'),

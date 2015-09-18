@@ -9,6 +9,8 @@ var md5File= require('../fs/md5File')
 var md5FileSync = require('../fs/md5FileSync')
 var isFileSync = require('../fs/isFileSync')
 var isDirectorySync = require('../fs/isDirectorySync')
+var filemtimeSync = require('../fs/filemtimeSync')
+var filesizeSync = require('../fs/filesizeSync')
 var tmppath = require('../fs/tmppath')
 
 
@@ -69,6 +71,24 @@ describe("FS functions", function(){
         done();
       });
 
+    });
+
+
+
+    it("should test filemtimeSync", function(){
+      var file = "dummy";
+
+      fs.writeFileSync(file, "bar");
+      expect(filemtimeSync(file)).to.be.ok();
+      fs.unlinkSync(file);
+    });
+
+    it("should test filesizeSync", function(){
+      var file = "dummy";
+
+      fs.writeFileSync(file, "bar");
+      expect(filesizeSync(file)).to.be(3);
+      fs.unlinkSync(file);
     });
 
 
