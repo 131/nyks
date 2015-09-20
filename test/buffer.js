@@ -26,7 +26,11 @@ describe("Crypto Buffer indexOf", function(){
         expect(indexOf(body, 95)).to.be(-1);
     });
 
-
+    it("should stop when desired", function(){
+        expect(indexOf(body, 5, 0, 2)).to.be(-1);
+        expect(indexOf(body, 5, 0, 19)).to.be(4);
+        expect(indexOf(body, 6, 0, 19)).to.be(-1); //outside range
+    });
 
     it("should search with string", function(){
 
