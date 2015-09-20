@@ -20,18 +20,19 @@ module.exports = function(buf, search, offset, stop) {
 
   var m = 0;
   var s = -1;
-  for(var i=offset;i< stop ;++i){
+
+
+  for(var i=offset; i< stop; ++i) {
     if(buf[i] == search[m]) {
       if(s == -1) s = i;
       ++m;
-      if(m == search.length) break;
+      if(m == search.length)
+        return s;
     } else {
       s = -1;
       m = 0;
     }
   }
 
-  if (s > -1 && buf.length - s < search.length)
-    return -1;
-  return s;
+  return -1;
 }

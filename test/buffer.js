@@ -8,6 +8,7 @@ describe("Crypto Buffer indexOf", function(){
 
     var body = new Buffer([1,2,3,4,5, 1]);
     var body2 = new Buffer("cat eat mouses");
+    var sep  = new Buffer([3,4,5]);
 
     it("should find an easy char", function(){
         expect(indexOf(body, 1)).to.be(0);
@@ -18,7 +19,8 @@ describe("Crypto Buffer indexOf", function(){
 
 
     it("should support offset based search", function(){
-        expect(indexOf(body, 1, 2)).to.be(5);
+        expect(indexOf(body, sep,0, 3)).to.be(-1);
+        expect(indexOf(body, 1, 2) ).to.be(5);
     });
 
 
