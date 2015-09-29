@@ -1,6 +1,6 @@
 "use strict";
 
-var format= require('util').format; //TODO : use sprintf instead
+var format= require('../string/sprintf');
 var forIn = require('mout/object/forIn');
 
 module.exports =  function(that, mask, glue) {

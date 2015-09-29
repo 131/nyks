@@ -7,6 +7,7 @@ var replaces = require('../string/replaces')
 var rreplaces = require('../string/rreplaces')
 var rot13 = require('../string/rot13')
 var chunk = require('../string/chunk')
+var sprintf = require('../string/sprintf');
 
 
 
@@ -73,6 +74,14 @@ describe("strings functions", function(){
         expect(stripEnd(str, body)).to.be(str);
 
     });
+
+
+  it("should test sprinf", function(){
+
+
+    expect(sprintf('Hallo %s!', 'Welt')).to.be('Hallo Welt!');
+
+  });
 
 
 });
