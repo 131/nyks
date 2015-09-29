@@ -7,6 +7,7 @@ module.exports = {
     'rreplaces': require('./string/rreplaces'),
     'sprintf'  : require('./string/sprintf'),
     'stripEnd' : require('./string/stripEnd'),
+    'crc32'    : require('./string/crc32'),
     'stripStart' : require('./string/stripStart')
 };
 

@@ -6,6 +6,7 @@ var stripEnd = require('../string/stripEnd')
 var replaces = require('../string/replaces')
 var rreplaces = require('../string/rreplaces')
 var rot13 = require('../string/rot13')
+var crc32 = require('../string/crc32')
 var chunk = require('../string/chunk')
 var sprintf = require('../string/sprintf');
 
@@ -84,4 +85,8 @@ describe("strings functions", function(){
   });
 
 
+
+  it("should test crc32", function(){
+    expect(crc32("foobar")).to.be(-1628037227);
+  });
 });

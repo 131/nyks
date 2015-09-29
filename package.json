@@ -1,6 +1,6 @@
 {
   "name": "nyks",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "nodejs exupery style",
   "keywords": [
     "mootools",
@@ -8,6 +8,7 @@
     "api"
   ],
   "dependencies": {
+    "crc-32": "^0.3.0",
     "mout": "^0.11.0",
     "sprintf-js": "^1.0.3"
   },
