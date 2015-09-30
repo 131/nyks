@@ -9,6 +9,7 @@ var rot13 = require('../string/rot13')
 var crc32 = require('../string/crc32')
 var chunk = require('../string/chunk')
 var sprintf = require('../string/sprintf');
+var hexToRgb = require('../string/hexToRgb');
 
 
 
@@ -79,7 +80,6 @@ describe("strings functions", function(){
 
   it("should test sprinf", function(){
 
-
     expect(sprintf('Hallo %s!', 'Welt')).to.be('Hallo Welt!');
 
   });
@@ -89,4 +89,11 @@ describe("strings functions", function(){
   it("should test crc32", function(){
     expect(crc32("foobar")).to.be(-1628037227);
   });
+
+  it("should test hexToRgb", function() {
+    expect(hexToRgb('#FF0000')).to.eql(['FF', '00', '00']);
+
+    expect(hexToRgb('not_an_hexa')).to.be(null);
+  });
+
 });
