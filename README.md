@@ -22,8 +22,14 @@ Extend system PATH with new directory
 ## util
 * require('util').md5(string)
 Return a hex encoded md5 hash
-* require('util').parseargs(process.argv.splice(2))
+
+
+## process
+* require('nyks/process/parseArgs')(process.argv.splice(2))
 Command line args parser, aligned on yks patterns
+* require('nyks/process/splitArgs')("some string 'with escaped' content")
+Split a string into whitespace separated chunks
+
 
 
 ## fs

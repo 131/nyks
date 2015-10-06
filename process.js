@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
-    'parseargs' : require('./process/parseargs')
+    'parseArgs' : require('./process/parseArgs'),
+    'splitArgs' : require('./process/splitArgs'),
 };
 
