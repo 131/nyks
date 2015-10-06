@@ -1,6 +1,7 @@
 "use strict";
 
 var util   = require('util');
+var startsWith = require('mout/string/startsWith');
 
 
 module.exports = function(argv){
@@ -10,8 +11,8 @@ module.exports = function(argv){
   var args = [], dict = {},
       k, v, r, e = new RegExp("^--?([a-z_0-9/:-]+)(?:=(.*))?", "i");
 
-  Array.each(argv, function(arg){
-    if(!arg.startsWith('-')) {
+  argv.forEach(function(arg){
+    if(!startsWith(arg, '-')) {
       args.push(arg);
     } else if(e.test(arg)) {
       r = e.exec(arg);
