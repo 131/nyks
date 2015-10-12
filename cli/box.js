@@ -33,7 +33,7 @@ var output = function(line){
 
 var box = function(title, msg){
   var args = [].slice.call(arguments);
-  var dotrim = true, pad_len = 0;
+  var dotrim = true, pad_len = COLS;
 
   for(var msg, a=1 ; a < args.length ; a+=2) {
     msg = args[a];
