@@ -1,5 +1,7 @@
 "use strict";
 
+var isFinite = require('mout/lang/isFinite');
+
 module.exports = function(str) {
   var mask      = "(\\s+)|([^\\s\\\"']+)|\\\"([^\\\"]*)\\\"|'([^']*)'";
 
@@ -13,6 +15,10 @@ module.exports = function(str) {
           //check "value"/separator alternance
     if(sep) { need_value = true; continue; }
     if(!need_value) break; need_value = false;
+
+    if(isFinite(value))
+      value = parseFloat(value);
+
 
     args.push(value);
   }

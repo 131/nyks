@@ -33,7 +33,7 @@ describe("Process functions", function(){
       expect(splitArgs("a \"b\" c  d") ).to.eql(["a", "b", "c", "d"]);
       expect(splitArgs("a \"'b'\" c  d") ).to.eql(["a", "'b'", "c", "d"]);
       expect(splitArgs("a \"'b c'\" c  d") ).to.eql(["a", "'b c'", "c", "d"]);
-      expect(splitArgs("a 'b c' c  d") ).to.eql(["a", "b c", "c", "d"]);
+      expect(splitArgs("a 'b c' c  d 8") ).to.eql(["a", "b c", "c", "d", 8]);
       expect(splitArgs("") ).to.eql([]);
 
 
