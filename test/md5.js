@@ -1,7 +1,7 @@
 "use strict";
 
 var expect = require('expect.js')
-var md5 = require('../crypt/md5')
+var md5 = require('../crypto/md5')
 
 
 describe("Crypto testing functions", function(){

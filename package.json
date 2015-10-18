@@ -1,6 +1,6 @@
 {
   "name": "nyks",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "description": "nodejs exupery style",
   "keywords": [
     "mootools",
@@ -29,7 +29,7 @@
     "url": "git@github.com:131/nyks.git"
   },
   "scripts": {
-    "test": " node node_modules/istanbul/lib/cli.js cover -x \"crypt/*\" -x \"path/*\" -x \"child_process/*\" node_modules/mocha/bin/_mocha test/"
+    "test": " node node_modules/istanbul/lib/cli.js cover -x \"crypto/*\" -x \"path/*\" -x \"child_process/*\" node_modules/mocha/bin/_mocha test/"
   },
   "readme": "# nyks toolkit\r\n\r\nExtend nodejs & javascript native API of missing functions.\r\n",
   "readmeFilename": "README.md",

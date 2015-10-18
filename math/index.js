@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-    'sum' : require('./array/sum')
+    'log10' : require('./log10'),
 };
 
