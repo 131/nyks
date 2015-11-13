@@ -23,24 +23,22 @@ var  readStatRecursive = function(item, cb) {
 }
 
 module.exports = function(dir_path, taskcb, endcb){
-  var cargo = async.cargo(function(tasks, cb){
-      forEach(tasks ,function(stat){
-        if(stat)
-          taskcb(stat);
-      })
+  var queue = async.queue(function(tasks, cb){
+      if(tasks)
+        taskcb(tasks);
       cb();
-  });
+  }, 10);
 
-  cargo.push(null);
+  queue.push(null);
 
   readStatRecursive(dir_path , function(err , stats){
-    cargo.push(stats, function(err){
+    queue.push(stats, function(err){
       if(err)
         endcb(err);
     })
   })
 
-  cargo.drain = debounce(function(){
+  queue.drain = debounce(function(){
     endcb();
   }, 50)
 }
