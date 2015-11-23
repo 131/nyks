@@ -48,7 +48,11 @@ Return md5 checksum of a file
 * require('nyks/fs/tmppath')(ext)
 Return a unique file path in OS temp dir
 
+* require('nyks/fs/getFolderSize')(path)
+Return a folder Size
 
+* require('nyks/fs/clearFolderReccurcive')(path , options , callback)  // options {file_to_keep:[] , size_to_delete:number(octet) , max_size:number(octet)  , max_time:number(millisecond) }
+delete files in folder (you can delete the files created before max_time or and delete with size options)
 
 
 # Crypto
