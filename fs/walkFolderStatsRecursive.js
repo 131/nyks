@@ -6,21 +6,35 @@ var forEach = require('mout/array/forEach');
 var debounce= require('mout/function/debounce');
 var diff    = require('mout/date/diff')
 
-var  readStatRecursive = function(item, cb) {
-  fs.lstat(item, function(err, stats) {
-    if (!err && stats.isDirectory()) {
-      fs.readdir(item, function(err, list) {
-        if(!err)
-          forEach(list , function(dirItem){
-            readStatRecursive(path.join(item, dirItem), cb);
-          })
-      })
-    }else {
-      stats.file_path = item;
-      cb(err, stats)
-    }
-  })
-}
+
+var readStatRecursive = function(dir, done, cb) {
+  var results = [];
+  fs.readdir(dir, function(err, list) {
+    if (err) return done(err);
+    var i = 0;
+    (function next() {
+      var file = list[i++];
+      if (!file) return done(null, results);
+      file = dir + '/' + file;
+      fs.stat(file, function(err, stat) {
+        if (stat && stat.isDirectory()) {
+          readStatRecursive(file, function(err, res) {
+            results = results.concat(res);
+            next();
+          }, cb);
+        } else {
+          results.push(file);
+          stat.file_path = file;
+          cb(err, stat)
+          next();
+        }
+      });
+    })();
+  });
+};
+
+
+
 
 module.exports = function(dir_path, taskcb, endcb){
   var queue = async.queue(function(tasks, cb){
@@ -29,16 +43,18 @@ module.exports = function(dir_path, taskcb, endcb){
       cb();
   }, 10);
 
-  queue.push(null);
-
-  readStatRecursive(dir_path , function(err , stats){
-    queue.push(stats, function(err){
-      if(err)
-        endcb(err);
-    })
+  var done = false ;
+  readStatRecursive(dir_path ,
+   function(err){
+     done = true ;
+     queue.push(null);
+   },
+   function(err , stats){
+    queue.push(stats)
   })
 
-  queue.drain = debounce(function(){
-    endcb();
-  }, 50)
+  queue.drain = function(){
+    if(done)
+      endcb();
+  }
 }
