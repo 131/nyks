@@ -164,7 +164,9 @@ describe("FS functions", function(){
           }
         }
 
-        clearFolderReccurcive(root, null, 100, function(){
+        var options = {max_time : 100}
+
+        clearFolderReccurcive(root, options, function(){
           getFolderSize(root +"/first", function(err , foldersize){
             expect(foldersize).to.be(0);
             getFolderSize(root + "/second", function(err , foldersize){
@@ -199,7 +201,9 @@ describe("FS functions", function(){
         size += filesizeSync(filepath);
       }
 
-      clearFolderReccurcive(root, 2000, null, function(){
+      var options = {max_size : 2000}
+
+      clearFolderReccurcive(root, options, function(){
         getFolderSize(root +"/first", function(err , foldersize){
           expect(foldersize).to.be(0);
           getFolderSize(root + "/second", function(err , foldersize){
