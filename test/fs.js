@@ -13,7 +13,7 @@ var filemtimeSync = require('../fs/filemtimeSync')
 var filesizeSync = require('../fs/filesizeSync')
 var tmppath = require('../fs/tmppath')
 var getFolderSize = require('../fs/getFolderSize')
-var clearFolderReccurcive = require("../fs/clearFolderRecursive")
+var clearFolderRecursive = require("../fs/clearFolderRecursive")
 
 var guid = require('mout/random/guid')
 
@@ -164,19 +164,19 @@ describe("FS functions", function(){
           }
         }
 
-        var options = {max_time : 100}
+        var options = {max_age : 500}
 
-        clearFolderReccurcive(root, options, function(){
-          getFolderSize(root +"/first", function(err , foldersize){
-            expect(foldersize).to.be(0);
-            getFolderSize(root + "/second", function(err , foldersize){
-              expect(foldersize).to.be(size);
+        clearFolderRecursive(root, options, function(){
+          getFolderSize(root +"/first", function(err , foldersizea){
+            expect(foldersizea).to.be(0);
+            getFolderSize(root + "/second", function(err , foldersizeb){
+              expect(foldersizeb).to.be(size);
               deleteFolderRecursive(root);
               done();
             })
           })
         })
-      }, 200)
+      }, 1200)
 
     });
 
@@ -203,11 +203,11 @@ describe("FS functions", function(){
 
       var options = {max_size : 2000}
 
-      clearFolderReccurcive(root, options, function(){
-        getFolderSize(root +"/first", function(err , foldersize){
-          expect(foldersize).to.be(0);
-          getFolderSize(root + "/second", function(err , foldersize){
-            expect(foldersize).to.be(size);
+      clearFolderRecursive(root, options, function(){
+        getFolderSize(root +"/first", function(err , foldersizea){
+          expect(foldersizea).to.be(0);
+          getFolderSize(root + "/second", function(err , foldersizeb){
+            expect(foldersizeb).to.be(size);
             deleteFolderRecursive(root);
             done();
           })
