@@ -37,9 +37,9 @@ var readStatRecursive = function(dir, done, cb) {
 
 
 module.exports = function(dir_path, taskcb, endcb){
-  var queue = async.queue(function(tasks, cb){
-      if(tasks)
-        taskcb(tasks);
+  var queue = async.queue(function(stat, cb){
+      if(stat)
+        taskcb(stat);
       cb();
   }, 10);
 
