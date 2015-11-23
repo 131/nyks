@@ -9,6 +9,7 @@ module.exports = {
     'md5File'               : require('./md5File'),
     'md5FileSync'           : require('./md5FileSync'),
     'mkdirpSync'            : require('./mkdirpSync'),
-    'tmppath'               : require('./tmppath')
+    'tmppath'               : require('./tmppath'),
+    'clearFolderRecursive'  : require('./clearFolderRecursive'),
+    'getFolderSize'         : require('./getFolderSize')
 };
-
