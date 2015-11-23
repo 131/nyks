@@ -1,4 +1,4 @@
-var readFolderRecursive = require("./readFolderRecursive");
+var readFolderRecursive = require("./walkFolderStatsRecursive");
 
 module.exports = function(dir_path, callback){
   var size = 0 ;

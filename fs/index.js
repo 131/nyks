@@ -10,6 +10,6 @@ module.exports = {
     'md5FileSync'           : require('./md5FileSync'),
     'mkdirpSync'            : require('./mkdirpSync'),
     'tmppath'               : require('./tmppath'),
-    'clearFolderReccurcive' : require('./clearFolderReccurcive'),
+    'clearFolderRecursive'  : require('./clearFolderRecursive'),
     'getFolderSize'         : require('./getFolderSize')
 };

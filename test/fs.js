@@ -13,7 +13,7 @@ var filemtimeSync = require('../fs/filemtimeSync')
 var filesizeSync = require('../fs/filesizeSync')
 var tmppath = require('../fs/tmppath')
 var getFolderSize = require('../fs/getFolderSize')
-var clearFolderReccurcive = require("../fs/clearFolderReccurcive")
+var clearFolderReccurcive = require("../fs/clearFolderRecursive")
 
 var guid = require('mout/random/guid')
 

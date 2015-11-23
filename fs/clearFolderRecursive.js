@@ -1,7 +1,7 @@
 var sort = require("mout/array/sort");
 var diff = require("mout/date/diff");
 var fs   = require('fs');
-var readFolderRecursive = require("./readFolderRecursive");
+var readFolderRecursive = require("./walkFolderStatsRecursive");
 
 module.exports = function(file_path , options , callback){
   var self = this ;
