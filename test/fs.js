@@ -13,7 +13,6 @@ var filemtimeSync = require('../fs/filemtimeSync')
 var filesizeSync = require('../fs/filesizeSync')
 var tmppath = require('../fs/tmppath')
 var getFolderSize = require('../fs/getFolderSize')
-var clearFolderRecursive = require("../fs/clearFolderRecursive")
 
 var guid = require('mout/random/guid')
 
@@ -140,81 +139,7 @@ describe("FS functions", function(){
     });
 
 
-    it("should clear cache with time", function(done){
-      var root = "trashme";
 
-      var size = 0 ;
-      for (var i = 0; i < 3; i++) {
-        var dir = path.join(root, "first", guid().split('-').join('/'));
-        mkdirpSync(dir);
-        for (var j = 0; j < 3; j++) {
-          var filepath = dir + '/' + guid();
-          fs.writeFileSync(filepath, guid());
-        }
-      }
-
-      setTimeout(function(){
-        for (var i = 0; i < 3; i++) {
-          var dir = path.join(root, "second", guid().split('-').join('/'));
-          mkdirpSync(dir);
-          for (var j = 0; j < 3; j++) {
-            var filepath = dir + '/' + guid();
-            fs.writeFileSync(filepath, guid());
-            size += filesizeSync(filepath);
-          }
-        }
-
-        var options = {max_age : 500}
-
-        clearFolderRecursive(root, options, function(){
-          getFolderSize(root +"/first", function(err , foldersizea){
-            expect(foldersizea).to.be(0);
-            getFolderSize(root + "/second", function(err , foldersizeb){
-              expect(foldersizeb).to.be(size);
-              deleteFolderRecursive(root);
-              done();
-            })
-          })
-        })
-      }, 1200)
-
-    });
-
-    it("should clear cache with size", function(done){
-      var root = "trashme";
-
-      for (var i = 0; i < 3; i++) {
-        var dir = path.join(root, "first", guid().split('-').join('/'));
-        mkdirpSync(dir);
-        for (var j = 0; j < 3; j++) {
-          var filepath = dir + '/' + guid();
-          fs.writeFileSync(filepath, guid());
-        }
-      }
-
-      var size = 0;
-      var dir = path.join(root, "second", guid().split('-').join('/'));
-      mkdirpSync(dir);
-      while(size < 2000){
-        var filepath = dir + '/' + guid();
-        fs.writeFileSync(filepath, guid());
-        size += filesizeSync(filepath);
-      }
-
-      var options = {max_size : 2000}
-
-      clearFolderRecursive(root, options, function(){
-        getFolderSize(root +"/first", function(err , foldersizea){
-          expect(foldersizea).to.be(0);
-          getFolderSize(root + "/second", function(err , foldersizeb){
-            expect(foldersizeb).to.be(size);
-            deleteFolderRecursive(root);
-            done();
-          })
-        })
-      })
-
-    });
 
 
     it("should test tmppath stress", function(){
