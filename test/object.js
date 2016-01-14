@@ -4,6 +4,7 @@ var expect =  require('expect.js')
 var combine  = require('../object/combine')
 var mask     = require('../object/mask')
 var jsonpath = require('../object/jsonpath')
+var indexOf = require('../object/indexOf')
 
 
 //i feel a little sorry for that
@@ -19,6 +20,15 @@ describe("object functions", function(){
           "italy"  : "pizza",
           "usa"    : "hamburger",
         });
+    });
+
+
+
+    it("should test indexOf", function(){
+        var keys = ["france", "italy", "usa"];
+        var values=  ["baguette", "pizza", "hamburger"];
+        expect( indexOf(combine(keys, values), "pizza" )).to.eql("italy");
+        expect( indexOf(combine(keys, values), "melon" )).to.eql(null);
     });
 
     it("should return empty object", function(){

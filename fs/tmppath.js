@@ -11,7 +11,6 @@ var filesToDelete = [];
 function deleteOnExit(file_path) {
 
   if (!exitListenerAttached) {
-    console.log("Registering for cleanup");
     process.on('exit', cleanupFilesSync);
     process.on('fsgc', cleanupFilesSync); //force cleanup
       //makes sure exit is called event on sigint \o/
