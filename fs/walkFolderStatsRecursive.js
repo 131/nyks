@@ -10,7 +10,10 @@ var diff    = require('mout/date/diff')
 var readStatRecursive = function(dir, done, cb) {
   var results = [];
   fs.readdir(dir, function(err, list) {
-    if (err) return done(err);
+    /* istanbul ignore if  */
+    if (err)
+      return done(err);
+
     var i = 0;
     (function next() {
       var file = list[i++];
