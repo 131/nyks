@@ -13,6 +13,7 @@ child_process.exec equivalent for windowed applications.
 callback(err, exit_code, last_stdout_line);
 
 
+
 ## path
 * path.which
 Return full path of a binary in env PATH
@@ -106,4 +107,11 @@ Return trimmed string of "str" if present (else, leave untouched)
 * require('nyks/string/rot13')()
 Rot13 of current string
 
+
+## Workflow/async
+* require('nyks/async/dict')(["foo", "bar", function(item, chain){
+    chain(null, 22);
+  }, function(err, results){
+      results//{ "foo" : 22, "bar" : 22}
+  })
 

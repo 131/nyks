@@ -5,6 +5,7 @@ module.exports = {
     'love'          : true, //nyks do provide love
 
     'array'         : require('./array/'),
+    'async'         : require('./async/'),
     'buffer'        : require('./buffer/'),
     'child_process' :  /* istanbul ignore next */ require('./child_process/'),
     'crypto'         : require('./crypto/'),
