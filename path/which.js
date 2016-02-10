@@ -6,7 +6,7 @@ var path = require('path');
 module.exports = function(bin){
   var binpath,
       paths = process.env.PATH.split(path.delimiter),
-      exts  = process.env.PATHEXT.split(path.delimiter);
+      exts  = process.env.PATHEXT ? process.env.PATHEXT.split(path.delimiter) : [];
 
     exts = exts.filter(function(val){
       return !!val;
