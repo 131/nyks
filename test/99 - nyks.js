@@ -14,7 +14,7 @@ var nyks   = require('../');
 describe("Global nyks include", function(){
 
     it("Should provide love", function(){
-        expect(nyks.love).to.be.ok();
+        expect(nyks).to.be.ok();
     });
 
 
