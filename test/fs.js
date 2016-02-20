@@ -13,12 +13,26 @@ var filemtimeSync = require('../fs/filemtimeSync')
 var filesizeSync = require('../fs/filesizeSync')
 var tmppath = require('../fs/tmppath')
 var getFolderSize = require('../fs/getFolderSize')
+var copyFile = require('../fs/copyFile')
 
 var guid = require('mout/random/guid')
 
 
 describe("FS functions", function(){
 
+
+    it("should test copyFile", function(done){
+      var dst  = tmppath("too");
+      var from = fs.readFileSync(__filename), challenge;
+
+      copyFile(__filename, dst, function(err) {
+        expect(err).not.to.be.ok();
+        challenge = fs.readFileSync(dst);
+        expect(""+challenge).to.equal(""+from);
+        fs.unlinkSync(dst);
+        done();
+      });
+    });
 
     it("should test mkdirpSync/deleteFolderRecursive", function(){
       var root = "trashme", dir = path.join(root, "this is/a/dir"), file = path.join(dir,"foo");
