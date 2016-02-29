@@ -10,6 +10,7 @@ var crc32 = require('../string/crc32')
 var chunk = require('../string/chunk')
 var sprintf = require('../string/sprintf');
 var hexToRgb = require('../string/hexToRgb');
+var repeat = require('../string/repeat');
 
 
 
@@ -26,6 +27,13 @@ describe("strings functions", function(){
         expect(replaces(str, data)).to.be(challenge);
         expect(replaces(str, {})).to.be(str);
         expect(replaces(str + str, data)).to.be(challenge + str);
+    });
+
+    it("should test repeat", function(){
+        var str = "abc";
+        var challenge = "abcabcabc";
+        expect(repeat(str, 3)).to.be(challenge);
+        expect(repeat("", 9)).to.be("");
     });
 
     it("should test rreplaces", function(){
