@@ -1,10 +1,10 @@
 "use strict";
-var async = require('async');
+var mapLimit = require('async/mapLimit');
 
 
 module.exports = function(keys, tasks, iterator, chain){
   var out = {}, errs = [];
-  async.mapLimit(keys, tasks, function(item, chain) {
+  mapLimit(keys, tasks, function(item, chain) {
     iterator(item, function(err, result) {
       out[item] = err ? null : result;
       if(err) errs.push(err);

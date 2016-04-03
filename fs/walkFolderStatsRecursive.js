@@ -1,7 +1,7 @@
 "use strict";
 var fs      = require('fs');
 var path    = require('path');
-var async   = require('async');
+var queue   = require('async/queue');
 var forEach = require('mout/array/forEach');
 var debounce= require('mout/function/debounce');
 var diff    = require('mout/date/diff')
@@ -40,7 +40,7 @@ var readStatRecursive = function(dir, done, cb) {
 
 
 module.exports = function(dir_path, taskcb, endcb){
-  var queue = async.queue(function(stat, cb){
+  var q = queue(function(stat, cb){
       if(stat)
         taskcb(stat);
       cb();
@@ -50,13 +50,13 @@ module.exports = function(dir_path, taskcb, endcb){
   readStatRecursive(dir_path ,
    function(err){
      done = true ;
-     queue.push(null);
+     q.push(null);
    },
    function(err , stats){
-    queue.push(stats)
+    q.push(stats)
   })
 
-  queue.drain = function(){
+  q.drain = function(){
     if(done)
       endcb();
   }
