@@ -1,10 +1,11 @@
 "use strict";
 
-var expect =  require('expect.js')
+var expect   =  require('expect.js')
 var combine  = require('../object/combine')
 var mask     = require('../object/mask')
 var jsonpath = require('../object/jsonpath')
-var indexOf = require('../object/indexOf')
+var indexOf  = require('../object/indexOf')
+var sort     = require('../object/sort')
 
 
 //i feel a little sorry for that
@@ -12,13 +13,15 @@ var indexOf = require('../object/indexOf')
 
 describe("object functions", function(){
 
-    it("should test combine", function(){
-        var keys = ["france", "italy", "usa"];
-        var values=  ["baguette", "pizza", "hamburger"];
-        expect(combine(keys, values)).to.eql({
+    it("should test sort", function(){
+        var keys = {
           "france" : "baguette",
           "italy"  : "pizza",
           "usa"    : "hamburger",
+        };
+        expect(sort(keys, ["france", "italy"])).to.eql({
+          "france" : "baguette",
+          "italy"  : "pizza",
         });
     });
 
