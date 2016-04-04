@@ -31,8 +31,6 @@ var request = function(/*target, [data,], chain */ ){
     var cookie = query.headers.cookie || "";
     cookie += ";" + mask(pluck(query.jar, "value"), '%s="%s"', "; ");
     query.headers.cookie = cookie;
-
-    console.log(query.headers.cookie);
   }
 
   if(data && typeof data != "string")
@@ -40,17 +38,15 @@ var request = function(/*target, [data,], chain */ ){
 
 
 
-  if(query.params) {
+  if(query.qs) {
     var i = query.path.indexOf('?'), params = {};
     if(i !== -1) {
       params = qs.parse(query.path.substr(i+1));
       query.path = substr(i);
     }
 
-    query.params = merge(params, query.params);
-    query.path += "?" + qs.stringify(query.params);
-
-    console.log(query.path);
+    query.qs = merge(params, query.qs);
+    query.path += "?" + qs.stringify(query.qs);
   }
 
   if(data) merge(query, {
