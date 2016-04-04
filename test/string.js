@@ -11,11 +11,20 @@ var chunk = require('../string/chunk')
 var sprintf = require('../string/sprintf');
 var hexToRgb = require('../string/hexToRgb');
 var repeat = require('../string/repeat');
+var truncate = require('../string/truncate');
 
 
 
 
 describe("strings functions", function(){
+
+    it("should test truncate", function(){
+        expect(truncate("1234578", "8")).to.be("1234578");
+        expect(truncate("1234578", "5")).to.be("1234…");
+        expect(truncate("1234578", "5", "...")).to.be("12...");
+    });
+
+
 
     it("should test replaces", function(){
         var str = "You know &what;, &who;";
