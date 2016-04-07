@@ -1,8 +1,8 @@
 "use strict";
 
-var sprintf = require('../string/sprintf');
-var repeat  = require('mout/string/repeat');
-var crop    = require('mout/string/crop');
+var sprintf  = require('../string/sprintf');
+var repeat   = require('mout/string/repeat');
+var truncate = require('nyks/string/truncate');
 
 var LF = "\n";
 var COLS       = 76;
@@ -31,19 +31,21 @@ var output = function(line){
 }
 
 
-var box = function(title, msg){
+var box = function(/*[title, msg]*/){
   var args = [].slice.call(arguments);
+
   var dotrim = true, pad_len = COLS;
 
   for(var msg, a=1 ; a < args.length ; a+=2) {
     msg = args[a];
     if(typeof msg !== "string")
-        msg = JSON.stringify(msg);
+        msg = JSON.stringify(msg, null, 2);
     
-    msg = msg.trim().replace("	", "    ").split(/\r?\n/);
+    msg = msg.trim().replace("	", "    ").split(/\r?\n/);//use 4 tab indent
+
     msg.forEach(function(tmp_line, i) {
       if(dotrim)
-        msg[i] = crop(tmp_line,  COLS, "…");
+        msg[i] = truncate(tmp_line,  COLS);
       //msg[i] = preg_replace('#&[^;]*?#m','…',);
       pad_len = Math.max(pad_len, msg[i].length + 2); //2 chars enclosure
     })
