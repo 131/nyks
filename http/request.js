@@ -54,8 +54,12 @@ var request = function(/*target, [data,], chain */ ){
       'content-length' : Buffer.byteLength(data),
   });
 
-  var req = https.request(query, function(res){
-    var shouldBuffer = !! query.json;
+
+  var transport = query.protocol == 'https:' ? https : http;
+
+
+  var req = transport.request(query, function(res){
+    var shouldBuffer = query.json || startsWith(res.headers["content-type"], "application/json");
 
     if(!shouldBuffer)
       return chain(null, res);
