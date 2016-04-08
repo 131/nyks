@@ -15,13 +15,14 @@ var truncate = require('../string/truncate');
 
 
 
-
 describe("strings functions", function(){
 
     it("should test truncate", function(){
-        expect(truncate("1234578", "8")).to.be("1234578");
-        expect(truncate("1234578", "5")).to.be("1234…");
-        expect(truncate("1234578", "5", "...")).to.be("12...");
+        expect(truncate("123456789ABC")).to.be("123456789…"); //default to 10..
+        expect(truncate("123456789", "8")).to.be("1234567…");
+        expect(truncate("12345678", "5")).to.be("1234…");
+        expect(truncate("12345678", "20")).to.be("12345678");
+        expect(truncate("12345678", "5", "...")).to.be("12...");
     });
 
 

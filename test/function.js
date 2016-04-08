@@ -3,6 +3,7 @@
 var expect = require('expect.js')
 var once   = require('../function/once')
 var detach = require('../function/detach')
+var unary  = require('../function/unary')
 
 
 describe("Testing functions helpers", function(){
@@ -20,6 +21,17 @@ describe("Testing functions helpers", function(){
 
 
     });
+
+    it("should test unary", function(){
+
+        var f = function(){ return arguments.length },
+            g = unary(f);
+
+        expect(f(1,2)).to.be(2);
+        expect(g(1,2)).to.be(1);
+
+    });
+
 
 
     it("should test detach", function(chain){
