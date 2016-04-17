@@ -6,7 +6,6 @@ var stripEnd = require('../string/stripEnd')
 var replaces = require('../string/replaces')
 var rreplaces = require('../string/rreplaces')
 var rot13 = require('../string/rot13')
-var crc32 = require('../string/crc32')
 var chunk = require('../string/chunk')
 var sprintf = require('../string/sprintf');
 var hexToRgb = require('../string/hexToRgb');
@@ -19,10 +18,11 @@ describe("strings functions", function(){
 
     it("should test truncate", function(){
         expect(truncate("123456789ABC")).to.be("123456789…"); //default to 10..
-        expect(truncate("123456789", "8")).to.be("1234567…");
-        expect(truncate("12345678", "5")).to.be("1234…");
-        expect(truncate("12345678", "20")).to.be("12345678");
-        expect(truncate("12345678", "5", "...")).to.be("12...");
+        expect(truncate("123456789", 8)).to.be("1234567…");
+        expect(truncate("12345678", 5)).to.be("1234…");
+        expect(truncate("12345678", 20)).to.be("12345678");
+        expect(truncate("12345678", 5, "...")).to.be("12...");
+        expect(truncate("12345678", -6, "[..]")).to.be("[..]78");
     });
 
 
@@ -104,9 +104,6 @@ describe("strings functions", function(){
 
 
 
-  it("should test crc32", function(){
-    expect(crc32("foobar")).to.be(-1628037227);
-  });
 
   it("should test hexToRgb", function() {
     expect(hexToRgb('#FF0000')).to.eql(['FF', '00', '00']);
