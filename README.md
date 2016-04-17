@@ -1,33 +1,36 @@
-nyks provide a set of "missing" stuffs in nodejs basic api.
-All those functions will eventually end up in the official API :-).
+# Motivation
+
+nyks provide a set of complentary modules nodejs basic api.
+
+Module are exported in a standard common JS module format and written in pure ES5 strict format. (no transpilation required nor used), just use browserify if you need nyks module in a browser environnement (no fancy / smart context detection from me, juste plain module).
+
+
+Module complete moutjs spirit with (mostly) nodejs specifics patterns.
+
+
 
 
 # Natives
 
 ## child_process
-* require('child_process').exec_window(cmd, args, callback);
-child_process.exec equivalent for windowed applications.
+* require('nyks/child_process/exec')(cmd, options, callback);
+child_process.exec equivalent with sane API for arguments.
 
-* require('child_process').passthru(cmd, args, callback);
-* require('child_process').passthru(cmd, {args:args,env:env}, callback);
-callback(err, exit_code, last_stdout_line);
-
+* require('nyks/child_process/passthru')(cmd, args, callback);
+Like exec, but with stdout & stderr bound to current process IO streams.
 
 
 ## path
-* path.which
-Return full path of a binary in env PATH
-* path.extend_PATH(path[,path2, ..]);
-Extend system PATH with new directory
+* require('nyks/path/which'(bin)
+Search for a binary in env PATH
 
-## util
-* require('util').md5(string)
-Return a hex encoded md5 hash
-
+* require('nyks/path/extend')( path[,path2, ..]);
+Extend system PATH with new directories
 
 ## process
-* require('nyks/process/parseArgs')(process.argv.splice(2))
+* require('nyks/process/parseArgs')([process.argv.splice(2)])
 Command line args parser, aligned on yks patterns
+
 * require('nyks/process/splitArgs')("some string 'with escaped' content")
 Split a string into whitespace separated chunks
 
@@ -52,8 +55,6 @@ Return a unique file path in OS temp dir
 * require('nyks/fs/getFolderSize')(path)
 Return a folder Size
 
-* require('nyks/fs/clearFolderReccurcive')(path , options , callback)  // options {file_to_keep:[] , size_to_delete:number(octet) , max_size:number(octet)  , max_time:number(millisecond) }
-delete files in folder (you can delete the files created before max_time or and delete with size options)
 
 
 # Crypto
@@ -85,14 +86,6 @@ Return -1 if not found
 
 * require('nyks/string/chunk')(basestr, chunksize)
 Split a string into chunk of specified size.
-
-
-* require('nyks/string/startsWith')(str)
-Return boolean
-
-* require('nyks/string/endsWith')(str)
-Return boolean
-
 
 * require('nyks/string/replaces')(dict)
 Replace key => value in current string

@@ -6,6 +6,7 @@ var stripEnd = require('../string/stripEnd')
 var replaces = require('../string/replaces')
 var rreplaces = require('../string/rreplaces')
 var rot13 = require('../string/rot13')
+var crc32 = require('../string/crc32')
 var chunk = require('../string/chunk')
 var sprintf = require('../string/sprintf');
 var hexToRgb = require('../string/hexToRgb');
@@ -104,6 +105,10 @@ describe("strings functions", function(){
 
 
 
+  it("should test crc32", function(){
+    expect(crc32("foobar")).to.be(-1628037227);
+    expect(crc32("café")).to.be(-1733475659);
+  });
 
   it("should test hexToRgb", function() {
     expect(hexToRgb('#FF0000')).to.eql(['FF', '00', '00']);
