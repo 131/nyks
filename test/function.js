@@ -1,9 +1,10 @@
 "use strict";
 
-var expect = require('expect.js')
-var once   = require('../function/once')
-var detach = require('../function/detach')
-var unary  = require('../function/unary')
+var expect = require('expect.js');
+var once   = require('../function/once');
+var detach = require('../function/detach');
+var unary  = require('../function/unary');
+var promisify  = require('../function/promisify');
 
 
 describe("Testing functions helpers", function(){
@@ -48,8 +49,33 @@ describe("Testing functions helpers", function(){
           expect(b).to.be(3);
           chain();
         }, 100);
-
     });
+    
+    it("should test promisify with no err", function(done){
+      var sayHello = function(str, err, cb) {
+        setTimeout(function(){
+          cb(err, "Hello " + str)
+        })
+      };
+      
+      var fn = promisify(sayHello);
+      fn("world" , null)
+      .catch(function(err){
+        expect(false).to.be(true);
+      })
+      .then(function(val) {
+        expect(val).to.be.equal("Hello world");
+        fn("world" , "error")
+        .catch(function(err){
+          expect(err).to.be("error");
+          done();
+        })
+        .then(function(val) {
+          expect(false).to.be.equal(true);
+        })
+      });
+    });
+    
 
 
 
