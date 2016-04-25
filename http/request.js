@@ -21,7 +21,9 @@ var request = function(/*target, [data,], chain */ ){
       data   = args.shift() || null;
 
   var query = typeof target == "string" ? url.parse(target) : target;
-  var method = data ? 'POST' : 'GET';
+
+  if(!query.method)
+      query.method =  data ? 'POST' : 'GET';
 
   //Cookie:X-APPLE-WEB-KB-ASPCOB8QBWQ1JVMLAKEOFWELBME="v=1:t=AQAAAABWzO-1XtFLiXxOmZG3SlR66fcav3ExgY4~";
   if(!query.headers)
@@ -50,7 +52,6 @@ var request = function(/*target, [data,], chain */ ){
   }
 
   if(data) merge(query, {
-      method : 'POST',
       'content-length' : Buffer.byteLength(data),
   });
 
