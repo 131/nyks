@@ -10,18 +10,19 @@ function writeBits(target, source, bitoffset, sourcebitLength){
     sourcebitLength = source.length << 3;
 
   if(!sourcebitLength)
-    return target;
+    return 0;
 
   var soucebitStart = sourcebitLength < 0 ? (source.length<<3) + sourcebitLength : 0,
-      sourcebitLength  = Math.abs(sourcebitLength),
-      sourceBitEnd  = soucebitStart + sourcebitLength - 1;
+      sourcebitLength  = Math.min(Math.abs(sourcebitLength), (target.length <<3) - bitoffset),
+      sourceBitEnd  = soucebitStart +  sourcebitLength - 1;
+
 
   for(var v, i = soucebitStart, j=bitoffset; i<= sourceBitEnd; i++, j++)
     if(source[i>>3] & pow2[7-i%8])
       target[j>>3]    |= pow2[7-j%8];
     else target[j>>3] &= neg[j%8];
 
-  return target;
+  return sourcebitLength;
 }
 
 

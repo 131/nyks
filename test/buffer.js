@@ -15,13 +15,33 @@ function trace(buf){
 describe("Buffer writeBits", function(){
   it("should test writeBits", function(){
      // TOUS LES OFFSETS SONT INCLUSIFS (taille mini 1) (offsetEnd = offsetStart + length - 1)
-    expect(writeBits(Buffer([1]), Buffer(0), 1)).to.eql(Buffer([1]));// 01100000
-    expect(writeBits(Buffer([0]), Buffer([255]), 1)).to.eql(Buffer([127]));// 01100000
+    var tmp;
 
-    expect(writeBits(Buffer([0]), Buffer([255]), 1, 2)).to.eql(Buffer([96]));// 01100000
-    expect(writeBits(Buffer([0, 195]), fromInt(3), 11, -2)).to.eql(Buffer([0, 219]));
-    expect(writeBits(Buffer([0,0,0, 195]), fromInt(3), 27, -2)).to.eql(Buffer([0,0,0, 219]));
-    expect(writeBits(Buffer([0]), Buffer([192]), 0, 2)).to.eql(Buffer([192]));
+    tmp = Buffer([1]);
+    expect(writeBits(tmp, Buffer(0), 1)).to.eql(0);// 01100000
+    expect(tmp).to.eql(Buffer([1]));
+
+    tmp = Buffer([0]);
+    expect(writeBits(tmp, Buffer([255]), 1)).to.eql(7);// 01100000
+    expect(tmp).to.eql(Buffer([127]) );
+
+    tmp = Buffer([0]);
+    expect(writeBits(tmp, Buffer([255]), 1, 2)).to.eql(2);// 01100000
+    expect(tmp).to.eql(Buffer([96]));
+
+
+    tmp = Buffer([0, 195]);
+    expect(writeBits(tmp, fromInt(3), 11, -2)).to.eql(2);
+    expect(tmp).to.eql( Buffer([0, 219]) );
+
+
+    tmp = Buffer([0,0,0, 195]);
+    expect(writeBits(tmp, fromInt(3), 27, -2)).to.eql(2);
+    expect(tmp).to.eql(Buffer([0,0,0, 219]));
+
+    tmp = Buffer([0]);
+    expect(writeBits(tmp, Buffer([192]), 0, 2)).to.eql(2);
+    expect(tmp).to.eql(Buffer([192]));
 
     // [195] 11000011
     // [219] 11011011 (write 3 at 4)
@@ -29,7 +49,10 @@ describe("Buffer writeBits", function(){
 
     // [129, 5, 39] 10000001 00000101 00100111
     // [129, 5, 39] 10001000 10000101 00100111  (write 17 at 4)
-    expect(writeBits(Buffer([129,5,39]), fromInt(17), 4, -5)).to.eql(Buffer([136,133,39]));
+    tmp = Buffer([129,5,39]);
+    expect(writeBits(tmp, fromInt(17), 4, -5)).to.eql(5);
+    expect(tmp).to.eql(Buffer([136,133,39]));
+
   });
 });
 
