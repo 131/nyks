@@ -6,7 +6,7 @@ var neg  = [127, 191, 223, 239, 247, 251, 253, 254]; //xor
 
 
 function writeBits(target, source, bitoffset, sourcebitLength){
-  if(!sourcebitLength)
+  if(sourcebitLength === undefined)
     sourcebitLength = source.length << 3;
 
   if(!sourcebitLength)

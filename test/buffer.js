@@ -4,6 +4,7 @@ var expect = require('expect.js')
 var indexOf = require('../buffer/indexOf')
 var writeBits = require('../buffer/writeBits');
 var fromInt   = require('../buffer/fromInt');
+var readUInt   = require('../buffer/readUInt');
 
 
 function trace(buf){
@@ -13,6 +14,17 @@ function trace(buf){
 
 
 describe("Buffer writeBits", function(){
+
+  it("should test readUInt", function(){
+    expect(readUInt(fromInt(1024))).to.eql(1024);
+    expect(readUInt(fromInt(3), -2)).to.eql(3);
+    expect(readUInt(new Buffer([192]), 0, 2)).to.eql(3);
+    expect(readUInt(new Buffer([255]), 0, 0)).to.eql(0);
+    expect(readUInt(new Buffer([255, 24, 255]), 11, 2)).to.eql(3);
+  });
+
+
+
   it("should test writeBits", function(){
      // TOUS LES OFFSETS SONT INCLUSIFS (taille mini 1) (offsetEnd = offsetStart + length - 1)
     var tmp;
