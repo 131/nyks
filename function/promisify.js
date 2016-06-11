@@ -4,8 +4,9 @@
  * Convert a node style fn to a promise
  */
 
-module.exports = function(fn) {
-  var ctx = this;
+module.exports = function(fn, ctx) {
+  if(ctx === undefined)
+      ctx = this;
   return function(){
     var args = [].slice.apply(arguments);
 
