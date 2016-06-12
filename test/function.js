@@ -57,6 +57,13 @@ describe("Testing functions helpers", function(){
           cb(err, "Hello " + str)
         })
       };
+
+      var sayHi = function(cb) { //bind that
+        var self = this;
+        setTimeout(function(){
+          cb(null, "Hi" + self.name)
+        })
+      };
       
       var fn = promisify(sayHello);
       fn("world" , null)
@@ -74,6 +81,14 @@ describe("Testing functions helpers", function(){
           expect(false).to.be.equal(true);
         })
       });
+
+
+      var fne = promisify(sayHi, {name:"Joe"});
+      fne()
+      .then(function(val) {
+        expect(val).to.be.equal("Hi Joe");
+        done();
+      })
     });
     
 

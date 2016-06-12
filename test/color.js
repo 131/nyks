@@ -1,8 +1,10 @@
 "use strict";
 
-var expect   = require('expect.js')
+var expect    = require('expect.js')
+
 var Int2RGBA  = require('../color/Int2RGBA')
 var RGBA2Int  = require('../color/RGBA2Int')
+var RGB2HTML  = require('../color/RGB2HTML')
 
 
 describe("Color functions", function(){
@@ -23,5 +25,14 @@ describe("Color functions", function(){
     expect(Int2RGBA(RGBA2Int(b))).to.eql(bf);
 
   });
+
+  it("Shoud test html encoder", function(){
+
+    var a = {r:255,g:0,b:255,a:12};
+    expect(RGB2HTML(a)).to.eql("#ff00ff");
+    expect(RGB2HTML([0,255,0])).to.eql("#00ff00");
+
+  });
+
 
 });
