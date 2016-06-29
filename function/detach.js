@@ -6,7 +6,8 @@ if(typeof process === 'object')
     return function() {
       var args = arguments;
       process.nextTick(function(){
-        return fn.apply(bind, args);
+        if(fn)
+          return fn.apply(bind, args);
       })
     };
   };
@@ -15,7 +16,8 @@ else
     return  function() {
       var args = arguments;
       setTimeout(function(){
-        return fn.apply(bind, args);
+        if(fn)
+          return fn.apply(bind, args);
       }, 0);
     };
   };
