@@ -37,6 +37,9 @@ describe("Testing functions helpers", function(){
 
     it("should test detach", function(chain){
         var a = 0, b = 0 , c = function(i){ b+= i; }, d = detach(c);
+        var foo = detach();
+        foo(); // this is useless..., but do not crash
+
 
         c(1);
         expect(b).to.be(1);
