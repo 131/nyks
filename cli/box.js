@@ -33,6 +33,8 @@ var output = function(line){
 
 var box = function(/*[title, msg]*/){
   var args = [].slice.call(arguments);
+  if(!args.length)
+    return;
 
   var dotrim = true, pad_len = COLS;
 
