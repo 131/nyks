@@ -4,12 +4,13 @@ var cp = require('child_process');
 
   //callback(err, exit, lastline);
 module.exports = function(cmd, options, chain){
-    if(Array.isArray(options))
-      options = { args : options} ;
-    options = options || {};
+  if(Array.isArray(options))
+    options = { args : options} ;
 
-  var ps   = cp.spawn(cmd, options.args || [], options),
-      _ret = "";
+  options = options || {};
+  options.stdio = ['inherit', 'inherit', 'inherit'];
+
+  var ps   = cp.spawn(cmd, options.args || [], options);
 
   ps.on('error', function(err){
     ps.removeAllListeners('close');
@@ -17,14 +18,9 @@ module.exports = function(cmd, options, chain){
       return chain(err, exit);
     });
   });
-  ps.stdout.pipe(process.stdout);
-  ps.stderr.pipe(process.stderr);
-  ps.stdout.on("data", function(data){
-    _ret = data.toString();
-  });
 
   ps.on('close', function(exit) {
-    return chain(null, exit, _ret);
+    return chain(null, exit);
   });
 }
 
