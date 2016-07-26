@@ -34,6 +34,9 @@ Command line args parser, aligned on yks patterns
 * require('nyks/process/splitArgs')("some string 'with escaped' content")
 Split a string into whitespace separated chunks
 
+## stream
+* require('nyks/stream/fromBuffer')(buffer)
+Return a readable stream from a buffer
 
 
 ## fs
@@ -54,6 +57,7 @@ Return a unique file path in OS temp dir
 
 * require('nyks/fs/getFolderSize')(path)
 Return a folder Size
+
 
 
 
