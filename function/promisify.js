@@ -7,7 +7,7 @@
 module.exports = function(fn, ctx) {
   if(ctx === undefined)
       ctx = this;
-  return function(){
+  return function() {
     var args = [].slice.apply(arguments);
 
     return new Promise(function (resolve, reject) {
