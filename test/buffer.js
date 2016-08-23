@@ -2,9 +2,10 @@
 
 var expect = require('expect.js')
 var indexOf = require('../buffer/indexOf')
-var writeBits = require('../buffer/writeBits');
-var fromInt   = require('../buffer/fromInt');
+var writeBits  = require('../buffer/writeBits');
+var fromInt    = require('../buffer/fromInt');
 var readUInt   = require('../buffer/readUInt');
+var fromASCII  = require('../buffer/fromASCII');
 
 
 function trace(buf){
@@ -22,6 +23,12 @@ describe("Buffer writeBits", function(){
     expect(readUInt(new Buffer([255]), 0, 0)).to.eql(0);
     expect(readUInt(new Buffer([255, 24, 255]), 11, 2)).to.eql(3);
   });
+
+  it("should test fromASCII", function(){
+    var body = "ABCD";
+    expect(fromASCII(body)).to.eql([65, 66, 67, 68]);
+  });
+
 
 
 
