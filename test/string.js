@@ -1,18 +1,18 @@
 "use strict";
 
-var expect = require('expect.js')
-var stripStart = require('../string/stripStart')
-var stripEnd = require('../string/stripEnd')
-var replaces = require('../string/replaces')
-var rreplaces = require('../string/rreplaces')
-var rot13 = require('../string/rot13')
-var crc32 = require('../string/crc32')
-var chunk = require('../string/chunk')
-var sprintf = require('../string/sprintf');
-var hexToRgb = require('../string/hexToRgb');
-var repeat = require('../string/repeat');
-var truncate = require('../string/truncate');
+const expect     = require('expect.js');
 
+const stripStart = require('../string/stripStart')
+const stripEnd   = require('../string/stripEnd')
+const replaces   = require('../string/replaces')
+const rreplaces  = require('../string/rreplaces')
+const rot13      = require('../string/rot13')
+const crc32      = require('../string/crc32')
+const chunk      = require('../string/chunk')
+const hexToRgb   = require('../string/hexToRgb');
+const repeat     = require('../string/repeat');
+const truncate   = require('../string/truncate');
+const sprintf    = require('../string/format');
 
 
 describe("strings functions", function(){
@@ -26,6 +26,18 @@ describe("strings functions", function(){
         expect(truncate("12345678", -6, "[..]")).to.be("[..]78");
     });
 
+
+    it("should test sprintf", function() {
+        expect(sprintf("%%")).to.eql("%");
+        expect(sprintf("%d", 2)).to.eql("2");
+        expect(sprintf("%d", -2)).to.eql("-2");
+        expect(sprintf("%d %s", -2)).to.eql("-2 %s");
+        var o = {go:42};
+        expect(sprintf("%j", o)).to.eql('{"go":42}');
+        o.o = o;
+        expect(sprintf("-%j-", o)).to.eql('-[Circular]-');
+        expect(sprintf("-%u ok", 42)).to.eql("-%u ok");
+    })
 
 
     it("should test replaces", function(){

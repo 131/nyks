@@ -1,6 +1,6 @@
 "use strict";
 
-var sprintf  = require('../string/sprintf');
+var sprintf  = require('../string/format');
 var repeat   = require('mout/string/repeat');
 var truncate = require('nyks/string/truncate');
 
