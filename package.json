@@ -12,9 +12,10 @@
     "mout": "^1.0.0"
   },
   "devDependencies": {
+    "co": "^4.6.0",
     "expect.js": "^0.3.1",
-    "mocha": "^2.2.5",
-    "istanbul": "~0.3.18"
+    "istanbul": "~0.3.18",
+    "mocha": "^2.2.5"
   },
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
