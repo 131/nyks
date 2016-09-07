@@ -11,6 +11,11 @@ module.exports = function() {
   defer.resolve = function(body){ thisresolve(body); };
   defer.reject  = function(err){ thisreject(err); };
 
+  defer.chain   = function(err, body){
+    if(err)
+      return defer.reject(err);
+    return defer.resolve(body)
+  }
 
   return defer;
 }
