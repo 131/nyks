@@ -112,3 +112,8 @@ Rot13 of current string
       results//{ "foo" : 22, "bar" : 22}
   })
 
+
+# Notes
+
+[![Build Status](https://travis-ci.org/131/cnyks.svg?branch=master)](https://travis-ci.org/131/cnyks)
+[![Coverage Status](https://coveralls.io/repos/github/131/nyks/badge.svg?branch=master)](https://coveralls.io/github/131/nyks?branch=master)
