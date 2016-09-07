@@ -115,5 +115,5 @@ Rot13 of current string
 
 # Notes
 
-[![Build Status](https://travis-ci.org/131/cnyks.svg?branch=master)](https://travis-ci.org/131/cnyks)
+[![Build Status](https://travis-ci.org/131/nyks.svg?branch=master)](https://travis-ci.org/131/nyks)
 [![Coverage Status](https://coveralls.io/repos/github/131/nyks/badge.svg?branch=master)](https://coveralls.io/github/131/nyks?branch=master)
