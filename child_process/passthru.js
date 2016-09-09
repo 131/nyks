@@ -20,7 +20,10 @@ module.exports = function(cmd, options, chain){
   });
 
   ps.on('close', function(exit) {
-    return chain(null, exit);
+    var err = null;
+    if(exit !== 0)
+      err = "Bad exit code " + exit;
+    return chain(err, exit);
   });
 }
 
