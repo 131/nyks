@@ -26,15 +26,14 @@ var pad = function(str, pad, mode, mask, pad_len){
       repeat(pad, Math.max(left, 0)) + str + repeat(pad, Math.max(pad_len - left, 0)));
 }
 
-var output = function(line){
-  process.stderr.write(line);
-}
 
 
-var box = function(/*[title, msg]*/){
+var box = function(/*[title, msg]*/) {
   var args = [].slice.call(arguments);
+  var resp = "";
+
   if(!args.length)
-    return;
+    return resp;
 
   var dotrim = true, pad_len = COLS;
 
@@ -56,12 +55,14 @@ var box = function(/*[title, msg]*/){
 
 
   for(var a=0; a < args.length; a+=2) {
-    output( pad(" "+args[a]+" ", "═", STR_PAD_BOTH, a ? "╠%s╣":"╔%s╗", pad_len) + LF );
+    resp += pad(" "+args[a]+" ", "═", STR_PAD_BOTH, a ? "╠%s╣":"╔%s╗", pad_len) + LF;
     args[a+1].forEach(function(line) {
-      output( pad(line, " ", STR_PAD_RIGHT, "║%s║", pad_len) + LF);
+      resp += pad(line, " ", STR_PAD_RIGHT, "║%s║", pad_len) + LF;
     });
   }
-  output( pad('', "═", STR_PAD_BOTH, "╚%s╝", pad_len) + LF );
+  resp += pad('', "═", STR_PAD_BOTH, "╚%s╝", pad_len) + LF;
+
+  return resp;
 }
 
 

@@ -105,12 +105,6 @@ Return trimmed string of "str" if present (else, leave untouched)
 Rot13 of current string
 
 
-## Workflow/async
-* require('nyks/async/dict')(["foo", "bar", function(item, chain){
-    chain(null, 22);
-  }, function(err, results){
-      results//{ "foo" : 22, "bar" : 22}
-  })
 
 
 # Notes

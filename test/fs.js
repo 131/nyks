@@ -12,7 +12,6 @@ var isDirectorySync = require('../fs/isDirectorySync')
 var filemtimeSync = require('../fs/filemtimeSync')
 var filesizeSync = require('../fs/filesizeSync')
 var tmppath = require('../fs/tmppath')
-var getFolderSize = require('../fs/getFolderSize')
 var copyFile = require('../fs/copyFile')
 
 var guid = require('mout/random/guid')
@@ -131,28 +130,6 @@ describe("FS functions", function(){
       expect(fs.existsSync(tpath3)).to.be.ok();
       fs.unlinkSync(tpath3);
     });
-
-    it("should test folder size reccurcive", function(done){
-      var root = "trashme";
-      var size = 0 ;
-      for (var i = 0; i < 4; i++) {
-        var dir = path.join(root, guid().split('-').join('/'));
-        mkdirpSync(dir);
-        for (var j = 0; j < 4; j++) {
-          var filepath = dir + '/' + guid();
-          fs.writeFileSync(filepath, guid());
-          size += filesizeSync(filepath);
-        }
-      }
-
-      getFolderSize(root , function(err , foldersize){
-        expect(foldersize).to.be(size);
-        deleteFolderRecursive(root);
-        done();
-      })
-    });
-
-
 
 
 
