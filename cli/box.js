@@ -4,7 +4,7 @@ var sprintf  = require('../string/format');
 var repeat   = require('mout/string/repeat');
 var truncate = require('nyks/string/truncate');
 
-var LF = "\n";
+var CRLF = "\r\n";
 var COLS       = 76;
 var STR_PAD_LEFT  = "left";
 var STR_PAD_RIGHT = "right";
@@ -55,12 +55,12 @@ var box = function(/*[title, msg]*/) {
 
 
   for(var a=0; a < args.length; a+=2) {
-    resp += pad(" "+args[a]+" ", "═", STR_PAD_BOTH, a ? "╠%s╣":"╔%s╗", pad_len) + LF;
+    resp += pad(" "+args[a]+" ", "═", STR_PAD_BOTH, a ? "╠%s╣":"╔%s╗", pad_len) + CRLF;
     args[a+1].forEach(function(line) {
-      resp += pad(line, " ", STR_PAD_RIGHT, "║%s║", pad_len) + LF;
+      resp += pad(line, " ", STR_PAD_RIGHT, "║%s║", pad_len) + CRLF;
     });
   }
-  resp += pad('', "═", STR_PAD_BOTH, "╚%s╝", pad_len) + LF;
+  resp += pad('', "═", STR_PAD_BOTH, "╚%s╝", pad_len) + CRLF;
 
   return resp;
 }
