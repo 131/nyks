@@ -13,7 +13,7 @@ var STR_PAD_BOTH  = "both";
 
 
 var pad = function(str, pad, mode, mask, pad_len){
-  if(!pad_len) pad_len = COLS;
+  if(!pad_len) pad_len = box.COLS;
   if(!mask)    mask    = '%s';
   if(!pad)     pad     = '─';
   if(!mode)    mode    = STR_PAD_BOTH;
@@ -35,7 +35,7 @@ var box = function(/*[title, msg]*/) {
   if(!args.length)
     return resp;
 
-  var dotrim = true, pad_len = COLS;
+  var dotrim = true, pad_len = box.COLS;
 
   for(var msg, a=1 ; a < args.length ; a+=2) {
     msg = args[a];
@@ -46,7 +46,7 @@ var box = function(/*[title, msg]*/) {
 
     msg.forEach(function(tmp_line, i) {
       if(dotrim)
-        msg[i] = truncate(tmp_line,  COLS);
+        msg[i] = truncate(tmp_line,  box.COLS);
       //msg[i] = preg_replace('#&[^;]*?#m','…',);
       pad_len = Math.max(pad_len, msg[i].length + 2); //2 chars enclosure
     })
@@ -65,6 +65,6 @@ var box = function(/*[title, msg]*/) {
   return resp;
 }
 
-
+box.COLS = COLS;
 
 module.exports = box;
