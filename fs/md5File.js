@@ -1,14 +1,21 @@
 "use strict";
 
-var fs = require('fs'),
-  crypto = require('crypto');
+const fs = require('fs');
+const crypto = require('crypto');
 
+module.exports = function md5File (file_path, cb) {
+  if (typeof cb !== 'function')
+      throw new TypeError('Argument cb must be a function')
 
-module.exports = function (file_path, callback){
-  var shasum = crypto.createHash('md5');
-  var s = fs.ReadStream(file_path);
-  s.on('data', shasum.update.bind(shasum));
-  s.on('end', function() {
-    callback(null, shasum.digest('hex'));
-  });
+  var output = crypto.createHash('md5')
+  var input = fs.createReadStream(file_path)
+
+  input.on('error', cb)
+
+  output.once('readable', function () {
+    cb(null, output.read().toString('hex'))
+  })
+
+  input.pipe(output)
 }
+
