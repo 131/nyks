@@ -8,6 +8,7 @@ var use_buffer = typeof Buffer !== 'undefined';
 var use_in32   = typeof Int32Array !== 'undefined';
 
 
+/* istanbul ignore next */
 var table = (function() {
   var c = 0, table = new Array(256);
   for(var n =0; n != 256; ++n) {
@@ -29,6 +30,7 @@ var table = (function() {
 
 /* charCodeAt is the best approach for binary strings */
 
+/* istanbul ignore next */
 function crc32_bstr(bstr) {
   if(bstr.length > 32768) if(use_buffer) return crc32_buf_8(new Buffer(bstr));
   var crc = -1, L = bstr.length - 1;
@@ -41,6 +43,7 @@ function crc32_bstr(bstr) {
 }
 
 
+/* istanbul ignore next */
 function crc32_buf(buf) {
   if(buf.length > 10000) return crc32_buf_8(buf);
   for(var crc = -1, i = 0, L=buf.length-3; i < L;) {
@@ -54,6 +57,7 @@ function crc32_buf(buf) {
 }
 
 
+/* istanbul ignore next */
 function crc32_buf_8(buf) {
   for(var crc = -1, i = 0, L=buf.length-7; i < L;) {
     crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
@@ -70,6 +74,7 @@ function crc32_buf_8(buf) {
 }
 
 /* much much faster to intertwine utf8 and crc */
+/* istanbul ignore next */
 function crc32_str(str) {
   for(var crc = -1, i = 0, L=str.length, c, d; i < L;) {
     c = str.charCodeAt(i++);
