@@ -11,10 +11,12 @@
     "mout": "^1.0.0"
   },
   "devDependencies": {
+    "async-co": "^1.2.2",
     "co": "^4.6.0",
     "expect.js": "^0.3.1",
     "istanbul": "~0.3.18",
-    "mocha": "^2.2.5"
+    "mocha": "^3.1.2",
+    "mocha-plugin-co": "^1.0.0"
   },
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
@@ -28,7 +30,8 @@
     "url": "git@github.com:131/nyks.git"
   },
   "scripts": {
-    "test": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha",
+    "mocha": "node node_modules/mocha/bin/_mocha -r mocha-plugin-co",
+    "test": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha -- -r mocha-plugin-co",
     "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
   "readme": "# nyks toolkit\r\n\r\nExtend nodejs & javascript native API of missing functions.\r\n",
