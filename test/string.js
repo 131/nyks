@@ -13,9 +13,18 @@ const hexToRgb   = require('../string/hexToRgb');
 const repeat     = require('../string/repeat');
 const truncate   = require('../string/truncate');
 const sprintf    = require('../string/format');
+const prettyFileSize    = require('../string/prettyFileSize');
 
 
 describe("strings functions", function(){
+
+    it("should test prettyFileSize", function(){ //for normal people
+      expect(prettyFileSize(0)).to.eql("0B");
+      expect(prettyFileSize(1)).to.eql("1B");
+      expect(prettyFileSize(1024)).to.eql("1kB");
+      expect(prettyFileSize(1023)).to.eql("0.99kB");
+      expect(prettyFileSize(1024 * 5 + 800)).to.eql("5.78kB");
+    });
 
     it("should test truncate", function(){
         expect(truncate("123456789ABC")).to.be("123456789…"); //default to 10..
