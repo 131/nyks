@@ -1,6 +1,6 @@
 {
   "name": "nyks",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "nodejs exupery style",
   "keywords": [
     "mootools",
@@ -10,7 +10,7 @@
   "dependencies": {
     "mout": "^1.0.0"
   },
-  "peerDependencies" : {
+  "peerDependencies": {
     "read": "^1.0.7"
   },
   "devDependencies": {
