@@ -17,6 +17,7 @@ describe("Process functions", function(){
       expect(parseArgs(["bar", "--foo", "baz"]) ).to.eql({args : ["bar", "baz"], dict : {foo:true}});
       expect(parseArgs(["--foo=42", "--foo=55"]) ).to.eql({args : [], dict : {foo:[42, 55]}});
       expect(parseArgs(["--foo=42", "--foo=55", "--foo"]) ).to.eql({args : [], dict : {foo:[42, 55, true]}});
+      expect(parseArgs(["--foo=355f82ab-a1d0-4df3-94ab-f55a1b51bd14"]) ).to.eql({args : [], dict : {foo: '355f82ab-a1d0-4df3-94ab-f55a1b51bd14'}});
     });
 
 

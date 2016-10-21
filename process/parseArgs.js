@@ -2,7 +2,6 @@
 
 var util       = require('util');
 var startsWith = require('mout/string/startsWith');
-var isFinite   = require('mout/lang/isFinite');
 var isArray    = require('mout/lang/isArray');
 
 module.exports = function(argv){
@@ -22,7 +21,8 @@ module.exports = function(argv){
       r = e.exec(arg);
       k = r[1], v = r[2] === undefined ? true : r[2];
 
-      if(isFinite(v))
+
+      if(typeof v === 'string' && v !== '' && isFinite(v)) //mout isFinite force parseFloat
         v = parseFloat(v);
 
       if(dict[k] !== undefined) {
