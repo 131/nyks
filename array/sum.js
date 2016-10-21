@@ -1,5 +1,5 @@
 "use strict";
 
 module.exports = function(values){
-  return values.reduce(function(a, b){return a+b;});
+  return values.reduce(function(a, b){return a+b;}, 0);
 };
