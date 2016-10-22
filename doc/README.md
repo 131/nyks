@@ -20,6 +20,7 @@
 ** nyks/function/sleep - setTiemout as a promise
 ** nyks/function/thunk - promise resolution thunk
 ** nyks/function/unary - wrap a closure so it's called with only one parameter (un-curry)
+** nyks/function/cache - protect a function, cache & debounce multiple calls with same parameter
 
 * generator
 **  nyks/generator/func - generator version of mout/function/func
