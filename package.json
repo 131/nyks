@@ -10,9 +10,6 @@
   "dependencies": {
     "mout": "^1.0.0"
   },
-  "peerDependencies": {
-    "read": "^1.0.7"
-  },
   "devDependencies": {
     "async-co": "^1.2.2",
     "co": "^4.6.0",
