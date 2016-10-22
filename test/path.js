@@ -1,8 +1,10 @@
 "use strict";
 
-var expect = require('expect.js')
-var extend = require('../path/extend')
-var which  = require('../path/which')
+const path   = require('path')
+const expect = require('expect.js')
+const extend = require('../path/extend')
+const which  = require('../path/which')
+const jail  = require('../path/jail')
 
 
 describe("Paths functions", function(){
@@ -15,6 +17,13 @@ describe("Paths functions", function(){
 
       extend(__dirname);
       expect(which("path.js")).to.eql(__filename);
+    });
+
+
+
+    it("testing fail", function() {
+      expect(function(){  jail(__dirname, "../../etc/host") }).to.throwException(/escape attempt/)
+      expect(jail(__dirname, "ab", "..", "cd") ).to.eql(path.join(__dirname, 'ab/../cd'))
     });
 
 

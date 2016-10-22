@@ -45,6 +45,8 @@
 ** nyks/fs/mkdirpSync - create a directory (at any depth) sync
 
 
+# Path
+** nyks/path/jail - like path.join, but throw when attempting escape
 
 # Nodejs natives
 
