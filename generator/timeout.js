@@ -1,17 +1,20 @@
+"use strict";
+
 const defer      = require('../promise/defer');
 const isNumber   = require('mout/lang/isNumber');
 
 module.exports =  function(fn, timeout) {
-  var my = function*(){
-    var args = [].slice.call(arguments);
-    
-    if(!timeout)
-      return yield fn(args);
+  if(!timeout)
+    return fn;
 
-    if(!isNumber(timeout))
-      throw "timeout must be a number";
+  if(!isNumber(timeout))
+    throw "timeout must be a number";
+
+  var my = function* () {
+    var args = [].slice.call(arguments);
 
     var defered = defer();
+
     setTimeout(defered.reject.bind(defered, "timeout"), timeout);
 
     yield [ function*() {

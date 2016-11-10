@@ -40,11 +40,10 @@ describe("testing timeout", function() {
       return "done";
     }
 
-    var Resolve = timeout(resolve, "aze");
-   
     try{
-      var rej = yield Resolve();
-    }catch(err){
+      var Resolve = timeout(resolve, "aze");
+      expect.fail("Never here");
+    }catch(err) {
       expect(err).to.eql("timeout must be a number");
     }
   });

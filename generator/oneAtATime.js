@@ -1,18 +1,21 @@
+"use strict";
+
 
 module.exports =  function(fn) {
-  var my = function*(){
+  var my = function* () {
     var args = [].slice.call(arguments);
     if(my.running)
-      throw "ALLREADY RUNNING";
+      throw "Already running !";
+
     my.running= true;
+
     try {
       var res = yield fn(args);
-      my.running = false;
       return res;
-    } catch(err) {
+    } finally {
       my.running = false;
-      throw err;
     }
   }
+
   return my;
 }

@@ -48,7 +48,7 @@ describe("testing one at a time", function() {
     try{
       var res = yield [runOneAtATIme , runOneAtATIme, runOneAtATIme];
     }catch(err){
-      expect(err).to.eql("ALLREADY RUNNING");
+      expect(err).to.eql("Already running !");
     }
     expect(a).to.eql(3);
     yield sleep(201);
