@@ -1,6 +1,6 @@
 "use strict";
 const expect     = require('expect.js');
-const oneAtaTime = require('../generator/oneAtaTime');
+const oneAtaTime = require('../generator/oneAtATime');
 const sleep      = require('../function/sleep');
 
 describe("testing one at a time", function() {
