@@ -2,20 +2,19 @@
 
 
 module.exports =  function(fn) {
-  var my = function* () {
+  var running = false;
+  return function* () {
     var args = [].slice.call(arguments);
-    if(my.running)
+    if(running)
       throw "Already running !";
 
-    my.running= true;
+    running = true;
 
     try {
       var res = yield fn(args);
       return res;
     } finally {
-      my.running = false;
+      running = false;
     }
   }
-
-  return my;
 }
