@@ -11,7 +11,7 @@ module.exports =  function(fn) {
     running = true;
 
     try {
-      var res = yield fn(args);
+      var res = yield fn.apply(this, args);
       return res;
     } finally {
       running = false;
