@@ -12,13 +12,13 @@ module.exports =  function(fn, timeout) {
 
   var my = function* () {
     var args = [].slice.call(arguments);
-
+    var self = this;
     var defered = defer();
 
     setTimeout(defered.reject.bind(defered, "timeout"), timeout);
 
     yield [ function*() {
-      var response = yield fn(args);
+      var response = yield fn.applay(self, args);
       defered.resolve(response);
     }, defered];
 
