@@ -7,7 +7,8 @@ describe("testing one at a time", function() {
  
   it("should not change original function", function *(){
 
-    var resolve = function*(a){
+    var resolve = function*(a) {
+      this.name = a;
       yield sleep(200);
       return "done " + a;
     }
@@ -26,8 +27,24 @@ describe("testing one at a time", function() {
       expect(err).to.eql("reject");
     }
     
-    var res   = yield oneAtATImeResolve("cool");
+    var foo = {
+      name : "nope",
+      fn   : oneAtATImeResolve,
+    }, bar = {};
+
+
+    var res   = yield foo.fn("cool");
     expect(res).to.eql("done cool");
+    expect(foo.name).to.eql("cool");
+
+    foo = {
+      name : "nope",
+      fn   : oneAtaTime(resolve, bar),
+    };
+
+    yield foo.fn("test 55");
+    expect(bar.name).to.eql("test 55");
+
   });
 
 

@@ -3,7 +3,7 @@
 const defer      = require('../promise/defer');
 const isNumber   = require('mout/lang/isNumber');
 
-module.exports =  function(fn, timeout) {
+module.exports =  function(fn, timeout, ctx) {
   if(!timeout)
     return fn;
 
@@ -12,7 +12,7 @@ module.exports =  function(fn, timeout) {
 
   var my = function* () {
     var args = [].slice.call(arguments);
-    var self = this;
+    var self = ctx || this;
     var defered = defer();
 
     setTimeout(defered.reject.bind(defered, "timeout"), timeout);

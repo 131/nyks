@@ -1,7 +1,7 @@
 "use strict";
 
 
-module.exports =  function(fn) {
+module.exports =  function(fn, ctx) {
   var running = false;
   return function* () {
     var args = [].slice.call(arguments);
@@ -11,7 +11,7 @@ module.exports =  function(fn) {
     running = true;
 
     try {
-      var res = yield fn.apply(this, args);
+      var res = yield fn.apply(ctx || this, args);
       return res;
     } finally {
       running = false;
