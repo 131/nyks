@@ -18,7 +18,7 @@ module.exports =  function(fn, timeout) {
     setTimeout(defered.reject.bind(defered, "timeout"), timeout);
 
     yield [ function*() {
-      var response = yield fn.applay(self, args);
+      var response = yield fn.apply(self, args);
       defered.resolve(response);
     }, defered];
 
