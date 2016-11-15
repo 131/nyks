@@ -18,6 +18,7 @@ describe("Process functions", function(){
       expect(parseArgs(["--foo=42", "--foo=55"]) ).to.eql({args : [], dict : {foo:[42, 55]}});
       expect(parseArgs(["--foo=42", "--foo=55", "--foo"]) ).to.eql({args : [], dict : {foo:[42, 55, true]}});
       expect(parseArgs(["--foo=355f82ab-a1d0-4df3-94ab-f55a1b51bd14"]) ).to.eql({args : [], dict : {foo: '355f82ab-a1d0-4df3-94ab-f55a1b51bd14'}});
+      expect(parseArgs(["--foo=127.10.10.1"]) ).to.eql({args : [], dict : {foo: '127.10.10.1'}});
     });
 
 
@@ -30,12 +31,18 @@ describe("Process functions", function(){
 
     it("should test splitArgs", function(){
       expect(splitArgs("a b c  d") ).to.eql(["a", "b", "c", "d"]);
+      expect(splitArgs("a 127.0.0.1 d") ).to.eql(["a", "127.0.0.1", "d"]);
+      expect(splitArgs("a 12 d") ).to.eql(["a", 12, "d"]);
       expect(splitArgs("a 'b' c  d") ).to.eql(["a", "b", "c", "d"]);
       expect(splitArgs("a \"b\" c  d") ).to.eql(["a", "b", "c", "d"]);
       expect(splitArgs("a \"'b'\" c  d") ).to.eql(["a", "'b'", "c", "d"]);
       expect(splitArgs("a \"'b c'\" c  d") ).to.eql(["a", "'b c'", "c", "d"]);
       expect(splitArgs("a 'b c' c  d 8") ).to.eql(["a", "b c", "c", "d", 8]);
       expect(splitArgs("") ).to.eql([]);
+      expect(splitArgs('""') ).to.eql(['']);
+      expect(splitArgs('"0.124"') ).to.eql([0.124]);
+      expect(typeof splitArgs("12")[0] ).to.eql("number");
+      expect(typeof splitArgs("0")[0] ).to.eql("number");
 
 
       expect(splitArgs("'foo''foobar'") ).to.eql(["foo"]);
