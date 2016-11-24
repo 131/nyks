@@ -49,6 +49,10 @@
 # Path
 ** nyks/path/jail - like path.join, but throw when attempting escape
 
+
+# Require/modules
+** nyks/require/resolve - simple / portable alternative to require.resolve
+
 # Nodejs natives
 
 * Buffer utilties
