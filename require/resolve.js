@@ -1,6 +1,5 @@
 "use strict";
 
-const global     = (Function('return this'))();
 const existsSync = require('fs').existsSync;
 const path       = require('path');
 /** 
@@ -9,9 +8,9 @@ const path       = require('path');
 * this will return the package.json folder, not the package entry point
 */
 
-
 /*istanbul ignore next */ //coverage unreachable but when browserified
-const search_paths = global.process && global.process.mainModule.paths || []; 
+const search_paths = module.paths || []; 
+
 
 search_paths.unshift(path.join(process.cwd(), 'node_modules'));
 
