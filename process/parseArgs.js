@@ -18,7 +18,7 @@ module.exports = function(argv){
     if(rest !== undefined)
       return;
     if(arg == "--") {
-      rest = argv[i+1];
+      rest = argv.slice(i+1).join(' ');
     } else if(!startsWith(arg, '-')) {
       args.push(arg);
     } else if(e.test(arg)) {
