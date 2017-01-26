@@ -9,27 +9,9 @@ var splitArgs = require('../process/splitArgs')
 
 describe("Process functions", function(){
 
+    it("should test splitArgs", function() {
+      expect(splitArgs("--foo=42 bar -- --this --is --unparsed") ).to.eql(["--foo=42", "bar", "--", "--this --is --unparsed"]);
 
-    it("testing parseArgs", function(){
-      expect(parseArgs(["--foo"]) ).to.eql({args : [], dict : {foo:true}});
-      expect(parseArgs(["--foo", "bar"]) ).to.eql({args : ["bar"], dict : {foo:true}});
-      expect(parseArgs(["bar", "--foo"]) ).to.eql({args : ["bar"], dict : {foo:true}});
-      expect(parseArgs(["bar", "--foo", "baz"]) ).to.eql({args : ["bar", "baz"], dict : {foo:true}});
-      expect(parseArgs(["--foo=42", "--foo=55"]) ).to.eql({args : [], dict : {foo:[42, 55]}});
-      expect(parseArgs(["--foo=42", "--foo=55", "--foo"]) ).to.eql({args : [], dict : {foo:[42, 55, true]}});
-      expect(parseArgs(["--foo=355f82ab-a1d0-4df3-94ab-f55a1b51bd14"]) ).to.eql({args : [], dict : {foo: '355f82ab-a1d0-4df3-94ab-f55a1b51bd14'}});
-      expect(parseArgs(["--foo=127.10.10.1"]) ).to.eql({args : [], dict : {foo: '127.10.10.1'}});
-    });
-
-
-        //invalid argument description are dropped
-
-    it("should drop invalid args", function(){
-      expect(parseArgs(["-=foo", "bar"]) ).to.eql({args : ["bar"], dict : {}});
-    });
-
-
-    it("should test splitArgs", function(){
       expect(splitArgs("a b c  d") ).to.eql(["a", "b", "c", "d"]);
       expect(splitArgs("a 127.0.0.1 d") ).to.eql(["a", "127.0.0.1", "d"]);
       expect(splitArgs("a 12 d") ).to.eql(["a", 12, "d"]);
@@ -49,5 +31,27 @@ describe("Process functions", function(){
       expect(splitArgs("'foo'foobar'") ).to.eql(["foo"]);
       
     });
+
+
+    it("testing parseArgs", function(){
+      expect(parseArgs(["--foo"]) ).to.eql({args : [], dict : {foo:true}, rest:undefined});
+      expect(parseArgs(["--foo", "bar"]) ).to.eql({args : ["bar"], dict : {foo:true}, rest:undefined});
+      expect(parseArgs(["bar", "--foo"]) ).to.eql({args : ["bar"], dict : {foo:true}, rest:undefined});
+      expect(parseArgs(["bar", "--foo", "baz"]) ).to.eql({args : ["bar", "baz"], dict : {foo:true}, rest:undefined});
+      expect(parseArgs(["--foo=42", "--foo=55"]) ).to.eql({args : [], dict : {foo:[42, 55]}, rest:undefined});
+      expect(parseArgs(["--foo=42", "--foo=55", "--foo"]) ).to.eql({args : [], dict : {foo:[42, 55, true]}, rest:undefined});
+      expect(parseArgs(["--foo=355f82ab-a1d0-4df3-94ab-f55a1b51bd14"]) ).to.eql({args : [], dict : {foo: '355f82ab-a1d0-4df3-94ab-f55a1b51bd14'}, rest:undefined});
+      expect(parseArgs(["--foo=127.10.10.1"]) ).to.eql({args : [], dict : {foo: '127.10.10.1'}, rest:undefined});
+      expect(parseArgs(splitArgs("--foo=42 bar -- --this --is --unparsed")) ).to.eql({args : ["bar"], dict : {foo: 42}, rest:"--this --is --unparsed"});
+    });
+
+
+        //invalid argument description are dropped
+
+    it("should drop invalid args", function(){
+      expect(parseArgs(["-=foo", "bar"]) ).to.eql({args : ["bar"], dict : {}, rest:undefined});
+    });
+
+
 
 });

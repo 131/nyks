@@ -1,8 +1,8 @@
 "use strict";
 
-var util       = require('util');
-var startsWith = require('mout/string/startsWith');
-var isArray    = require('mout/lang/isArray');
+const util       = require('util');
+const startsWith = require('mout/string/startsWith');
+const isArray    = require('mout/lang/isArray');
 
 module.exports = function(argv){
 
@@ -10,12 +10,16 @@ module.exports = function(argv){
   if(arguments.length == 0)
      argv = process.argv.slice(2);
 
-  var args = [], dict = {},
+  var args = [], dict = {}, rest,
       r, e = new RegExp("^--?([a-z_0-9/:-]+)(?:=(.*))?", "i");
 
-  argv.forEach(function(arg){
+  argv.forEach(function(arg, i) {
     var k, v;
-    if(!startsWith(arg, '-')) {
+    if(rest !== undefined)
+      return;
+    if(arg == "--") {
+      rest = argv[i+1];
+    } else if(!startsWith(arg, '-')) {
       args.push(arg);
     } else if(e.test(arg)) {
       r = e.exec(arg);
@@ -34,5 +38,5 @@ module.exports = function(argv){
     }
   });
 
-  return {args:args, dict:dict};
+  return {args, dict, rest};
 }
