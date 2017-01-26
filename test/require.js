@@ -8,8 +8,8 @@ const path    = require('path');
 describe("Require functions", function(){
 
   it("testing require resolve", function(){
-    var folder = resolve("nyks");
-    expect(folder).to.eql(path.join(__dirname, ".."));
+    var folder = resolve("expect.js");
+    expect(folder).to.eql(path.join(__dirname, "..", "node_modules", "expect.js"));
   });
 
   it("testing require resolve failure", function(){
