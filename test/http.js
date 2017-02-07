@@ -33,7 +33,7 @@ describe("Testing http", function(){
     var testurl = util.format("http://127.0.0.1:%d/ping", port);
     getContents(testurl , function(err, ip){
       expect(err).not.to.be.ok();
-      expect(ip.trim()).to.be("pong");
+      expect((""+ip).trim()).to.be("pong");
       done();
     });
   });
