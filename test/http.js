@@ -1,9 +1,15 @@
 "use strict";
 
-var expect = require('expect.js')
-var util   = require('util')
-var url   = require('url')
-var getContents   = require('../http/getContents')
+const url    = require('url')
+const util   = require('util')
+const fs     = require('fs')
+
+const expect = require('expect.js')
+
+const getContents   = require('../http/getContents')
+const fetch         = require('../http/fetch')
+const pipe          = require('../stream/pipe')
+const tmppath   = require('../fs/tmppath')
 
 
 
@@ -37,6 +43,20 @@ describe("Testing http", function(){
       done();
     });
   });
+
+
+  it("Should test fetch ", function(done){
+    var tmp_file = tmppath();
+    var dest = fs.createWriteStream(tmp_file);
+    var testurl = util.format("http://127.0.0.1:%d/ping", port);
+    pipe(fetch(testurl), dest).then(function() {
+      var body = fs.readFileSync(tmp_file, 'utf-8');
+      expect(body).to.be("pong");
+      done();
+    });
+  });
+
+
 
   it("Should fetch missing resource", function(done){
     var testurl = util.format("http://127.0.0.1:%d/missing", port);

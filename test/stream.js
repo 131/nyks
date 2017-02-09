@@ -5,6 +5,7 @@ const fs = require('fs');
 const expect     = require('expect.js');
 const tmppath    = require('../fs/tmppath');
 const pipe = require('../stream/pipe');
+const drain = require('../stream/drain');
 const fromBuffer = require('../stream/fromBuffer');
 const defer = require('../promise/defer');
 
@@ -13,45 +14,62 @@ const defer = require('../promise/defer');
 describe("Stream functions", function(){
 
 
+    it("should test drain", function(done){
+
+        var body = "café",
+             buf = new Buffer(body);
+
+        var input = fromBuffer(buf);
+
+        drain(input).then(function(contents){
+          expect("" + contents).to.eql(body);
+          done();
+        });
+    });
+
+
+
 
     it("should test pipe", function(done){
 
         var body = "café",
              buf = new Buffer(body);
 
+        var tmp_path = tmppath("too");
+        var dest = fs.createWriteStream(tmp_path);
+
         var input = fromBuffer(buf);
-
-        var defered = defer();
-        var dest = pipe(defered) ;
-        input.pipe( dest );
-
-
-        dest.on("finish", function(){
-
-          defered.then(function(contents){
-            expect("" + contents).to.eql(body);
-            done();
-          });
-
-
+        pipe(input, dest).then( function() {
+          expect("" + fs.readFileSync(tmp_path)).to.eql(body);
+          fs.unlinkSync(tmp_path);
+          done();
+        }).catch(function(err){
+          console.log(err);
         });
     });
 
-    it("should test fromBuffer", function(done){
+
+    it("should test pipe", function(done){
 
         var body = "café",
              buf = new Buffer(body);
 
-        var tmp_path = tmppath("too"),
-             dest = fs.createWriteStream(tmp_path);
+        var tmp_path = tmppath("too");
 
-        var input = fromBuffer(buf);
-        input.pipe(dest);
+        var input = new Promise(function(resolve, reject){
+          resolve(fromBuffer(buf));
+        });
 
-        dest.on("finish", function(){
+        var dest = new Promise(function(resolve, reject){
+          resolve(fs.createWriteStream(tmp_path));
+        });
+
+        pipe(input, dest).then( function() {
           expect("" + fs.readFileSync(tmp_path)).to.eql(body);
           fs.unlinkSync(tmp_path);
           done();
+        }).catch(function(err){
+          console.log(err);
         });
     });
 
