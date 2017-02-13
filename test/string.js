@@ -13,6 +13,7 @@ const hexToRgb   = require('../string/hexToRgb');
 const repeat     = require('../string/repeat');
 const truncate   = require('../string/truncate');
 const sprintf    = require('../string/format');
+const capitalize = require('../string/capitalize');
 const prettyFileSize    = require('../string/prettyFileSize');
 
 
@@ -136,5 +137,11 @@ describe("strings functions", function(){
 
     expect(hexToRgb('not_an_hexa')).to.be(null);
   });
+
+  it("should test capitalize", function(){ //for normal people
+      expect(capitalize('florent')).to.eql("Florent");
+      expect(capitalize(null)).to.be("");
+      expect(capitalize('a')).to.eql("A");
+    });
 
 });
