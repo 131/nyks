@@ -1,18 +1,20 @@
 "use strict";
 
-var fs = require('fs');
-var path = require('path');
-var expect = require('expect.js')
-var mkdirpSync= require('../fs/mkdirpSync')
-var deleteFolderRecursive= require('../fs/deleteFolderRecursive')
-var md5File= require('../fs/md5File')
-var md5FileSync = require('../fs/md5FileSync')
-var isFileSync = require('../fs/isFileSync')
-var isDirectorySync = require('../fs/isDirectorySync')
-var filemtimeSync = require('../fs/filemtimeSync')
-var filesizeSync = require('../fs/filesizeSync')
-var tmppath = require('../fs/tmppath')
-var copyFile = require('../fs/copyFile')
+var fs    = require('fs');
+var path  = require('path');
+var expect = require('expect.js');
+var mkdirpSync= require('../fs/mkdirpSync');
+
+var deleteFolderRecursive= require('../fs/deleteFolderRecursive');
+var md5File= require('../fs/md5File');
+var md5FileSync = require('../fs/md5FileSync');
+var isFileSync = require('../fs/isFileSync');
+var isDirectorySync = require('../fs/isDirectorySync');
+var filemtimeSync = require('../fs/filemtimeSync');
+var filesizeSync = require('../fs/filesizeSync');
+var tmppath = require('../fs/tmppath');
+var copyFile = require('../fs/copyFile');
+var rmrf = require('../fs/rmrf');
 
 var guid = require('mout/random/guid')
 
@@ -61,6 +63,37 @@ describe("FS functions", function(){
 
 
     });
+
+
+
+
+    it("should test rmrf", function* (){
+      var root = "trashme", dir = path.join(root, "this is/a/dir"), file = path.join(dir,"foo");
+      var out = mkdirpSync(dir);
+      expect(out).to.be(dir);
+
+      expect(fs.existsSync(dir)).to.be.ok();
+
+        yield rmrf(dir);
+      expect(fs.existsSync(dir)).not.to.be.ok();
+
+      yield rmrf(dir); //check delete a non existing path
+
+
+      mkdirpSync(dir);
+      mkdirpSync(dir);
+
+      expect(isDirectorySync(dir)).to.be.ok();
+
+
+      fs.writeFileSync(file, "bar");
+
+      yield rmrf(root);
+
+      expect(isDirectorySync(root)).not.to.be.ok();
+      expect(fs.existsSync(root)).not.to.be.ok();
+    });
+
 
     it("should test md5File", function(done){
       var file = "dummy";
