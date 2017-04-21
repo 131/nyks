@@ -2,7 +2,10 @@
 
 // drain a stream, return the contents as a buffer
 
-module.exports = function(stream) {
+module.exports = function drain(stream) {
+
+  if(stream.then)
+    return stream.then(drain);
 
   return new Promise(function(resolve, reject) {
 

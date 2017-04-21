@@ -27,6 +27,19 @@ describe("Stream functions", function(){
         });
     });
 
+    it("should test drain (from a promise)", function(done){
+
+        var body = "café",
+             buf = new Buffer(body);
+
+        var input = Promise.resolve(fromBuffer(buf));
+
+        drain(input).then(function(contents){
+          expect("" + contents).to.eql(body);
+          done();
+        });
+    });
+
 
 
 
