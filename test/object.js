@@ -7,6 +7,7 @@ var jsonpath = require('../object/jsonpath')
 var indexOf  = require('../object/indexOf')
 var sort     = require('../object/sort')
 
+var difference     = require('../object/difference')
 
 //i feel a little sorry for that
 
@@ -24,6 +25,13 @@ describe("object functions", function(){
           "italy"  : "pizza",
         });
     });
+
+    it("should test difference" , function(){
+      var obj1 = {a : 5 , c: 2 , d:"aa"};
+      var obj2 = {b : 3 , c: 2 , d:"a"};
+
+      expect(difference(obj1, obj2)).to.eql(["a" ,"b" ,"d"]);
+     })
 
 
 
