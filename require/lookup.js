@@ -21,7 +21,7 @@ function findPackage(file_path) {
       return packages_paths[file_path] = package_path;
   }
 
-  throw "nope";
+  throw `nope ${file_path}`;
 }
 
 

@@ -76,6 +76,8 @@ var request = function(/*target, [data,], chain */ ){
       chain(null, response, res);
     });
   });
+
+  req.once('error', chain);
   if(data)
     req.write(data);
   req.end();
