@@ -64,7 +64,10 @@ var request = function(/*target, [data,], chain */ ){
 
     if(!shouldBuffer)
       return chain(null, res);
-
+    
+    if(res.statusCode !== 200)
+      return chain(`Invalid status code '${res.statusCode}'`);
+    
     var out = [];
     res.on("data", function(buf){ out.push(buf); });
     res.on("end", function(){
