@@ -16,14 +16,15 @@
 * function
 ** nyks/function/detach - wrap a closure in nextTick
 ** nyks/function/once - ensure a closure is only called once
-** nyks/function/promisify - convert a node style fn to a promise
-** nyks/function/sleep - setTiemout as a promise
 ** nyks/function/thunk - promise resolution thunk
 ** nyks/function/unary - wrap a closure so it's called with only one parameter (un-curry)
 ** nyks/function/cache - protect a function, cache & debounce multiple calls with same parameter
 
-* generator
-**  nyks/generator/func - generator version of mout/function/func
+
+* promises
+** nyks/function/promisify - convert a node style fn to a promise
+** nyks/async/sleep - setTimeout as a promise
+
 
 * Collection
 ** nyks/collection/reindex - re-index a collection on the specified index (and pluck, if needed)

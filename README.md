@@ -46,5 +46,4 @@ Released under the [MIT License](http://www.opensource.org/licenses/mit-license.
 ## Credits / related
 * [131](https://github.com/131), author
 * [mout](https://github.com/mout/mout), design inspiration, main complementarity
-* [async-co](https://github.com/mout/mout), good complementarity
 * [cnyks](https://github.com/131/cnyks), CLI runner & related tools
