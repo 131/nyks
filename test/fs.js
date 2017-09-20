@@ -67,17 +67,17 @@ describe("FS functions", function(){
 
 
 
-    it("should test rmrf", function* (){
+    it("should test rmrf", async function(){
       var root = "trashme", dir = path.join(root, "this is/a/dir"), file = path.join(dir,"foo");
       var out = mkdirpSync(dir);
       expect(out).to.be(dir);
 
       expect(fs.existsSync(dir)).to.be.ok();
 
-        yield rmrf(dir);
+        await rmrf(dir);
       expect(fs.existsSync(dir)).not.to.be.ok();
 
-      yield rmrf(dir); //check delete a non existing path
+      await rmrf(dir); //check delete a non existing path
 
 
       mkdirpSync(dir);
@@ -88,7 +88,7 @@ describe("FS functions", function(){
 
       fs.writeFileSync(file, "bar");
 
-      yield rmrf(root);
+      await rmrf(root);
 
       expect(isDirectorySync(root)).not.to.be.ok();
       expect(fs.existsSync(root)).not.to.be.ok();

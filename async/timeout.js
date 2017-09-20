@@ -10,17 +10,18 @@ module.exports =  function(fn, timeout, ctx) {
   if(!isNumber(timeout))
     throw "timeout must be a number";
 
-  var my = function* () {
+  var my = async function (){
     var args = [].slice.call(arguments);
     var self = ctx || this;
     var defered = defer();
 
     setTimeout(defered.reject.bind(defered, "timeout"), timeout);
 
-    yield [ function*() {
-      var response = yield fn.apply(self, args);
+    let job = async function() {
+      var response = await fn.apply(self, args);
       defered.resolve(response);
-    }, defered];
+    };
+    await Promise.all([job(), defered]);
 
     return defered;
   }

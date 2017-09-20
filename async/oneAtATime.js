@@ -3,7 +3,7 @@
 
 module.exports =  function(fn, ctx) {
   var running = false;
-  return function* () {
+  return async function () {
     var args = [].slice.call(arguments);
     if(running)
       throw "Already running !";
@@ -11,7 +11,7 @@ module.exports =  function(fn, ctx) {
     running = true;
 
     try {
-      var res = yield fn.apply(ctx || this, args);
+      var res = await fn.apply(ctx || this, args);
       return res;
     } finally {
       running = false;

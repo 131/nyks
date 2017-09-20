@@ -24,6 +24,9 @@ Use browserify if you need nyks module in a browser environnement.
  - be modular;
  - have unit tests for all modules;
 
+## Async APIs
+ - Find more details about async APIs (async.js thought ES7 async/await) in a [dedicated readme](./README-async.md)
+
 
 ## What shouldn't be here
 

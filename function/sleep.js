@@ -1,7 +1,3 @@
 "use strict";
 
-module.exports = function sleep(timeout) {
-  return new Promise(function(resolve) {
-    setTimeout(resolve, timeout);
-  });
-};
+return require('../async/sleep');

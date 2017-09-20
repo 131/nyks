@@ -1,19 +1,20 @@
 "use strict";
-var https = require('https');
-var http  = require('http');
-var url  = require('url');
-var qs   = require('querystring');
 
-var merge      = require('mout/object/merge');
-var encode     = require('mout/queryString/encode');
-var trim       = require('mout/string/trim');
-var contains   = require('mout/array/contains');
-var startsWith = require('mout/string/startsWith');
+const https = require('https');
+const http  = require('http');
+const url  = require('url');
+const qs   = require('querystring');
 
-var mask       = require('nyks/object/mask');
-var pluck      = require('mout/object/pluck');
+const merge      = require('mout/object/merge');
+const encode     = require('mout/queryString/encode');
+const trim       = require('mout/string/trim');
+const contains   = require('mout/array/contains');
+const startsWith = require('mout/string/startsWith');
 
-var request = function(/*target, [data,], chain */ ){
+const mask       = require('nyks/object/mask');
+const pluck      = require('mout/object/pluck');
+
+const request = function(/*target, [data,], chain */ ){
 
   var args  = [].slice.apply(arguments),
       chain  = args.pop(),
@@ -60,24 +61,9 @@ var request = function(/*target, [data,], chain */ ){
 
 
   var req = transport.request(query, function(res){
-    var shouldBuffer = query.json || startsWith(res.headers["content-type"], "application/json");
-
-    if(!shouldBuffer)
-      return chain(null, res);
-    
     if(res.statusCode !== 200)
-      return chain(`Invalid status code '${res.statusCode}'`);
-    
-    var out = [];
-    res.on("data", function(buf){ out.push(buf); });
-    res.on("end", function(){
-      var response = Buffer.concat(out);
-
-      if(startsWith(res.headers["content-type"], "application/json"))
-        response = JSON.parse(response);
-
-      chain(null, response, res);
-    });
+      return chain(`Invalid status code '${res.statusCode}' for '${req.path}'`);
+    chain(null, res);
   });
 
   req.once('error', chain);

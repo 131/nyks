@@ -1,92 +1,99 @@
 "use strict";
 
-var expect = require('expect.js')
-var co     = require('co');
-
-var defer  = require('../promise/defer')
-
-
-describe("Paths functions", function(){
+const expect = require('expect.js')
+const defer  = require('../promise/defer')
+const promisify  = require('../function/promisify');
 
 
-    it("testing defer errors", function(done){
-      co(function*(){
-        var defered = defer();
-        
-        setTimeout(function(){
-          defered.reject("Nope");
-        }, 0);
+describe("Promise functions", function(){
 
-        try {
-          yield defered;
-        } catch(err){
-          expect(err).to.be("Nope");
-          done();
-        }
+
+  it("should test promisify with no err", async function() {
+    var sayHello = function(str, err, cb) {
+      setTimeout(function(){
+        cb(err, "Hello " + str)
       })
-    });
+    };
 
-
-    it("testing defer chain", function(done){
-      co(function*(){
-        var defered = defer();
-        
-        setTimeout(function(){
-          defered.chain("Nope");
-        }, 0);
-
-        try {
-          
-          yield defered;
-        } catch(err){
-          expect(err).to.be("Nope");
-        }
-
-
-        var defered = defer();
-        
-        setTimeout(function(){
-          defered.chain(null, "Okay");
-        }, 0);
-
-        var result = yield defered;
-        expect(result).to.be("Okay");
-
-
-        done();
-
-
+    var sayHi = function(cb) { //bind that
+      var self = this;
+      setTimeout(function(){
+        cb(null, "Hi " + self.name)
       })
-    });
+    };
+
+    var fn = promisify(sayHello);
+
+    var val = await fn("world" , null)
+    expect(val).to.be.equal("Hello world");
+
+    try {
+      await fn("world" , "error");
+      expect().to.fail("Never here");
+    } catch(err) {
+      expect(err).to.be("error");
+    }
+
+    var fne = promisify(sayHi, {name:"Joe"});
+    var val = await fne();
+    expect(val).to.be.equal("Hi Joe");
+  });
+  
+
+  it("testing defer errors", async function() {
+    var defered = defer();
+    setTimeout(function(){
+      defered.reject("Nope");
+    }, 0);
+
+    try {
+      await defered;
+    } catch(err){
+      expect(err).to.be("Nope");
+    }
+  });
 
 
+  it("testing defer chain", async function(){
+    var defered = defer();
+    
+    setTimeout(function(){
+      defered.chain("Nope");
+    }, 0);
+
+    try {
+      await defered;
+    } catch(err){
+      expect(err).to.be("Nope");
+    }
 
 
-    it("testing defer sync behavior", function(done){
-      co(function*(){
-        var defered = defer();
-        
-        defered.reject("Nope");
-        done();
-      })
-    });
+    var defered = defer();
+    setTimeout(function(){
+      defered.chain(null, "Okay");
+    }, 0);
+    var result = await defered;
+    expect(result).to.be("Okay");
 
-    it("testing defer accept", function(done){
-      co(function*(){
-        var defered = defer();
-
-        setTimeout(function(){
-          defered.resolve("okay");
-        }, 0);
-
-        var result = yield defered;
-
-        expect(result).to.eql("okay");
-        done();
-      });
-    });
+  });
 
 
+  it("testing defer sync behavior", function(){
+    var defered = defer();
+    defered.catch(function(err) {});
+    defered.reject("Nope");
+  });
 
+  it("testing defer accept", async function(){
+    var defered = defer();
+
+    setTimeout(function(){
+      defered.resolve("okay");
+    }, 0);
+
+    var result = await defered;
+
+    expect(result).to.eql("okay");
+  });
 
 });

@@ -1,18 +1,18 @@
 "use strict";
 const expect     = require('expect.js');
-const timeout    = require('../generator/timeout');
-const sleep      = require('../function/sleep');
+const timeout    = require('../../async/timeout');
+const sleep      = require('../../async/sleep');
 
 describe("testing timeout", function() {
  
-  it("should not change original function", function *(){
-    var resolve = function*(a){
-      yield sleep(100);
+  it("should not change original function", async function(){
+    var resolve = async function(a){
+      await sleep(100);
       return "done " + a;
     }
 
-    var reject = function*(){
-      yield sleep(100);
+    var reject = async function(){
+      await sleep(100);
       throw "reject";
     }
 
@@ -21,22 +21,22 @@ describe("testing timeout", function() {
     var resolveWithoutTimeout = timeout(resolve);
    
     try{
-      var rej = yield Reject();
+      var rej = await Reject();
     }catch(err){
       expect(err).to.eql("reject");
     }
     
-    var res   = yield Resolve("cool");
+    var res   = await Resolve("cool");
     expect(res).to.eql("done cool");
 
-    var res   = yield resolveWithoutTimeout("cool 2");
+    var res   = await resolveWithoutTimeout("cool 2");
     expect(res).to.eql("done cool 2");
   });
 
 
-  it("should not run with bad argument", function *(){
-    var resolve = function*(a){
-      yield sleep(100);
+  it("should not run with bad argument", async function(){
+    var resolve = async function(a){
+      await sleep(100);
       return "done";
     }
 
@@ -49,21 +49,21 @@ describe("testing timeout", function() {
   });
 
 
-  it("should timout", function *(){
+  it("should timout", async function(){
     var time = 100;
     
-    var testTimout = function*(a){
-      yield sleep(time);
+    var testTimout = async function(a){
+      await sleep(time);
       return "pass";
     }
 
     var passTimeout  = timeout(testTimout, time + 5);
     var crachTimeout = timeout(testTimout, time - 5);
 
-    var data = yield passTimeout();
+    var data = await passTimeout();
     expect(data).to.eql("pass");
     try{
-      var data = yield crachTimeout();
+      var data = await crachTimeout();
     }catch(err){
       expect(err).to.eql("timeout");
     }

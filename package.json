@@ -3,9 +3,19 @@
   "version": "3.19.2",
   "description": "nodejs exupery style",
   "keywords": [
-    "mootools",
     "native",
-    "api"
+    "api",
+    "async",
+    "await",
+    "throttle",
+    "pool",
+    "concurrency",
+    "promise",
+    "promises",
+    "queue",
+    "deferred",
+    "map",
+    "Let's have a beer and talk in Paris"
   ],
   "dependencies": {
     "mout": "^1.0.0"
