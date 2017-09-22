@@ -4,7 +4,6 @@
 * from  crc32.js (C) 2014-2015 SheetJS -- http://sheetjs.com
 */
 
-var use_buffer = typeof Buffer !== 'undefined';
 var use_in32   = typeof Int32Array !== 'undefined';
 
 
@@ -26,52 +25,6 @@ var table = (function() {
   return use_in32 ? new Int32Array(table) : table;
 })();
 
-
-
-/* charCodeAt is the best approach for binary strings */
-
-/* istanbul ignore next */
-function crc32_bstr(bstr) {
-  if(bstr.length > 32768) if(use_buffer) return crc32_buf_8(new Buffer(bstr));
-  var crc = -1, L = bstr.length - 1;
-  for(var i = 0; i < L;) {
-    crc =  table[(crc ^ bstr.charCodeAt(i++)) & 0xFF] ^ (crc >>> 8);
-    crc =  table[(crc ^ bstr.charCodeAt(i++)) & 0xFF] ^ (crc >>> 8);
-  }
-  if(i === L) crc = (crc >>> 8) ^ table[(crc ^ bstr.charCodeAt(i)) & 0xFF];
-  return crc ^ -1;
-}
-
-
-/* istanbul ignore next */
-function crc32_buf(buf) {
-  if(buf.length > 10000) return crc32_buf_8(buf);
-  for(var crc = -1, i = 0, L=buf.length-3; i < L;) {
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-  }
-  while(i < L+3) crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-  return crc ^ -1;
-}
-
-
-/* istanbul ignore next */
-function crc32_buf_8(buf) {
-  for(var crc = -1, i = 0, L=buf.length-7; i < L;) {
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-    crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-  }
-  while(i < L+7) crc = (crc >>> 8) ^ table[(crc^buf[i++])&0xFF];
-  return crc ^ -1;
-}
 
 /* much much faster to intertwine utf8 and crc */
 /* istanbul ignore next */
@@ -101,5 +54,3 @@ function crc32_str(str) {
 
 
 module.exports      = crc32_str;
-module.exports.buf  = crc32_buf;
-module.exports.bstr = crc32_bstr;
