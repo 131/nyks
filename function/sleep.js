@@ -1,3 +1,3 @@
 "use strict";
 
-return require('../async/sleep');
+module.exports = require('../async/sleep');
