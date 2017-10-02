@@ -15,6 +15,10 @@ var filesizeSync = require('../fs/filesizeSync');
 var tmppath = require('../fs/tmppath');
 var copyFile = require('../fs/copyFile');
 var rmrf = require('../fs/rmrf');
+const writeLazySafeSync = require('../fs/writeLazySafeSync');
+
+
+
 
 var guid = require('mout/random/guid')
 
@@ -60,8 +64,6 @@ describe("FS functions", function(){
       expect(isDirectorySync(root)).not.to.be.ok();
 
       expect(fs.existsSync(root)).not.to.be.ok();
-
-
     });
 
 
@@ -174,6 +176,27 @@ describe("FS functions", function(){
         fs.writeFileSync(b, "dummy");
       }
     });
+
+
+    it("should test writeLazySafeSync", function(done){
+      var path = 'test/path/to/tash/me';
+      var str = `some 
+      text
+      to
+      write
+      `
+      writeLazySafeSync(path, str);
+      expect(fs.existsSync(path + 'tmp')).to.be(false);
+      var fileStats = fs.statSync(path);
+      setTimeout(()=>{
+        writeLazySafeSync(path, str);
+        expect(fs.existsSync(path + 'tmp')).to.be(false);   
+        expect(fileStats).to.eql(fs.statSync(path));
+        fs.unlinkSync(path)
+        done();
+      }, 1000)
+    });
+
 
 
 
