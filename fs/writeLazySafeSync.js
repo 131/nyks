@@ -1,7 +1,7 @@
 'use strict';
 
 const fs         = require('fs');
-const mkdirpsync = require('./mkdirpsync')
+const mkdirpsync = require('./mkdirpSync');
 const path       = require('path');
 
 module.exports = (file_path, body) => {
