@@ -194,7 +194,8 @@ describe("FS functions", function(){
         expect(fileStats).to.eql(fs.statSync(path));
         fs.unlinkSync(path)
         done();
-      }, 1000)
+      }, 1000);
+
     });
 
 

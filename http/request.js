@@ -62,7 +62,7 @@ const request = function(/*target, [data,], chain */ ){
 
   var req = transport.request(query, function(res){
     if(res.statusCode !== 200)
-      return chain(`Invalid status code '${res.statusCode}' for '${req.path}'`);
+      return chain({err: `Invalid status code '${res.statusCode}' for '${req.path}'`, res});
     chain(null, res);
   });
 
