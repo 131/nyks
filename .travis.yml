@@ -6,7 +6,6 @@ after_script:
 deploy:
   provider: npm
   email: 131.frodon@cloudyks.org
-  api_key:
-    secure: Z6NIu7FJ9z95C+tIZoweDU3mcgjxC6J5TchC6qf04ibZDS9o6HF4ikwDTl9xcpJbRAkWtpVbKHMEHoBzgYIChewE0dVfH+qLTI9g/LTofAXJENer6c+4iAdn4BdStiqJfuTxmZEizbVg2Ez1mf4E7LhbyxCgYvfjvZKSdGfkwdhZRwD89zKLydpqJ/qkDkiHPIH4AtYWv3Jnra6rz1zn0yAS+XPjtZWI+Jmw1bhRJP5HK+gsTd8ZxLszJYzwEWL6MJpHxoBJnrpWZKCcCwEeagGZqoX0m11F28aal/uYwBuWVfEWvnRxG9HklhYKImKagktx6Tl7AozP0qKHPXYF3wFR60QT7bhpuH+j26/uaNUI9JbWXG5r7JMpZtaxWwrtr2y7CQgVS1GRzEjH1XNQAbPJypikfXFe0bbcyBqjvfcU1ASjvbmnb8c5kaKAYsADsv8aufZJvJkQe+0ap9VQ7xibBAI0EECn6a1e9cIYpTZ6U67NRogAFyy02ZrOo+wmaH8Y54Af655K3K4/siML5MlfxXRjdpxGGN0+D/vJqqSyqzdS70Ca/ovqbqz0qgaVV4/5hb7L0XvrsMkuZeGYPA3gCit9JPvanqJVeCMOlBY8fsclH7H/WayrHPrKT6Vu73LBsvxB/zeTAG+ViKqGqpQRWh4Z7yxsiWWIIc2KGSM=
+  api_key: $NPM_TOKEN
   on:
     tags: true
