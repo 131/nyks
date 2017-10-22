@@ -183,6 +183,7 @@ describe("FS functions", function(){
       var str = `some 
       text
       to
+      ${Date.now()}
       write
       `
       writeLazySafeSync(path, str);
@@ -191,7 +192,8 @@ describe("FS functions", function(){
       setTimeout(()=>{
         writeLazySafeSync(path, str);
         expect(fs.existsSync(path + 'tmp')).to.be(false);   
-        expect(fileStats).to.eql(fs.statSync(path));
+
+        expect(fs.readFileSync(path, 'utf-8')).to.eql(str);
         fs.unlinkSync(path)
         done();
       }, 1000);
