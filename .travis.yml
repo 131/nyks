@@ -6,8 +6,6 @@ after_script:
 deploy:
   provider: npm
   email: "131.frodon@cloudyks.org"
-  api_key: "OOFnQ1jzRL3Y7ar99uhQ/LPIr/vUj54BvcS5HqcgSAersOEp5jt4e3A2GEMnYGhgk3oeWukmkRjAhAYpBJKGlCQQd1MGKAcdqfODHBJhacgMwFChoc412s4geWXz1HLCSmBPeeblLzQQB4H7bHi2B0ai0o5SAbXnCRAxWvlM2FeAG6tDm/K1OGfm1x1LVtIdWWdoK17q5IIWhlUFhqGSxFEGTTtjTLC2jslovaVtlOrIA+34Cx1DyjcSEDecHSFx/SiYim09r7KXkA9t1hy8Az/eXq0ueNNb6cG6uNso+zQk1LfYLSuWkfnuoPW7EGMrNP0Sv3235JCAnozWOxbY/hG/SE3rrjSG8lY8qHnxqAFtSdS/tWcjCnOQKrFPNeW/bDKRHKJjh4uZzQ1EzspD3SBJEwpeUSjSQ9q6UKp6nCkom/2q4jDM8Ux3qM0sCmNxPkOLJOe/gRZQrQwTcR0/leFWiCmpDb221l1yr6TbD5KjKIie4S9+RglTOHaMlyKHAGab/GG2SLDyuRMj/e211QW69+KjuQMXT73Jw8NnuM4ADOm/Yo4dXOHZxcuqUQAERyltICVntiYKITczlk8TBDJMVtuzz5BNdUzUe+zHrF/UtErlqDpvttkegBduLkRaN2E37/96dy30oF3WwTRLUTaxeXvuZLgyUUx+aI6vLVI="
+  api_key: $NPM_TOKEN 
   on:
     tags: true
-
-
