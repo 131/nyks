@@ -3,3 +3,9 @@ node_js:
   - 8
 after_script:
   - npm run coveralls
+deploy:
+  provider: npm
+  email: "131.frodon@cloudyks.org"
+  api_key: "qVdV1bq6vw6y7c7Qfwvqmbs99iKn0oFIfbhRbFk35LzP97N5FclDqpWFj3m6wd/xBnglzwmMpz6ywHnyjLohhZ2OXO5KSJ2aixFnSpVmPJP2V+o8fPihL8nw7kp9gPpd2mcOivW+KAzCGpOD6y3Yvf8zVHBgb4CyJJY/x93Kcwc3nJIavcxAjEfIxRP+0F0Q4qZ9pSBCzjSrxHR0gT4kbfDFUUZOh6hbwU2GPFDbRJYjV/L5twi2a0aV+wDFoiUgBfo4Jq50+S/HVmwDf13xdhWqA3HQwBysg1nNSuYNOGBfGkEzJnAW2iFNnvwE8hrETKJ3X1zCukxHGypm+sciuRsk7U+FMVb2oZ+cLkkYZqgLXoC/C7raoLq+areF+pzvJzGZ2EXEhJTlO22aHhHpTYk/kkKj8nHgwuOjyY6PFi4ByYyhUyON9OkrtVkk6H+oWtXzTH4SZpa0HoEtakRIhslK9ZZcqCsOuc2lrbvLpxmoUVKE4MCxDOep1zKnfLzcUVdodnbCZmeF3uLjjdOOL47/To0W3bSbT7rBsrtgZXwo3qY9EXyNKyFrg3YVtVJLBDgCczMgn6pqVmO94a40PQdF+VuBkBZMTF4ZXN/wzBg05nXJCK7E2eJqQLWieFuoEAgmOke+7JJMSCJjVoOjHZ+AhD9r8UpYxP/naBH+uy8="
+ on:
+    tags: true
