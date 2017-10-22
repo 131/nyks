@@ -36,10 +36,6 @@ const request = function(/*target, [data,], chain */ ){
     query.headers.cookie = cookie;
   }
 
-  if(data && typeof data != "string")
-    data = query.json ? JSON.stringify(data) : trim(encode(data), "?");
-
-
 
   if(query.qs) {
     var i = query.path.indexOf('?'), params = {};
@@ -52,10 +48,12 @@ const request = function(/*target, [data,], chain */ ){
     query.path += "?" + qs.stringify(query.qs);
   }
 
-  if(data) merge(query, {
+  if(data && typeof data != "string" && typeof data.pipe != "function") {
+    data = query.json ? JSON.stringify(data) : trim(encode(data), "?");
+    merge(query, {
       'content-length' : Buffer.byteLength(data),
-  });
-
+    });
+  }
 
   var transport = query.protocol == 'https:' ? https : http;
 
@@ -67,8 +65,13 @@ const request = function(/*target, [data,], chain */ ){
   });
 
   req.once('error', chain);
+
+  if(data && typeof data.pipe == "function")
+      return data.pipe(req);
+
   if(data)
     req.write(data);
+
   req.end();
 };
 
