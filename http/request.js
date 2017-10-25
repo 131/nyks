@@ -36,7 +36,6 @@ const request = function(/*target, [data,], chain */ ){
     query.headers.cookie = cookie;
   }
 
-
   if(query.qs) {
     var i = query.path.indexOf('?'), params = {};
     if(i !== -1) {
@@ -48,9 +47,10 @@ const request = function(/*target, [data,], chain */ ){
     query.path += "?" + qs.stringify(query.qs);
   }
 
-  if(data && typeof data != "string" && typeof data.pipe != "function") {
-    data = query.json ? JSON.stringify(data) : trim(encode(data), "?");
-    merge(query, {
+  if(data && typeof data.pipe != "function") {
+    if(typeof data != "string")
+      data = query.json ? JSON.stringify(data) : trim(encode(data), "?");
+    Object.assign(query.headers, {
       'content-length' : Buffer.byteLength(data),
     });
   }
@@ -59,7 +59,7 @@ const request = function(/*target, [data,], chain */ ){
 
 
   var req = transport.request(query, function(res){
-    if(res.statusCode !== 200)
+    if( ! (res.statusCode >= 200 && res.statusCode < 300) )
       return chain({err: `Invalid status code '${res.statusCode}' for '${req.path}'`, res});
     chain(null, res);
   });
@@ -68,6 +68,7 @@ const request = function(/*target, [data,], chain */ ){
 
   if(data && typeof data.pipe == "function")
       return data.pipe(req);
+
 
   if(data)
     req.write(data);
