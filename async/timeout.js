@@ -10,7 +10,7 @@ module.exports =  function(fn, timeout, ctx) {
   if(!isNumber(timeout))
     throw "timeout must be a number";
 
-  var my = async function (){
+  var my = async function () {
     var args = [].slice.call(arguments);
     var self = ctx || this;
     var defered = defer();
@@ -24,6 +24,7 @@ module.exports =  function(fn, timeout, ctx) {
     await Promise.all([job(), defered]);
 
     return defered;
-  }
+  };
+
   return my;
-}
+};

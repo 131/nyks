@@ -4,18 +4,18 @@ const cp    = require('child_process');
 const once  = require('../function/once');
 
 
-module.exports = function(cmd /*, options, chain*/){
-  var args = Array.from(arguments),
-      chain    = once(args.pop()),
-      cmd      = args.shift(),
-      options  = args.shift() || {};
+module.exports = function(cmd /*, options, chain*/) {
+  var args = Array.from(arguments);
+  var chain    = once(args.pop());
+  cmd      = args.shift();
+  var options  = args.shift() || {};
 
   if(Array.isArray(options))
     options = { args : options};
 
   options.stdio = ['inherit', 'inherit', 'inherit'];
 
-  var ps   = cp.spawn(cmd, options.args || [], options);
+  var ps = cp.spawn(cmd, options.args || [], options);
 
   ps.on('error', chain);
 
@@ -25,5 +25,5 @@ module.exports = function(cmd /*, options, chain*/){
       err = "Bad exit code " + exit;
     return chain(err, exit);
   });
-}
+};
 

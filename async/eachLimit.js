@@ -3,19 +3,19 @@
 const setImmediate  = require('./setImmediate');
 
 module.exports = async function(series, n, thunk, ctx) {
-  var n = Math.min(n || 5, series.length);
+  n = Math.min(n || 5, series.length);
 
   var ret = [];
   var index = 0;
-  var cancel = false; 
+  var cancel = false;
 
   var next = async function() {
     if (index >= series.length || cancel)
       return;
 
     let i = index++;
-    
-      //force async HERE, so we MIGHT stop replenishing after error
+
+    //force async HERE, so we MIGHT stop replenishing after error
     await new Promise(setImmediate);
 
     try { //stop replenishing after error
@@ -26,11 +26,12 @@ module.exports = async function(series, n, thunk, ctx) {
     }
 
     await next(); //continue in lane
-  }
+  };
 
   var lanes = [];
-  while (n--)
+  while (n--) {
     lanes.push(next());
+  }
 
   await Promise.all(lanes);
 

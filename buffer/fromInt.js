@@ -1,9 +1,10 @@
 "use strict";
 
 function int2buff(value, length) {
-  var  i = length || 4, out = new Array(i);
+  var  i = length || 4;
+  var out = new Array(i);
   while(i--) {
-    out[i] = value%0x100;
+    out[i] = value % 0x100;
     value >>= 8;
   }
   return new Buffer(out);

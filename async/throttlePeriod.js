@@ -1,13 +1,13 @@
 "use strict";
 
+const sleep = require('./sleep');
 
-
-var throttle = function(gn , period) {
+/*eslint no-unsafe-finally: "off"*/
+var throttle = function(gn, period) {
   var runnig =  false;
   var mustRerunnif = false;
 
-
- return async function loop() {
+  return async function loop() {
     if(runnig) {
       mustRerunnif = arguments;
       return;
@@ -19,7 +19,7 @@ var throttle = function(gn , period) {
     } finally {
 
       if(period)
-        await new Promise(function(resolve){ setTimeout(resolve, period);});
+        await sleep(period);
 
       runnig = false;
       if(!mustRerunnif)
@@ -29,7 +29,7 @@ var throttle = function(gn , period) {
       mustRerunnif = false;
       await loop.apply(null, args);
     }
-  }
-}
+  };
+};
 
 module.exports = throttle;
