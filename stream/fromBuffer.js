@@ -2,8 +2,8 @@
 
 var PassThrough = require('stream').PassThrough;
 
-module.exports = function(data){
+module.exports = function(data) {
   var tmp = new PassThrough();
   tmp.end(data);
-  return  tmp;
-}
+  return tmp;
+};

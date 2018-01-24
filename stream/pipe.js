@@ -2,7 +2,7 @@
 
 //pipe a stream to another, streams might be promises
 
-const pipe = function(src, dest) {
+function pipe(src, dest) {
 
   if(src.then)
     return src.then(function(tmp) {
@@ -14,13 +14,11 @@ const pipe = function(src, dest) {
       return pipe(src, tmp);
     });
 
-  return new Promise(function(resolve, reject) {
-      src.pipe(dest);
-      dest.on('close', resolve);
+  return new Promise(function(resolve) {
+    src.pipe(dest);
+    dest.on('close', resolve);
   });
 
 }
-
-
 
 module.exports = pipe;

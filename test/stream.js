@@ -41,6 +41,25 @@ describe("Stream functions", function(){
     });
 
 
+    it("Draining twice should do", function(done){
+
+        var body = "café",
+             buf = new Buffer(body);
+
+        var input = Promise.resolve(fromBuffer(buf));
+
+        drain(input).then(function(contents){
+          expect("" + contents).to.eql(body);
+
+          drain(input).then(function(contents2){
+            expect("" + contents2).to.eql("");
+
+            done();
+          });
+        });
+    });
+
+
 
 
     it("should test pipe", function(done){
