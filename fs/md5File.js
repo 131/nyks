@@ -3,17 +3,18 @@
 const fs = require('fs');
 const crypto = require('crypto');
 
-module.exports = function md5File (file_path, cb) {
+function md5File(file_path, cb) {
 
-  var output = crypto.createHash('md5')
-  var input = fs.createReadStream(file_path)
+  var output = crypto.createHash('md5');
+  var input = fs.createReadStream(file_path);
 
-  input.on('error', cb)
+  input.on('error', cb);
 
   output.once('readable', function () {
-    cb(null, output.read().toString('hex'))
-  })
+    cb(null, output.read().toString('hex'));
+  });
 
-  input.pipe(output)
+  input.pipe(output);
 }
 
+module.exports = md5File;

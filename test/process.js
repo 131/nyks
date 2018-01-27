@@ -3,11 +3,22 @@
 var expect    = require('expect.js')
 var parseArgs = require('../process/parseArgs')
 var splitArgs = require('../process/splitArgs')
+var formatArgs = require('../process/formatArgs')
 
 
 
 
 describe("Process functions", function(){
+
+
+    it("Should test formatArgs", function(){
+      expect(formatArgs({foo:'foo',bar:'bar'})).to.eql(["--foo=foo", "--bar=bar"]);
+      expect(formatArgs({foo:'foo',bar:'bar'}, true)).to.eql(["--foo", "foo", "--bar", "bar"]);
+      expect(formatArgs({foo:true, bar:'bar'})).to.eql(["--foo", "--bar=bar"]);
+      expect(formatArgs({foo:null})).to.eql([]);
+      expect(formatArgs()).to.eql([]);
+      expect(formatArgs({foo:[1,2,3]})).to.eql(["--foo=1", "--foo=2", "--foo=3"]);
+    });
 
     it("should test splitArgs", function() {
       expect(splitArgs("--foo=42 bar -- --this --is --unparsed") ).to.eql(["--foo=42", "bar", "--", "--this --is --unparsed"]);

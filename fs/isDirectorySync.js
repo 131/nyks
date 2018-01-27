@@ -1,7 +1,8 @@
 "use strict";
 
-var fs = require('fs');
+const fs = require('fs');
 
-module.exports = function(file_path){
- return fs.existsSync(file_path) && fs.statSync(file_path).isDirectory();
-}
+module.exports = function(file_path) {
+  return fs.existsSync(file_path) && fs.statSync(file_path).isDirectory();
+};
+

@@ -1,7 +1,7 @@
 "use strict";
 
-var fs = require('fs');
+const fs = require('fs');
 
-module.exports = function(file_path){
+module.exports = function(file_path) {
   return fs.statSync(file_path)["size"];
-}
+};

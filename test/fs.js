@@ -1,26 +1,23 @@
 "use strict";
 
-var fs    = require('fs');
-var path  = require('path');
-var expect = require('expect.js');
-var mkdirpSync= require('../fs/mkdirpSync');
+const fs    = require('fs');
+const path  = require('path');
+const expect = require('expect.js');
+const mkdirpSync= require('../fs/mkdirpSync');
 
-var deleteFolderRecursive= require('../fs/deleteFolderRecursive');
-var md5File= require('../fs/md5File');
-var md5FileSync = require('../fs/md5FileSync');
-var isFileSync = require('../fs/isFileSync');
-var isDirectorySync = require('../fs/isDirectorySync');
-var filemtimeSync = require('../fs/filemtimeSync');
-var filesizeSync = require('../fs/filesizeSync');
-var tmppath = require('../fs/tmppath');
-var copyFile = require('../fs/copyFile');
-var rmrf = require('../fs/rmrf');
+const deleteFolderRecursive= require('../fs/deleteFolderRecursive');
+const md5File= require('../fs/md5File');
+const md5FileSync = require('../fs/md5FileSync');
+const isFileSync = require('../fs/isFileSync');
+const isDirectorySync = require('../fs/isDirectorySync');
+const filemtimeSync = require('../fs/filemtimeSync');
+const filesizeSync = require('../fs/filesizeSync');
+const tmppath = require('../fs/tmppath');
+const copyFile = require('../fs/copyFile');
+const rmrf = require('../fs/rmrf');
 const writeLazySafeSync = require('../fs/writeLazySafeSync');
 
-
-
-
-var guid = require('mout/random/guid')
+const guid = require('mout/random/guid')
 
 
 describe("FS functions", function(){
@@ -179,22 +176,27 @@ describe("FS functions", function(){
 
 
     it("should test writeLazySafeSync", function(done){
-      var path = 'test/path/to/tash/me';
+      var target = 'test/path/to/tash/me';
       var str = `some 
       text
       to
       ${Date.now()}
       write
       `
-      writeLazySafeSync(path, str);
-      expect(fs.existsSync(path + 'tmp')).to.be(false);
-      var fileStats = fs.statSync(path);
-      setTimeout(()=>{
-        writeLazySafeSync(path, str);
-        expect(fs.existsSync(path + 'tmp')).to.be(false);   
+      var once = writeLazySafeSync(target, str);
+      expect(once).to.be.ok();
+      fs.writeFileSync(target, 'nope'); //alter file
+      var twice = writeLazySafeSync(target, str);
+      expect(twice).to.be.ok();
 
-        expect(fs.readFileSync(path, 'utf-8')).to.eql(str);
-        fs.unlinkSync(path)
+      expect(fs.existsSync(target + 'tmp')).to.be(false);
+      var fileStats = fs.statSync(target);
+      setTimeout(()=>{
+        writeLazySafeSync(target, str);
+        expect(fs.existsSync(target + 'tmp')).to.be(false);   
+
+        expect(fs.readFileSync(target, 'utf-8')).to.eql(str);
+        fs.unlinkSync(target)
         done();
       }, 1000);
 

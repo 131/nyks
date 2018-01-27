@@ -4,7 +4,7 @@ const fs         = require('fs');
 const mkdirpsync = require('./mkdirpSync');
 const path       = require('path');
 
-module.exports = (file_path, body) => {
+var writeLazySafeSync = (file_path, body) => {
   try {
     var data = fs.readFileSync(file_path, 'utf-8');
     if(data == body)
@@ -16,4 +16,6 @@ module.exports = (file_path, body) => {
   fs.writeFileSync(tmp_path, body);
   fs.renameSync(tmp_path, file_path);
   return true;
-}
+};
+
+module.exports = writeLazySafeSync;

@@ -1,10 +1,10 @@
 "use strict";
 
-var fs = require('fs'),
-  crypto = require('crypto');
+const fs = require('fs');
+const crypto = require('crypto');
 
 
-module.exports = function (file_path, callback){
+function sha1File(file_path, callback) {
   var shasum = crypto.createHash('sha1');
   var s = fs.ReadStream(file_path);
   s.on('data', shasum.update.bind(shasum));
@@ -12,3 +12,5 @@ module.exports = function (file_path, callback){
     callback(null, shasum.digest('hex'));
   });
 }
+
+module.exports = sha1File;

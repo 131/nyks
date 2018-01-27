@@ -1,24 +1,27 @@
 "use strict";
 
-const util       = require('util');
 const startsWith = require('mout/string/startsWith');
 const isArray    = require('mout/lang/isArray');
 
-module.exports = function(argv){
+module.exports = function(argv) {
 
   /* istanbul ignore if  */
   if(arguments.length == 0)
-     argv = process.argv.slice(2);
+    argv = process.argv.slice(2);
 
-  var args = [], dict = {}, rest,
-      r, e = new RegExp("^--?([a-z_0-9/:-]+)(?:=(.*))?", "i");
+  var args = [];
+  var dict = {};
+  var rest;
+  var r;
+  var e = new RegExp("^--?([a-z_0-9/:-]+)(?:=(.*))?", "i");
 
   argv.forEach(function(arg, i) {
-    var k, v;
+    var k;
+    var v;
     if(rest !== undefined)
       return;
     if(arg == "--") {
-      rest = argv.slice(i+1).join(' ');
+      rest = argv.slice(i + 1).join(' ');
     } else if(!startsWith(arg, '-')) {
       args.push(arg);
     } else if(e.test(arg)) {
@@ -39,4 +42,4 @@ module.exports = function(argv){
   });
 
   return {args, dict, rest};
-}
+};

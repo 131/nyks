@@ -1,13 +1,18 @@
 "use strict";
 
 
+const mask = "(\\s+)|--\\s+(.*)|([^\\s\\\"']+)|\\\"([^\\\"]*)\\\"|'([^']*)'";
+
 module.exports = function(str) {
-  var mask      = "(\\s+)|--\\s+(.*)|([^\\s\\\"']+)|\\\"([^\\\"]*)\\\"|'([^']*)'";
 
-  var args = [], need_value = true, digest = "";
-  var r = new RegExp(mask, "g"), step, sep, value;
+  var r = new RegExp(mask, "g");
+  var args = [];
+  var need_value = true;
+  var step;
+  var sep;
+  var value;
 
-  while(step = r.exec(str) ) {
+  while((step = r.exec(str))) {
 
     sep   = step[1] !== undefined;
     value = step[3] || step[4] || step[5] || "";
@@ -16,9 +21,14 @@ module.exports = function(str) {
       continue;
     }
 
-          //check "value"/separator alternance
-    if(sep) { need_value = true; continue; }
-    if(!need_value) break; need_value = false;
+    //check "value"/separator alternance
+    if(sep) {
+      need_value = true;
+      continue;
+    }
+    if(!need_value)
+      break;
+    need_value = false;
 
     if(value !== "" && isFinite(value))
       value = parseFloat(value);
@@ -28,4 +38,4 @@ module.exports = function(str) {
 
   return args;
 
-}
+};
