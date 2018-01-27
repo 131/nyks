@@ -34,6 +34,7 @@ describe("Process functions", function(){
       expect(splitArgs("") ).to.eql([]);
       expect(splitArgs('""') ).to.eql(['']);
       expect(splitArgs('"0.124"') ).to.eql([0.124]);
+      expect(typeof splitArgs('"0.124"')[0] ).to.eql("string");
       expect(typeof splitArgs("12")[0] ).to.eql("number");
       expect(typeof splitArgs("0")[0] ).to.eql("number");
 

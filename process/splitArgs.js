@@ -11,10 +11,12 @@ module.exports = function(str) {
   var step;
   var sep;
   var value;
+  var quoted;
 
   while((step = r.exec(str))) {
 
     sep   = step[1] !== undefined;
+    quoted = step[4] !== undefined || step[5] !== undefined;
     value = step[3] || step[4] || step[5] || "";
     if(step[2] !== undefined) {
       args.push("--", step[2]);
@@ -30,7 +32,8 @@ module.exports = function(str) {
       break;
     need_value = false;
 
-    if(value !== "" && isFinite(value))
+    //do not cast explicitly quoted strings
+    if(value !== "" && isFinite(value) && !quoted)
       value = parseFloat(value);
 
     args.push(value);
