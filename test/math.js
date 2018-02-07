@@ -6,7 +6,7 @@ const expect = require('expect.js');
 
 Math.log10 = null; //force alternative for testing
 
-const log2  = require('../math/log2');
+//const log2  = require('../math/log2');
 const log10 = require('../math/log10');
 
 describe("Math testing functions", function() {

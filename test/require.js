@@ -5,7 +5,7 @@
 const expect  = require('expect.js');
 const path    = require('path');
 
-const lookup  = require('../require/lookup');
+//const lookup  = require('../require/lookup');
 const resolve = require('../require/resolve');
 
 

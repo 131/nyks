@@ -7,7 +7,7 @@ const expect = require('expect.js');
 const cache     = require('../function/cache');
 const detach    = require('../function/detach');
 const once      = require('../function/once');
-const thunk     = require('../function/thunk');
+//const thunk     = require('../function/thunk');
 const unary     = require('../function/unary');
 
 describe("Testing functions helpers", function() {

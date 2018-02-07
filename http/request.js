@@ -39,7 +39,7 @@ module.exports = function(/*target, [data,], chain */) {
 
     if(i !== -1) {
       params = qs.parse(query.path.substr(i + 1));
-      query.path = substr(i);
+      query.path = query.path.substr(i);
     }
 
     query.qs = merge(params, query.qs);

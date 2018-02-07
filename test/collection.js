@@ -5,7 +5,7 @@
 const expect =  require('expect.js');
 
 const mask    = require('../collection/mask');
-const reindex = require('../collection/reindex');
+//const reindex = require('../collection/reindex');
 
 //I feel a little sorry for that
 describe("collections functions", function() {

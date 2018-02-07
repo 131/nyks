@@ -7,7 +7,7 @@ const os     = require('os');
 
 const exec     = require('../child_process/exec');
 const passthru = require('../child_process/passthru');
-const wait     = require('../child_process/wait');
+//const wait     = require('../child_process/wait');
 
 describe("Child process functions", function() {
 

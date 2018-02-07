@@ -4,8 +4,8 @@
 
 const expect = require('expect.js');
 
-const pickIn  = require('../array/pickIn');
-const reindex = require('../array/reindex');
+//const pickIn  = require('../array/pickIn');
+//const reindex = require('../array/reindex');
 const sum     = require('../array/sum');
 
 describe("Array functions", function() {

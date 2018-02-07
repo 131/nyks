@@ -5,7 +5,7 @@
 const expect = require('expect.js');
 
 const getSeason = require('../date/getSeason');
-const strftime  = require('../date/strftime');
+//const strftime  = require('../date/strftime');
 
 describe("Date functions", function() {
 

@@ -5,7 +5,7 @@
 const expect    = require('expect.js');
 
 const defer     = require('../promise/defer');
-const nodeify   = require('../promise/nodeify');
+//const nodeify   = require('../promise/nodeify');
 
 const promisify = require('../function/promisify');
 

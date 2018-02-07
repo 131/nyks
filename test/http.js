@@ -9,9 +9,9 @@ const util   = require('util');
 const fs     = require('fs');
 
 const fetch       = require('../http/fetch');
-const get         = require('../http/get');
+//const get         = require('../http/get');
 const getContents = require('../http/getContents');
-const request     = require('../http/request');
+//const request     = require('../http/request');
 
 const pipe        = require('../stream/pipe');
 const tmppath     = require('../fs/tmppath');
