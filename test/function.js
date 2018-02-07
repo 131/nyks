@@ -1,45 +1,45 @@
 "use strict";
 
-var expect = require('expect.js');
-var once   = require('../function/once');
-var detach = require('../function/detach');
-var unary  = require('../function/unary');
-var cache  = require('../function/cache');
+const expect = require('expect.js');
 
+const cache     = require('../function/cache');
+const detach    = require('../function/detach');
+const once      = require('../function/once');
+const promisify = require('../function/promisify');
+const sleep     = require('../function/sleep');
+const thunk     = require('../function/thunk');
+const unary     = require('../function/unary');
 
-describe("Testing functions helpers", function(){
+describe("Testing functions helpers", function() {
 
-  it("should test once", function(){
-
-
-    var a = 0, f  = function(){ return (a+= 1); }, g = once(f);
+  it("should test once", function() {
+    var a = 0;
+    var f = function() { return (a += 1); };
+    var g = once(f);
 
     f(); f();
     expect(a).to.be(2);
     g(); g();
     expect(a).to.be(3);
     expect(g()).to.be(3);
-
-
   });
 
-  it("should test unary", function(){
+  it("should test unary", function() {
 
-    var f = function(){ return arguments.length },
-      g = unary(f);
+    var f = function() { return arguments.length };
+    var g = unary(f);
 
     expect(f(1,2)).to.be(2);
     expect(g(1,2)).to.be(1);
-
   });
 
-
-
-  it("should test detach", function(chain){
-    var a = 0, b = 0 , c = function(i){ b+= i; }, d = detach(c);
+  it("should test detach", function(chain) {
+    var a   = 0;
+    var b   = 0;
+    var c   = function(i) { b += i; };
+    var d   = detach(c);
     var foo = detach();
     foo(); // this is useless..., but do not crash
-
 
     c(1);
     expect(b).to.be(1);
@@ -47,19 +47,17 @@ describe("Testing functions helpers", function(){
     d(2);
     expect(b).to.be(1);
 
-
-    setTimeout(function(){
+    setTimeout(function() {
       expect(b).to.be(3);
       chain();
     }, 100);
   });
 
-
   it("should test cache", function() {
     var cost = 0;
 
     function reverse(str) { //heavy CPU intensive operation
-      cost ++;
+      cost++;
       return str.toUpperCase();
     }
 
@@ -71,14 +69,6 @@ describe("Testing functions helpers", function(){
     expect(creverse("winter")).to.eql("WINTER");
     expect(creverse("winter")).to.eql("WINTER");
     expect(cost).to.eql(2);
-
   });
-  
-
-
-
 
 });
-
-
-

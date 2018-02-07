@@ -1,93 +1,88 @@
 "use strict";
 
-const expect = require('expect.js')
-const defer  = require('../promise/defer')
-const promisify  = require('../function/promisify');
+const expect    = require('expect.js');
 
+const defer     = require('../promise/defer');
+const nodeify   = require('../promise/nodeify');
 
-describe("Promise functions", function(){
+const promisify = require('../function/promisify');
 
+describe("Promise functions", function() {
 
   it("should test promisify with no err", async function() {
     var sayHello = function(str, err, cb) {
-      setTimeout(function(){
+      setTimeout(function() {
         cb(err, "Hello " + str)
-      })
+      });
     };
 
     var sayHi = function(cb) { //bind that
       var self = this;
-      setTimeout(function(){
+      setTimeout(function() {
         cb(null, "Hi " + self.name)
-      })
+      });
     };
 
-    var fn = promisify(sayHello);
-
-    var val = await fn("world" , null)
+    var fn  = promisify(sayHello);
+    var val = await fn("world", null);
     expect(val).to.be.equal("Hello world");
 
     try {
-      await fn("world" , "error");
+      await fn("world", "error");
       expect().to.fail("Never here");
     } catch(err) {
       expect(err).to.be("error");
     }
 
-    var fne = promisify(sayHi, {name:"Joe"});
+    var fne = promisify(sayHi, {name : "Joe"});
     var val = await fne();
     expect(val).to.be.equal("Hi Joe");
   });
-  
 
   it("testing defer errors", async function() {
     var defered = defer();
-    setTimeout(function(){
+    setTimeout(function() {
       defered.reject("Nope");
     }, 0);
 
     try {
       await defered;
-    } catch(err){
+    } catch(err) {
       expect(err).to.be("Nope");
     }
   });
 
-
-  it("testing defer chain", async function(){
+  it("testing defer chain", async function() {
     var defered = defer();
-    
-    setTimeout(function(){
+
+    setTimeout(function() {
       defered.chain("Nope");
     }, 0);
 
     try {
       await defered;
-    } catch(err){
+    } catch(err) {
       expect(err).to.be("Nope");
     }
 
-
     var defered = defer();
-    setTimeout(function(){
+    setTimeout(function() {
       defered.chain(null, "Okay");
     }, 0);
     var result = await defered;
     expect(result).to.be("Okay");
-
   });
 
-
-  it("testing defer sync behavior", function(){
+  it("testing defer sync behavior", function() {
     var defered = defer();
     defered.catch(function(err) {});
     defered.reject("Nope");
   });
 
-  it("testing defer accept", async function(){
+  it("testing defer accept", async function() {
     var defered = defer();
 
-    setTimeout(function(){
+    setTimeout(function() {
       defered.resolve("okay");
     }, 0);
 

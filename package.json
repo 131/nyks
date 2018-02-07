@@ -40,8 +40,8 @@
   "scripts": {
     "todo": "color crypto date fs function generator http lang math node_modules object path process promise require src stream string",
     "mocha": "node node_modules/mocha/bin/_mocha",
-    "jscs": "jscs --config=node_modules/ivs-jssc/ivs-node.jscsrc array async buffer child_process collection color crypto date fs function generator http lang math object path process promise require stream string",
-    "eslint": "eslint --config=node_modules/ivs-jssc/ivs-node.eslintrc.js array async buffer child_process collection color crypto date fs function generator http lang math object path process promise require stream string",
+    "jscs": "jscs --config=node_modules/ivs-jssc/ivs-node.jscsrc test",
+    "eslint": "eslint --config=node_modules/ivs-jssc/ivs-node.eslintrc.js test",
     "checkall": "npm run jscs && npm run eslint",
     "cover": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha --recursive test test/async",
     "test": "npm run cover && npm run checkall",
