@@ -1,6 +1,6 @@
 "use strict";
 
-var PassThrough = require('stream').PassThrough;
+const PassThrough = require('stream').PassThrough;
 
 module.exports = function(data) {
   var tmp = new PassThrough();

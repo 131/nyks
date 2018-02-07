@@ -1,6 +1,5 @@
 "use strict";
 
-
 module.exports =  function(fn, ctx) {
   var running = false;
   return function* () {
@@ -17,4 +16,4 @@ module.exports =  function(fn, ctx) {
       running = false;
     }
   }
-}
+};

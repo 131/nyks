@@ -1,8 +1,8 @@
 "use strict";
 
-var dayOfTheYear = require('mout/date/dayOfTheYear');
+const dayOfTheYear = require('mout/date/dayOfTheYear');
 
-module.exports = function(date){
+module.exports = function(date) {
   var i = dayOfTheYear(date);
   var s = "winter";
 
@@ -10,9 +10,9 @@ module.exports = function(date){
     s = "autumn";
   if(i < 265) // sept  21
     s = "summer";
-  if(i < 173) // june  21 
+  if(i < 173) // june  21
     s = "spring";
-  if(i < 81)  // march 21 
+  if(i < 81)  // march 21
     s = "winter";
 
   return s;
