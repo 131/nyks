@@ -1,5 +1,7 @@
 "use strict";
 
+/* global it describe */
+
 const expect = require('expect.js');
 
 const md5         = require('../crypto/md5');

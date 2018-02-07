@@ -1,5 +1,7 @@
 "use strict";
 
+/* global it describe */
+
 const expect = require('expect.js');
 
 const parse_cookie = require('../http/header/parse').parse_cookie;

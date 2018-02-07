@@ -1,5 +1,7 @@
 "use strict";
 
+/* global it describe */
+
 const expect         = require('expect.js');
 
 const capitalize     = require('../string/capitalize');
@@ -46,7 +48,7 @@ describe("strings functions", function() {
     o.o = o;
     expect(format("-%j-", o)).to.eql('-[Circular]-');
     expect(format("-%u ok", 42)).to.eql("-%u ok");
-  })
+  });
 
   it("should test replaces", function() {
     var str       = "You know &what;, &who;";

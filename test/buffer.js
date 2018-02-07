@@ -1,5 +1,7 @@
 "use strict";
 
+/* global it describe */
+
 const expect = require('expect.js');
 
 const fromASCII = require('../buffer/fromASCII');
@@ -7,11 +9,6 @@ const fromInt   = require('../buffer/fromInt');
 const indexOf   = require('../buffer/indexOf');
 const readUInt  = require('../buffer/readUInt');
 const writeBits = require('../buffer/writeBits');
-
-function trace(buf) {
-  var foo = require('mout/array/map')(buf).map((v) => { return ("00000000" + v.toString(2)).substr(-8) });
-  console.log(foo);
-}
 
 describe("Buffer writeBits", function() {
 
@@ -29,7 +26,7 @@ describe("Buffer writeBits", function() {
   });
 
   it("should test writeBits", function() {
-     // TOUS LES OFFSETS SONT INCLUSIFS (taille mini 1) (offsetEnd = offsetStart + length - 1)
+    // TOUS LES OFFSETS SONT INCLUSIFS (taille mini 1) (offsetEnd = offsetStart + length - 1)
     var tmp;
 
     tmp = Buffer([1]);
@@ -38,7 +35,7 @@ describe("Buffer writeBits", function() {
 
     tmp = Buffer([0]);
     expect(writeBits(tmp, Buffer([255]), 1)).to.eql(7);// 01100000
-    expect(tmp).to.eql(Buffer([127]) );
+    expect(tmp).to.eql(Buffer([127]));
 
     tmp = Buffer([0]);
     expect(writeBits(tmp, Buffer([255]), 1, 2)).to.eql(2);// 01100000
@@ -46,7 +43,7 @@ describe("Buffer writeBits", function() {
 
     tmp = Buffer([0, 195]);
     expect(writeBits(tmp, fromInt(3), 11, -2)).to.eql(2);
-    expect(tmp).to.eql( Buffer([0, 219]) );
+    expect(tmp).to.eql(Buffer([0, 219]));
 
     tmp = Buffer([0,0,0, 195]);
     expect(writeBits(tmp, fromInt(3), 27, -2)).to.eql(2);

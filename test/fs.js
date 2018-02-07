@@ -1,5 +1,7 @@
 "use strict";
 
+/* global it describe */
+
 const expect = require('expect.js');
 
 const fs     = require('fs');
@@ -21,9 +23,6 @@ const rmrf                  = require('../fs/rmrf');
 const sha1File              = require('../fs/sha1File');
 const tmppath               = require('../fs/tmppath');
 const writeLazySafeSync     = require('../fs/writeLazySafeSync');
-
-
-const guid = require('mout/random/guid')
 
 describe("FS functions", function() {
 
@@ -181,7 +180,7 @@ describe("FS functions", function() {
     to
     ${Date.now()}
     write
-    `
+    `;
     var once = writeLazySafeSync(target, str);
     expect(once).to.be.ok();
     fs.writeFileSync(target, 'nope'); //alter file
@@ -189,13 +188,13 @@ describe("FS functions", function() {
     expect(twice).to.be.ok();
 
     expect(fs.existsSync(target + 'tmp')).to.be(false);
-    var fileStats = fs.statSync(target);
+    //var fileStats = fs.statSync(target);
     setTimeout(() => {
       writeLazySafeSync(target, str);
       expect(fs.existsSync(target + 'tmp')).to.be(false);
 
       expect(fs.readFileSync(target, 'utf-8')).to.eql(str);
-      fs.unlinkSync(target)
+      fs.unlinkSync(target);
       done();
     }, 1000);
   });

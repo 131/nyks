@@ -1,12 +1,12 @@
 "use strict";
 
+/* global it describe */
+
 const expect = require('expect.js');
 
 const cache     = require('../function/cache');
 const detach    = require('../function/detach');
 const once      = require('../function/once');
-const promisify = require('../function/promisify');
-const sleep     = require('../function/sleep');
 const thunk     = require('../function/thunk');
 const unary     = require('../function/unary');
 
@@ -26,7 +26,7 @@ describe("Testing functions helpers", function() {
 
   it("should test unary", function() {
 
-    var f = function() { return arguments.length };
+    var f = function() { return arguments.length; };
     var g = unary(f);
 
     expect(f(1,2)).to.be(2);
@@ -34,7 +34,6 @@ describe("Testing functions helpers", function() {
   });
 
   it("should test detach", function(chain) {
-    var a   = 0;
     var b   = 0;
     var c   = function(i) { b += i; };
     var d   = detach(c);

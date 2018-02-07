@@ -9,7 +9,8 @@ const pluck  = require('mout/object/pluck');
 const encode = require('mout/queryString/encode');
 const merge  = require('mout/object/merge');
 const trim   = require('mout/string/trim');
-const mask   = require('nyks/object/mask');
+
+const mask   = require('../object/mask');
 
 module.exports = function(/*target, [data,], chain */) {
 

@@ -1,11 +1,12 @@
 "use strict";
 
+/* global it describe */
+
 const expect = require('expect.js');
 const path   = require('path');
 
 const extend = require('../path/extend');
 const jail   = require('../path/jail');
-const url    = require('../path/url');
 const which  = require('../path/which');
 
 describe("Paths functions", function() {
@@ -20,8 +21,8 @@ describe("Paths functions", function() {
   });
 
   it("testing fail", function() {
-    expect(function() { jail(__dirname, "../../etc/host") }).to.throwException(/escape attempt/)
-    expect(jail(__dirname, "ab", "..", "cd")).to.eql(path.join(__dirname, 'ab/../cd'))
+    expect(function() { jail(__dirname, "../../etc/host"); }).to.throwException(/escape attempt/);
+    expect(jail(__dirname, "ab", "..", "cd")).to.eql(path.join(__dirname, 'ab/../cd'));
   });
 
 });

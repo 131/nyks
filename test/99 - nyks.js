@@ -1,21 +1,18 @@
 "use strict";
 
-var expect = require('expect.js')
+/* global it describe */
+
+const expect = require('expect.js');
 
 
 Math.log10 = null; //force alternative for testing
 
+const nyks = require('../');
 
-var nyks   = require('../');
+describe("Global nyks include", function() {
 
-
-
-
-describe("Global nyks include", function(){
-
-    it("Should provide love", function(){
-        expect(nyks).to.be.ok();
-    });
-
+  it("Should provide love", function() {
+    expect(nyks).to.be.ok();
+  });
 
 });

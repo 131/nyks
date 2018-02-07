@@ -1,5 +1,7 @@
 "use strict";
 
+/* global it describe */
+
 const expect = require('expect.js');
 
 const url    = require('url');
@@ -55,7 +57,7 @@ describe("Testing http", function() {
 
   it("Should fetch missing resource", function(done) {
     var testurl = util.format("http://127.0.0.1:%d/missing", port);
-    getContents(testurl, function(err, body) {
+    getContents(testurl, function(err) {
       expect(err).to.be.ok();
       done();
     });
@@ -63,7 +65,7 @@ describe("Testing http", function() {
 
   it("Should fetch dummy error", function(done) {
     var testurl = url.parse(util.format("https://127.0.0.1:%d/ping", port + 1));
-    getContents(testurl, function(err, ip) {
+    getContents(testurl, function(err) {
       expect(err).to.be.ok();
       done();
     });

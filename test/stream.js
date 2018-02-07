@@ -1,10 +1,11 @@
 "use strict";
 
+/* global it describe */
+
 const fs     = require('fs');
 const expect = require('expect.js');
 
 const tmppath    = require('../fs/tmppath');
-const defer      = require('../promise/defer');
 
 const drain      = require('../stream/drain');
 const fromBuffer = require('../stream/fromBuffer');
@@ -68,10 +69,10 @@ describe("Stream functions", function() {
     var body     = "café";
     var buf      = new Buffer(body);
     var tmp_path = tmppath("too");
-    var input    = new Promise(function(resolve, reject) {
+    var input    = new Promise(function(resolve) {
       resolve(fromBuffer(buf));
     });
-    var dest     = new Promise(function(resolve, reject) {
+    var dest     = new Promise(function(resolve) {
       resolve(fs.createWriteStream(tmp_path));
     });
 

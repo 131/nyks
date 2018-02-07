@@ -1,6 +1,8 @@
 "use strict";
 
-const expect = require('expect.js')
+/* global it describe */
+
+const expect = require('expect.js');
 
 Math.log10 = null; //force alternative for testing
 

@@ -1,5 +1,7 @@
 "use strict";
 
+/* global it describe */
+
 const expect    = require('expect.js');
 
 const defer     = require('../promise/defer');
@@ -12,14 +14,14 @@ describe("Promise functions", function() {
   it("should test promisify with no err", async function() {
     var sayHello = function(str, err, cb) {
       setTimeout(function() {
-        cb(err, "Hello " + str)
+        cb(err, "Hello " + str);
       });
     };
 
     var sayHi = function(cb) { //bind that
       var self = this;
       setTimeout(function() {
-        cb(null, "Hi " + self.name)
+        cb(null, "Hi " + self.name);
       });
     };
 
@@ -35,7 +37,7 @@ describe("Promise functions", function() {
     }
 
     var fne = promisify(sayHi, {name : "Joe"});
-    var val = await fne();
+    val = await fne();
     expect(val).to.be.equal("Hi Joe");
   });
 
@@ -65,7 +67,7 @@ describe("Promise functions", function() {
       expect(err).to.be("Nope");
     }
 
-    var defered = defer();
+    defered = defer();
     setTimeout(function() {
       defered.chain(null, "Okay");
     }, 0);
@@ -75,7 +77,7 @@ describe("Promise functions", function() {
 
   it("testing defer sync behavior", function() {
     var defered = defer();
-    defered.catch(function(err) {});
+    defered.catch(function() {});
     defered.reject("Nope");
   });
 

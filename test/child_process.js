@@ -1,5 +1,7 @@
 "use strict";
 
+/* global it describe */
+
 const expect = require('expect.js');
 const os     = require('os');
 
@@ -17,7 +19,7 @@ describe("Child process functions", function() {
   });
 
   it("should test a failure", function(chain) {
-    passthru("hostnameNope", {}, function(err, exit) {
+    passthru("hostnameNope", {}, function(err) {
       expect(err).to.be.ok();
       chain();
     });

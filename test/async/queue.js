@@ -1,17 +1,18 @@
 "use strict";
 
-const assert = require('assert');
-const expect = require('expect.js');
-const sleep  = require('../../async/sleep');
+/* global it describe */
 
-const queue  = require('../../async/queue');
-describe('queue', function(){
+const expect = require('expect.js');
+
+const queue = require('../../async/queue');
+
+const sleep = require('../../async/sleep');
+
+describe('queue', function() {
 
   it('basics', async function() {
-
     var call_order = [];
-    var delays = [40,20,60,20];
-
+    var delays     = [40, 20, 60, 20];
 
     // worker1: --1-4
     // worker2: -2---3
@@ -23,31 +24,23 @@ describe('queue', function(){
       return Promise.resolve('arg');
     }, 2);
 
-
-
-    await Promise.all([(async function(){ 
+    await Promise.all([(async function() {
       var arg = await q.push(1);
       expect(arg).to.equal('arg');
       call_order.push('callback ' + 1);
-
-    })(), (async function(){
-
+    })(), (async function() {
       var arg = await q.push(2);
       expect(arg).to.equal('arg');
       call_order.push('callback ' + 2);
-
-    })(), (async function(){
-
+    })(), (async function() {
       var arg = await q.push(3);
       expect(arg).to.equal('arg');
       call_order.push('callback ' + 3);
-
-    })(), (async function(){
-      var arg = await q.push(4)
+    })(), (async function() {
+      var arg = await q.push(4);
       expect(arg).to.equal('arg');
       call_order.push('callback ' + 4);
     })()]);
-
 
     expect(call_order).to.eql([
       'process 2', 'callback 2',
@@ -55,16 +48,11 @@ describe('queue', function(){
       'process 4', 'callback 4',
       'process 3', 'callback 3'
     ]);
-
   });
 
-
   it('default concurrency', async function() {
-
-
     var call_order = [];
-    var delays = [40,20,60,20];
-
+    var delays     = [40,20,60,20];
 
     // worker1: --1-4
     // worker2: -2---3
@@ -76,31 +64,23 @@ describe('queue', function(){
       return Promise.resolve('arg');
     }, 1);
 
-
-
-    await Promise.all([ (async function(){ 
+    await Promise.all([(async function() {
       var arg = await q.push(1);
       expect(arg).to.equal('arg');
       call_order.push('callback ' + 1);
-
-    })(), (async function(){
-
+    })(), (async function() {
       var arg = await q.push(2);
       expect(arg).to.equal('arg');
       call_order.push('callback ' + 2);
-
-    })(), (async function(){
-
+    })(), (async function() {
       var arg = await q.push(3);
       expect(arg).to.equal('arg');
       call_order.push('callback ' + 3);
-
-    })(), (async function(){
-      var arg = await q.push(4)
+    })(), (async function() {
+      var arg = await q.push(4);
       expect(arg).to.equal('arg');
       call_order.push('callback ' + 4);
     })()]);
-
 
     expect(call_order).to.eql([
       'process 1', 'callback 1',
@@ -113,22 +93,21 @@ describe('queue', function(){
 
   it('error propagation', async function () {
     var results = [];
-
-    var q = queue(async function(task) {
+    var q       = queue(async function(task) {
       if(task.name === 'foo')
         throw 'fooError';
     }, 2);
 
-    await Promise.all([ (async function () {
-      await q.push({name: 'bar'});
+    await Promise.all([(async function () {
+      await q.push({name : 'bar'});
       results.push('bar');
     })(), (async function () {
-      await q.push({name: 'bur'});
+      await q.push({name : 'bur'});
       results.push('bur');
     })(), (async function () {
       try {
-        await q.push({name: 'foo'});
-      } catch(err){
+        await q.push({name : 'foo'});
+      } catch(err) {
         results.push(err);
         return ;
       }
@@ -138,7 +117,4 @@ describe('queue', function(){
     expect(results).to.eql(['bar', 'bur', 'fooError']);
   });
 
-
-
 });
-
