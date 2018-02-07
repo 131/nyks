@@ -19,4 +19,4 @@ module.exports = function(module_name) {
     if(existsSync(path.join(search_paths[i], module_name, "package.json")))
       return path.join(search_paths[i], module_name);
   throw "nope";
-}
+};

@@ -11,6 +11,6 @@ module.exports = (obj1, obj2) => {
     var valObj2 = obj2[stream_id];
     if(!valObj1 || !valObj2 || valObj1 != valObj2)
       modified.push(stream_id);
-  })
+  });
   return modified;
 };

@@ -10,4 +10,4 @@ module.exports = function(str, hash) {
     str = replaces(str, hash);
   } while(tmp != str);
   return tmp;
-}
+};

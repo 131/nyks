@@ -23,6 +23,7 @@ module.exports = function(fn, timeout, ctx) {
     }, defered];
 
     return defered;
-  }
+  };
+
   return my;
 };

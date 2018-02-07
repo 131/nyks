@@ -7,5 +7,5 @@ module.exports = function(a) {
   return "#"
        + ("00" + a.r.toString(16)).substr(-2)
        + ("00" + a.g.toString(16)).substr(-2)
-       + ("00" + a.b.toString(16)).substr(-2)
+       + ("00" + a.b.toString(16)).substr(-2);
 };

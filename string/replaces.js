@@ -8,4 +8,4 @@ module.exports = function(str, hash) {
     str = str.replace(k, v);
   });
   return str;
-}
+};

@@ -10,5 +10,4 @@ module.exports = function(coll, valueMask, keyMask) {
   });
 
   return ret;
-}
-
+};

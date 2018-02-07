@@ -14,8 +14,8 @@ module.exports = function() {
   defer.chain   = function(err, body) {
     if(err)
       return defer.reject(err);
-    return defer.resolve(body)
-  }
+    return defer.resolve(body);
+  };
 
   return defer;
-}
+};

@@ -12,4 +12,4 @@ module.exports = function(/* str, len[, pad = '…'] */) {
   if(len < 0)
     return pad + str.substr(len + pad.length);
   return str.substr(0, len - pad.length) + pad;
-}
+};

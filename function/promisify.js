@@ -19,5 +19,5 @@ module.exports = function(fn, ctx) {
       fn.apply(ctx, args);
     });
 
-  }
+  };
 };

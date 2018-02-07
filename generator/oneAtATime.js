@@ -15,5 +15,5 @@ module.exports =  function(fn, ctx) {
     } finally {
       running = false;
     }
-  }
+  };
 };

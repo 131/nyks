@@ -4,7 +4,6 @@ const fs   = require('fs');
 const path = require('path');
 
 module.exports = function(bin) {
-  var binpath;
   var paths = process.env.PATH.split(path.delimiter);
   /*istanbul ignore next*/
   var exts  = process.env.PATHEXT ? process.env.PATHEXT.split(path.delimiter) : [""];
@@ -24,6 +23,6 @@ module.exports = function(bin) {
       if(fs.existsSync(_full))
         return _full;
     }
-  };
+  }
   return false;
 };

@@ -7,5 +7,5 @@
 module.exports = function(cb) {
   return function(arg) {
     return cb(arg);
-  }
-}
+  };
+};

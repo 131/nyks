@@ -1,18 +1,15 @@
 "use strict";
 
-const https = require('https');
-const http  = require('http');
-const url   = require('url');
-const qs    = require('querystring');
+const https  = require('https');
+const http   = require('http');
+const url    = require('url');
+const qs     = require('querystring');
 
-const merge      = require('mout/object/merge');
-const encode     = require('mout/queryString/encode');
-const trim       = require('mout/string/trim');
-const contains   = require('mout/array/contains');
-const startsWith = require('mout/string/startsWith');
-
-const mask       = require('nyks/object/mask');
-const pluck      = require('mout/object/pluck');
+const pluck  = require('mout/object/pluck');
+const encode = require('mout/queryString/encode');
+const merge  = require('mout/object/merge');
+const trim   = require('mout/string/trim');
+const mask   = require('nyks/object/mask');
 
 module.exports = function(/*target, [data,], chain */) {
 

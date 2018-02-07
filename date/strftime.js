@@ -8,7 +8,7 @@ module.exports = function(date, format) {
   format = strftime.apply(null, arguments);
   var reToken = /%([a-z%])/gi;
 
-  function convertToken(date, token, l10n) {
+  function convertToken(date, token) {
     switch (token) {
       case 'E':
         return getSeason(date);

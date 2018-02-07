@@ -16,4 +16,4 @@ module.exports = function(date) {
     s = "winter";
 
   return s;
-}
+};
