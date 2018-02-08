@@ -11,7 +11,7 @@ describe("Testing header parse", function() {
   it("test lots of parsing", function() {
     var tests = [
       [
-        'X-APPLE-WEBAUTH-LOGIN="v=1:t=IWONTTELL-K6prhxwpzG3DAT7w~";Path=/;Domain=.icloud.com;Secure;HttpOnly',
+        'X-APPLE-WEBAUTH-LOGIN="v=1:t=IWONTTELL-K6prhxwpzG3DAT7w~";Path=/;Domain=.icloud.com;Secure; HttpOnly ',
         {
           name   : 'X-APPLE-WEBAUTH-LOGIN',
           value  : 'v=1:t=IWONTTELL-K6prhxwpzG3DAT7w~',

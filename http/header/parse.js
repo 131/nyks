@@ -1,7 +1,8 @@
+
 "use strict";
 
 const forOwn = require('mout/object/forOwn');
-const split  = new RegExp("(.+?)(?:=\\s*(?:\"([^\"]*)\"|'([^']*)'|(.*?)))?s*(;|$)", "g");
+const split = new RegExp("\\s*(.+?)(?:=\\s*(?:\"([^\"]*)\"|'([^']*)'|(.*?)))?\\s*(;|$)", "g");
 
 var parse = function(str) {
   var res;
@@ -26,3 +27,4 @@ parse.parse_cookie = function(str) {
 };
 
 module.exports = parse;
+
