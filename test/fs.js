@@ -17,7 +17,7 @@ const isFileSync            = require('../fs/isFileSync');
 const md5File               = require('../fs/md5File');
 const md5FileSync           = require('../fs/md5FileSync');
 const mkdirpSync            = require('../fs/mkdirpSync');
-//const patchJSON             = require('../fs/patchJSON');
+const patchJSON             = require('../fs/patchJSON');
 //const readFileJSONSync      = require('../fs/readFileJSONSync');
 const rmrf                  = require('../fs/rmrf');
 //const sha1File              = require('../fs/sha1File');
@@ -198,5 +198,34 @@ describe("FS functions", function() {
       done();
     }, 1000);
   });
+
+  it("should test patchJSON", function() {
+    var target = 'package_tmp.json';
+    var src    = 'package.json';
+    var concat = ' Patched';
+
+    var previous_name = null;
+
+    patchJSON(target, function(body) {
+      previous_name = body.name;
+      body.name = body.name + concat;
+    }, src);
+
+    var new_file_content = JSON.parse(fs.readFileSync(target));
+    expect(new_file_content.name).to.be(previous_name + concat);
+
+    // test with only one file
+    var new_name = 'This is new name';
+    patchJSON(target, function(body) {
+      body.name = new_name;
+    });
+
+    new_file_content = JSON.parse(fs.readFileSync(target));
+    expect(new_file_content.name).to.be(new_name);
+
+    // cleanup
+    fs.unlinkSync(target);
+  });
+
 
 });
