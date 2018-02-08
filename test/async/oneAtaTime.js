@@ -26,9 +26,7 @@ describe("testing one at a time", function() {
     var oneAtATImeReject  = oneAtaTime(reject);
 
     try {
-      /* eslint-disable */
-      var rej = await oneAtATImeReject();
-      /* eslint-enable */
+      await oneAtATImeReject();
     } catch(err) {
       expect(err).to.eql("reject");
     }

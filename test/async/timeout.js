@@ -25,9 +25,7 @@ describe("testing timeout", function() {
     var resolveWithoutTimeout = timeout(resolve);
 
     try {
-      /* eslint-disable */
-      var rej = await Reject();
-      /* eslint-enable */
+      await Reject();
     } catch(err) {
       expect(err).to.eql("reject");
     }
@@ -46,9 +44,7 @@ describe("testing timeout", function() {
     };
 
     try {
-      /* eslint-disable */
-      var Resolve = timeout(resolve, "aze");
-      /* eslint-enable */
+      timeout(resolve, "aze");
       expect.fail("Never here");
     } catch(err) {
       expect(err).to.eql("timeout must be a number");
@@ -68,9 +64,7 @@ describe("testing timeout", function() {
     var data = await passTimeout();
     expect(data).to.eql("pass");
     try {
-      /* eslint-disable */
-      var data = await crachTimeout();
-      /* eslint-enable */
+      await crachTimeout();
     } catch(err) {
       expect(err).to.eql("timeout");
     }

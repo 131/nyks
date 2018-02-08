@@ -18,9 +18,7 @@ describe("Require functions", function() {
 
   it("Should test require resolve failure", function() {
     try {
-      /* eslint-disable */
-      var folder = resolve("nope");
-      /* eslint-enable */
+      resolve("nope");
       expect().fail("Never Here");
     } catch(err) {
       expect(err).to.be("nope");
