@@ -20,7 +20,7 @@ const mkdirpSync            = require('../fs/mkdirpSync');
 const patchJSON             = require('../fs/patchJSON');
 const readFileJSONSync      = require('../fs/readFileJSONSync');
 const rmrf                  = require('../fs/rmrf');
-//const sha1File              = require('../fs/sha1File');
+const sha1File              = require('../fs/sha1File');
 const tmppath               = require('../fs/tmppath');
 const writeLazySafeSync     = require('../fs/writeLazySafeSync');
 
@@ -227,5 +227,17 @@ describe("FS functions", function() {
     fs.unlinkSync(target);
   });
 
+  it("should test sha1File", function() {
+    var file = "dummy";
+
+    fs.writeFileSync(file, "bar");
+
+    sha1File(file, function(err, sha1) {
+      expect(err).to.be(null);
+      expect(sha1).to.be('62cdb7020ff920e5aa642c3d4066950dd1f01f4d');
+
+      fs.unlinkSync(file);
+    });
+  });
 
 });
