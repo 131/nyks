@@ -14,8 +14,9 @@ function pipe(src, dest) {
       return pipe(src, tmp);
     });
 
-  return new Promise(function(resolve) {
+  return new Promise(function(resolve, reject) {
     src.pipe(dest);
+    src.on('error', reject);
     dest.on('close', resolve);
   });
 

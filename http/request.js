@@ -65,8 +65,10 @@ module.exports = function(/*target, [data,], chain */) {
 
   req.once('error', chain);
 
-  if(data && typeof data.pipe == "function")
+  if(data && typeof data.pipe == "function") {
+    data.on('error', chain);
     return data.pipe(req);
+  }
 
   if(data)
     req.write(data);
