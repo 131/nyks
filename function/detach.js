@@ -7,9 +7,9 @@ module.exports = function(fn, bind) {
 
   return function() {
     args.push.apply(args, arguments);
-    setImmediate(function(){
+    setImmediate(function() {
       if(fn)
         return fn.apply(bind, args);
-    })
+    });
   };
 };

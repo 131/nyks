@@ -1,6 +1,6 @@
 "use strict";
 
-const path = require('path');
+const path       = require('path');
 const startsWith = require('mout/string/startsWith');
 
 module.exports = function(base, file) {

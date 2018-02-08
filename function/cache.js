@@ -14,4 +14,4 @@ module.exports = function(fn) {
     cache[arg] = fn.apply(this, arguments);
     return cache[arg];
   };
-}
+};

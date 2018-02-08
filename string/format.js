@@ -1,9 +1,8 @@
 "use strict";
-"use strict";
 
-var formatRegExp = /%[sdj%]/g;
+const formatRegExp = /%[sdj%]/g;
 
-module.exports= function(f) {
+module.exports = function(f) {
   var i = 1;
   var args = arguments;
   var len = args.length;

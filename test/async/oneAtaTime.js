@@ -1,39 +1,43 @@
 "use strict";
+/* eslint-env node,mocha */
+
+
 const expect     = require('expect.js');
+
 const oneAtaTime = require('../../async/oneAtATime');
+
 const sleep      = require('../../async/sleep');
 
 describe("testing one at a time", function() {
- 
-  it("should not change original function", async function (){
 
+  it("should not change original function", async function () {
     var resolve = async function(a) {
       this.name = a;
       await sleep(200);
       return "done " + a;
-    }
+    };
 
-    var reject = async function(){
+    var reject = async function() {
       await sleep(200);
       throw "reject";
-    }
+    };
 
     var oneAtATImeResolve = oneAtaTime(resolve);
     var oneAtATImeReject  = oneAtaTime(reject);
-   
-    try{
-      var rej = await oneAtATImeReject();
-    }catch(err){
+
+    try {
+      await oneAtATImeReject();
+    } catch(err) {
       expect(err).to.eql("reject");
     }
-    
+
     var foo = {
       name : "nope",
       fn   : oneAtATImeResolve,
-    }, bar = {};
+    };
+    var bar = {};
 
-
-    var res   = await foo.fn("cool");
+    var res = await foo.fn("cool");
     expect(res).to.eql("done cool");
     expect(foo.name).to.eql("cool");
 
@@ -44,26 +48,26 @@ describe("testing one at a time", function() {
 
     await foo.fn("test 55");
     expect(bar.name).to.eql("test 55");
-
   });
 
-
-  it("should emmit error if run simultaneously", async function(){
-    var a = 0;
-    var wait200 = async function(){
+  it("should emmit error if run simultaneously", async function() {
+    var a       = 0;
+    var wait200 = async function() {
       a = a + 1 ;
       await sleep(200);
       return "done";
-    }
+    };
 
     var runOneAtATIme = oneAtaTime(wait200);
-    var res = await runOneAtATIme();
+    var res           = await runOneAtATIme();
+
     expect(res).to.eql("done");
     expect(a).to.eql(1);
     await runOneAtATIme();
     expect(a).to.eql(2);
+
     try {
-      var res = await Promise.all([runOneAtATIme() , runOneAtATIme(), runOneAtATIme()]);
+      res = await Promise.all([runOneAtATIme(), runOneAtATIme(), runOneAtATIme()]);
     } catch(err) {
       expect(err).to.eql("Already running !");
     }
@@ -72,7 +76,5 @@ describe("testing one at a time", function() {
     await runOneAtATIme();
     expect(a).to.eql(4);
   });
-
-
 
 });

@@ -8,7 +8,7 @@ module.exports = function fileUrl(str) {
 
   // Windows drive letter must be prefixed with a slash
   if (pathName[0] !== '/')
-      pathName = '/' + pathName;
+    pathName = '/' + pathName;
 
   return encodeURI('file://' + pathName);
 };
