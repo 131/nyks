@@ -14,12 +14,12 @@ function findPackage(file_path) {
     return packages_paths[file_path];
 
   for(var n = paths.length - 1; n > 0; n--) {
-    var package_path = path.join(paths.slice(0, n).join(path.sep), "package.json");
-    if(fs.existsSync(package_path) && n > 1)
+    var package_path = (paths.slice(0, n).concat("package.json")).join(path.sep);
+    if(fs.existsSync(package_path))
       return packages_paths[file_path] = package_path;
   }
 
-  throw `can't find ${file_path}`;
+  throw `can't find ${file_path} package`;
 }
 
 module.exports = function(file_path) {
