@@ -5,9 +5,10 @@
 const expect    = require('expect.js');
 
 const defer     = require('../promise/defer');
-//const nodeify   = require('../promise/nodeify');
+const nodeify   = require('../promise/nodeify');
 
 const promisify = require('../function/promisify');
+const sleep     = require('../function/sleep');
 
 describe("Promise functions", function() {
 
@@ -91,6 +92,19 @@ describe("Promise functions", function() {
     var result = await defered;
 
     expect(result).to.eql("okay");
+  });
+
+  it("should test nodeify", async function() {
+    var lazyMath = async function(int) {
+      await sleep(500);
+      return int * 2;
+    };
+
+    var worker = nodeify(lazyMath);
+
+    worker(8, function(err, result) {
+      expect(result).to.be(16);
+    });
   });
 
 });
