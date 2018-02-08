@@ -37,10 +37,9 @@ describe("Require functions", function() {
 
   it("Should test Lookup throw", function() {
     var toto_path = path.join(__dirname, "..", "..", "nop.js");
-    var result    = null;
 
     try {
-      result = lookup(toto_path);
+      lookup(toto_path);
       expect().fail("Never here");
     } catch (err) {
       expect(err).to.be(`can't find ${toto_path} package`);
