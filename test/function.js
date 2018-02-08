@@ -7,7 +7,7 @@ const expect = require('expect.js');
 const cache     = require('../function/cache');
 const detach    = require('../function/detach');
 const once      = require('../function/once');
-//const thunk     = require('../function/thunk');
+const thunk     = require('../function/thunk');
 const unary     = require('../function/unary');
 
 describe("Testing functions helpers", function() {
@@ -68,6 +68,25 @@ describe("Testing functions helpers", function() {
     expect(creverse("winter")).to.eql("WINTER");
     expect(creverse("winter")).to.eql("WINTER");
     expect(cost).to.eql(2);
+  });
+
+  it("should test thunk", function() {
+
+    var errorMessage = 'this is error';
+    var mockData     = "this is mock data";
+
+    new Promise(function(resolve, reject) {
+      var cb = thunk(resolve, reject);
+      expect(cb(null, mockData)).to.be(mockData);
+    });
+
+
+    new Promise(function(resolve, reject) {
+      var cb = thunk(resolve, reject);
+      cb(errorMessage, mockData);
+    }).catch(function(err) {
+      expect(err).to.be(errorMessage);
+    });
   });
 
 });
