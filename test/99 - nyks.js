@@ -6,6 +6,7 @@ const expect = require('expect.js');
 
 
 Math.log10 = null; //force alternative for testing
+Math.log2  = null; //force alternative for testing
 
 const nyks = require('../');
 
