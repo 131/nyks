@@ -13,7 +13,7 @@ const filemtimeSync         = require('../fs/filemtimeSync');
 const filesizeSync          = require('../fs/filesizeSync');
 const isDirectorySync       = require('../fs/isDirectorySync');
 const isFileSync            = require('../fs/isFileSync');
-//const json                  = require('../fs/JSON');
+const json                  = require('../fs/JSON');
 const md5File               = require('../fs/md5File');
 const md5FileSync           = require('../fs/md5FileSync');
 const mkdirpSync            = require('../fs/mkdirpSync');
@@ -199,7 +199,7 @@ describe("FS functions", function() {
     }, 1000);
   });
 
-  it("should test patchJSON", function() {
+  it("should test patchJSON AND JSON", function() {
     var target = 'package_tmp.json';
     var src    = 'package.json';
     var concat = ' Patched';
@@ -211,7 +211,7 @@ describe("FS functions", function() {
       body.name = body.name + concat;
     }, src);
 
-    var new_file_content = JSON.parse(fs.readFileSync(target));
+    var new_file_content = json(target);
     expect(new_file_content.name).to.be(previous_name + concat);
 
     // test with only one file
@@ -220,7 +220,7 @@ describe("FS functions", function() {
       body.name = new_name;
     });
 
-    new_file_content = JSON.parse(fs.readFileSync(target));
+    new_file_content = json(target);
     expect(new_file_content.name).to.be(new_name);
 
     // cleanup
