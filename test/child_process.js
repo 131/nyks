@@ -7,7 +7,7 @@ const os     = require('os');
 
 const exec     = require('../child_process/exec');
 const passthru = require('../child_process/passthru');
-//const wait     = require('../child_process/wait');
+const wait     = require('../child_process/wait');
 
 describe("Child process functions", function() {
 
@@ -47,6 +47,21 @@ describe("Child process functions", function() {
       expect(stderr.trim()).to.eql(22);
       chain();
     });
+  });
+
+  it("should test wait", async function() {
+    var process_1 = require('child_process').spawn('node', ['-e', 'process.exit(0)']);
+    var result  = await wait(process_1);
+
+    //wait doesn't return any stdout
+    expect(result).to.be.undefinded;
+
+    var process_2 = require('child_process').spawn('node', ['-e', 'process.exit(1)']);
+    try {
+      await wait(process_2);
+    } catch (err) {
+      expect(err).to.be("Invalid process exit code");
+    }
   });
 
 });
