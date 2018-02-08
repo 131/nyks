@@ -1,7 +1,6 @@
 "use strict";
 
-const fs = require('fs');
+//alias
+const that = require('./JSON');
 
-module.exports = function(file_path) {
-  return JSON.parse(fs.readFileSync(file_path));
-};
+module.exports = that;
