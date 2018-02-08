@@ -1,6 +1,5 @@
 "use strict";
-
-/* global it describe */
+/* eslint-env node,mocha */
 
 const expect = require('expect.js');
 
