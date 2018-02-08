@@ -10,19 +10,17 @@ var packages_paths = {}; //cache
 function findPackage(file_path) {
   file_path = path.resolve(file_path);
   var paths = file_path.split(path.sep);
-
   if(packages_paths[file_path])
     return packages_paths[file_path];
 
   for(var n = paths.length - 1; n > 0; n--) {
     var package_path = path.join(paths.slice(0, n).join(path.sep), "package.json");
-    if(fs.existsSync(package_path))
+    if(fs.existsSync(package_path) && n > 1)
       return packages_paths[file_path] = package_path;
   }
 
-  throw `nope ${file_path}`;
+  throw `can't find ${file_path}`;
 }
-
 
 module.exports = function(file_path) {
   var package_path = findPackage(file_path);
