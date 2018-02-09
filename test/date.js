@@ -20,8 +20,14 @@ describe("Date functions", function() {
 
   it("should test strftime", function() {
     var date = new Date('2016-01-01');
+
+    let tmp_string = strftime(date, '%v');
+
+    //this fix for travis tests
+    tmp_string = tmp_string.replace('STD', 'UTC');
+
     expect(strftime(date, '%d')).to.eql("01");
-    expect(strftime(date, '%v')).to.eql("Sun Dec 27 2015 00:00:00 GMT+0100 (STD)");
+    expect(tmp_string).to.eql("Sun Dec 27 2015 00:00:00 GMT+0100 (UTC)");
     expect(strftime(date, '%E')).to.eql("winter");
     expect(strftime(date, '%g')).to.eql("%g"); //doesn't exist
     //expect(strftime(date, '%%')).to.eql("%"); doesn't work...
