@@ -14,6 +14,7 @@ module.exports = function(date, format) {
         return getSeason(date);
       case 'v':
         return startOf(date, 'week');
+      /* istanbul ignore next */
       case '%':
         return '%';
       default:
