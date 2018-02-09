@@ -7,7 +7,6 @@ var indexOfc = function(buf, chr, offset, stop) {
   return -1;
 };
 
-
 module.exports = function(buf, search, offset, stop) {
   stop = Math.min(stop || buf.length, buf.length);
 
@@ -35,4 +34,3 @@ module.exports = function(buf, search, offset, stop) {
 
   return -1;
 };
-

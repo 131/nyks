@@ -38,7 +38,6 @@
     "url": "git@github.com:131/nyks.git"
   },
   "scripts": {
-    "todo": "color crypto date fs function generator http lang math node_modules object path process promise require src stream string",
     "mocha": "node node_modules/mocha/bin/_mocha",
     "jscs": "jscs --config=node_modules/ivs-jssc/ivs-node.jscsrc test",
     "eslint": "eslint --config=node_modules/ivs-jssc/ivs-node.eslintrc.js test",

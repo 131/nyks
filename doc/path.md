@@ -1,11 +1,65 @@
-## path
-* require('nyks/path/which'(bin)
-Search for a binary in env PATH
+# Path
 
-* require('nyks/path/extend')( path[,path2, ..]);
-Extend system PATH with new directories
+Path utilities
+
+------
+
+## Table of Contents
+
+  * [extend()](#extend)
+  * [jail()](#jail)
+  * [url()](#url)
+  * [which()](#which)
+
+------
+
+<a name="extend"></a>
+## extend(path[,path2][, ..]) : String
+
+Extend system PATH with new directories.
+
+```javascript
+const extend = require('nyks/path/extend');
+
+// do something
+```
+
+------
+
+<a name="jail"></a>
+## jail(base, file_path) : String
+
+Like path.join, but throw when attempting escape.
+
+```javascript
+const jail = require('nyks/path/jail');
+
+// do something
+```
+
+------
 
 
-* require('nyks/path/url')( file_path);
-Return a path with a file:// scheme syntax
+<a name="url"></a>
+## url(file_path) : String
 
+Return a path with a file:// scheme syntax.
+
+```javascript
+const url = require('nyks/path/url');
+
+// do something
+```
+
+------
+
+<a name="which"></a>
+## which(bin) : String
+
+Search for a binary in env PATH.
+
+```javascript
+const which = require('nyks/path/which');
+
+// do something
+```
