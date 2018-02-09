@@ -9,15 +9,14 @@ function ASN_len(s) {
     return new Buffer([len]);
 
   var data = len.toString(16);
+  /* istanbul ignore else */
   if(data.length & 1)
     data = "0" + data;
   data = new Buffer(data, 'hex');
   return Buffer.concat([new Buffer([data.length | ASN_LONG_LEN]), data]);
 }
 
-var unpack = function(mode, data, start) {
-  if(mode != "L")
-    throw "Unsupported mode";
+var unpack = function(data, start) {
   var slice = data.slice(start, 4);
   var out = (slice[0] << 24) + (slice[1] << 16) + (slice[2] << 8) + slice[3];
   return [out];
@@ -32,16 +31,16 @@ module.exports = function(openssh_data) {
     openssh_data = openssh_data.substr(SSH_RSA.length);
 
   var data    = new Buffer(openssh_data, 'base64');
-  var alg_len = unpack('L', data, 0)[0];
+  var alg_len = unpack(data, 0)[0];
   var i       = 4;
   var alg     = data.slice(i, i += alg_len).toString('ascii');
 
-  if (alg !== 'ssh-rsa')
+  if (alg !== SSH_RSA)
     throw "Not rsa";
 
-  var e_len = unpack('L', data.slice(i, i += 4))[0];
+  var e_len = unpack(data.slice(i, i += 4))[0];
   var e     = data.slice(i, i += e_len);
-  var n_len = unpack('L', data.slice(i, i += 4))[0];
+  var n_len = unpack(data.slice(i, i += 4))[0];
   var n     = data.slice(i, i += n_len);
   var algid = new Buffer('06092a864886f70d0101010500', 'hex');
 
