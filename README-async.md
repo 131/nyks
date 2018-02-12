@@ -61,7 +61,7 @@ const eachLimit = require('nyks/async/eachLimit');
 
   var stuffs = [1, 2, 3, 5, 6];
 
-  await eachLimit(stuffs, 2, function * (id) {
+  await eachLimit(stuffs, 2, async function(id) {
     await dootherStuffs(id);
   });
 
@@ -87,7 +87,7 @@ const eachOfLimit = require('nyks/async/eachOfLimit');
     'number' : 4
   };
 
-  await eachOfLimit(stuffs, 2, function * (id, key) {
+  await eachOfLimit(stuffs, 2, async function(id, key) {
     await dootherStuffs(id);
   });
 
@@ -108,7 +108,7 @@ const each = require('nyks/async/each');
 
   var stuffs = [1, 2, 3, 5, 6];
 
-  await each(stuffs, function * (id) {
+  await each(stuffs, async function(id) {
     await dootherStuffs(id);
   });
 
@@ -134,7 +134,7 @@ const eachOf = require('nyks/async/eachOf');
     'number' : 4
   };
 
-  await eachOf(stuffs, function * (id, key) {
+  await eachOf(stuffs, async function(id, key) {
     await dootherStuffs(id);
   });
 
@@ -155,7 +155,7 @@ const eachSeries = require('nyks/async/eachSeries');
 
   var stuffs = [1, 2, 3, 5, 6];
 
-  await eachSeries(stuffs, function * (id) {
+  await eachSeries(stuffs, async function(id) {
     await dootherStuffs(id);
   });
 
@@ -181,7 +181,7 @@ const eachOfSeries = require('nyks/async/eachOfSeries');
     'number' : 4
   };
 
-  await eachOfSeries(stuffs, function * (id, key) {
+  await eachOfSeries(stuffs, async function(id, key) {
     await dootherStuffs(id);
   });
 
