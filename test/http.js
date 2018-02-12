@@ -219,7 +219,7 @@ describe("Testing http", function() {
     target.qs = expected;
 
     request(target, async function(err/*, data*/) {
-      expect(err).to.be.ok;
+      expect(err).to.be.ok();
       done();
     });
   });
@@ -295,7 +295,7 @@ describe("Testing http", function() {
     var target = url.parse(util.format("https://127.0.0.1:%d/ping", port));
 
     request(target, async function(err) {
-      expect(err).to.be.ok;
+      expect(err).to.be.ok();
       // server shouldn't work with https endpoint, but request still answer socket error.
       done();
     });
