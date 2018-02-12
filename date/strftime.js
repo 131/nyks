@@ -14,8 +14,6 @@ module.exports = function(date, format) {
         return getSeason(date);
       case 'v':
         return startOf(date, 'week');
-      case '%':
-        return '%';
       default:
         // keep unrecognized tokens
         return '%' + token;
