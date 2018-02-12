@@ -43,8 +43,8 @@
     "jscs": "jscs --config=node_modules/ivs-jssc/ivs-node.jscsrc test",
     "eslint": "eslint --config=node_modules/ivs-jssc/ivs-node.eslintrc.js test",
     "checkall": "npm run jscs && npm run eslint",
-    "cover": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha --recursive test test/async",
-    "test": "npm run cover && npm run checkall",
+    "cover": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha --recursive",
+    "test": "npm run cover  test test/async && npm run checkall",
     "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
   "readme": "# nyks toolkit\r\n\r\nExtend nodejs & javascript native API of missing functions.\r\n",

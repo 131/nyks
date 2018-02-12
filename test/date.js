@@ -29,8 +29,9 @@ describe("Date functions", function() {
     expect(strftime(date, '%d')).to.eql("01");
     expect(tmp_string).to.eql("Sun Dec 27 2015 00:00:00");
     expect(strftime(date, '%E')).to.eql("winter");
+    expect(strftime(date, 'a%%ba')).to.eql("a%ba");
+    expect(strftime(date, '%%')).to.eql("%");
     expect(strftime(date, '%g')).to.eql("%g"); //doesn't exist
-    //expect(strftime(date, '%%')).to.eql("%"); doesn't work...
   });
 
 });
