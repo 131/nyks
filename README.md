@@ -38,7 +38,7 @@ Use browserify if you need nyks module in a browser environnement.
 
 ## API Documentation
 
-Online documentation can be found inside the `doc` folder.
+Online documentation can be found inside the [doc folder](./doc#top).
 
 ## License
 Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
@@ -47,3 +47,4 @@ Released under the [MIT License](http://www.opensource.org/licenses/mit-license.
 * [131](https://github.com/131), author
 * [mout](https://github.com/mout/mout), design inspiration, main complementarity
 * [cnyks](https://github.com/131/cnyks), CLI runner & related tools
+* [Kalmani](https://github.com/Kalmani/) for documentation
