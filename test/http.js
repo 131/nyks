@@ -9,7 +9,6 @@ const util   = require('util');
 const fs     = require('fs');
 
 const fetch       = require('../http/fetch');
-const getContents = require('../http/getContents');
 const request     = require('../http/request');
 
 const pipe        = require('../stream/pipe');
@@ -69,14 +68,6 @@ describe("Testing http", function() {
     });
   });
 
-  it("Should fetch dummy cotents", function(done) {
-    var testurl = util.format("http://127.0.0.1:%d/ping", port);
-    getContents(testurl, function(err, ip) {
-      expect(err).not.to.be.ok();
-      expect(("" + ip).trim()).to.be("pong");
-      done();
-    });
-  });
 
   it("Should test fetch ", function(done) {
     var tmp_file = tmppath();
@@ -89,21 +80,16 @@ describe("Testing http", function() {
     });
   });
 
-  it("Should fetch missing resource", function(done) {
-    var testurl = util.format("http://127.0.0.1:%d/missing", port);
-    getContents(testurl, function(err) {
+  it("Should test fetch on https endpoint and fail", function(done) {
+    var testurl = util.format("https://127.0.0.1:%d/ping", port);
+    fetch(url.parse(testurl)).then(function() {
+      expect().fail("Never here");
+    }).catch(function(err) {
       expect(err).to.be.ok();
       done();
     });
   });
 
-  it("Should fetch dummy error", function(done) {
-    var testurl = url.parse(util.format("https://127.0.0.1:%d/ping", port + 1));
-    getContents(testurl, function(err) {
-      expect(err).to.be.ok();
-      done();
-    });
-  });
 
   it("Should test request with target as string", function(done) {
     var target = util.format("http://127.0.0.1:%d/ping", port);
