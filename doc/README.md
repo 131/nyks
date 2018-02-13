@@ -13,7 +13,7 @@
   * [nyks/buffer/fromInt](./buffer.md#fromInt)     - Convert Int to Buffer.
   * [nyks/buffer/indexOf](./buffer.md#indexOf)     - Binary search of byte. Return -1 if not found.
   * [nyks/buffer/readUInt](./buffer.md#readUInt)   - Convert Buffer to Int.
-  * [nyks/buffer/writeBits](./buffer.md#writeBits) - PLACEHOLDER_DESC
+  * [nyks/buffer/writeBits](./buffer.md#writeBits) - Write Bits in a Bytes composed source.
 
 * # Child process
    * [nyks/child_process/exec](./child_process.md#exec)         - child_process.exec equivalent with sane API for arguments.
