@@ -89,6 +89,10 @@
   * [nyks/object/mask](./object.md#mask)             - Format a dictionnary to a mask sprintf(mask, k, v).
   * [nyks/object/sort](./object.md#sort)             - Return a new Object with only specified keys.
 
+* # Os
+  * [nyks/os/iswsl](./os.md#iswsl)     - FUNCTION DESCRIPTION
+  * [nyks/os/wslpath](./os.md#wslpath) - FUNCTION DESCRIPTION
+
 * # Path
   * [nyks/path/extend](./path.md#extend) - Extend system PATH with new directories.
   * [nyks/path/jail](./path.md#jail)     - Like path.join, but throw when attempting escape.
