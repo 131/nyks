@@ -1,4 +1,4 @@
-# Date
+# OS
 
 Os utilities
 
@@ -14,23 +14,40 @@ Os utilities
 <a name="iswsl"></a>
 ## iswsl() : Boolean
 
-FUNCTION DESCRIPTION
+return true if we are in the Linux Subsystem on Windows
 
 ```javascript
 const iswsl = require('nyks/os/iswsl');
 
-// do something
+iswsl(); //return true if on wsl.
 ```
 
 ------
 
 <a name="wslpath"></a>
-## wslpath(path) : String
+## wslpath(type, path) : String
 
-FUNCTION DESCRIPTION
+wslpath - Convert Unix and Windows format paths.
+
 
 ```javascript
+
 const wslpath = require('nyks/os/wslpath');
 
-// do something
+wslpath("-w", "test/data/value"); // return test\data\value
+wslpath("-u", "test\data\value"); // return test/data/value
+
+['-u', '-w', '-m', '-r', '-s']
+
+/*
+  The tolerated types are :
+
+  * -u : print Unix form of NAMEs (/mnt/c/Windows).
+  * -w : print Windows form of NAMEs (C:\Windows).
+  * -m : like --windows, but with regular slashes (C:/Windows).
+  * -r : output absolute path with resolved symbolic links. 
+  * -s : substitute Unix HOME path with Windows user path.
+*/
+
+
 ```
