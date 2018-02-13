@@ -6,9 +6,23 @@ Color utilities
 
 ## Table of Contents
 
+  * [hexToRgb()](#hexToRgb)
   * [Int2RGBA()](#Int2RGBA)
   * [RGB2HTML()](#RGB2HTML)
   * [RGBA2Int()](#RGBA2Int)
+
+------
+
+<a name="hexToRgb"></a>
+## hexToRgb(str) : Array
+
+Convert Hexadecimal color code to RGB array.
+
+```javascript
+const hexToRgb = require('nyks/string/hexToRgb');
+
+hexToRgb('#FF0000'); // return ['FF', '00', '00']
+```
 
 ------
 

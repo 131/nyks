@@ -12,7 +12,7 @@ Math utilities
 ------
 
 <a name="log2"></a>
-## log2
+## log2(num) : Float
 
 Returns the base 2 logarithm of a number.
 
@@ -25,7 +25,7 @@ log2(2); // return 1
 ------
 
 <a name="log10"></a>
-## log10
+## log10(num) : Float
 
 Returns the base 10 logarithm of a number.
 

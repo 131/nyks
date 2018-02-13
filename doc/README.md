@@ -90,8 +90,8 @@
   * [nyks/object/sort](./object.md#sort)             - Return a new Object with only specified keys.
 
 * # Os
-  * [nyks/os/iswsl](./os.md#iswsl)     - FUNCTION DESCRIPTION
-  * [nyks/os/wslpath](./os.md#wslpath) - FUNCTION DESCRIPTION
+  * [nyks/os/iswsl](./os.md#iswsl)     - Return true if we are in the Linux Subsystem on Windows.
+  * [nyks/os/wslpath](./os.md#wslpath) - Convert Unix and Windows format paths.
 
 * # Path
   * [nyks/path/extend](./path.md#extend) - Extend system PATH with new directories.

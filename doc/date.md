@@ -12,7 +12,7 @@ Date utilities
 ------
 
 <a name="getSeason"></a>
-## getSeason() : String
+## getSeason(date) : String
 
 Return the current season of a Date object.
 
@@ -28,7 +28,7 @@ getSeason(new Date('2016-12-31')); // return "winter";
 ------
 
 <a name="strftime"></a>
-## strftime() : 
+## strftime(date, format) : String
 
 Extended mout/date/strftime.
 

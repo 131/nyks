@@ -7,7 +7,6 @@ const capitalize     = require('../string/capitalize');
 const chunk          = require('../string/chunk');
 const crc32          = require('../string/crc32');
 const format         = require('../string/format');
-const hexToRgb       = require('../string/hexToRgb');
 const prettyFileSize = require('../string/prettyFileSize');
 const repeat         = require('../string/repeat');
 const replaces       = require('../string/replaces');
@@ -54,7 +53,7 @@ describe("strings functions", function() {
     var challenge = "You know nothing, John Snow";
     var data      = {
       '&who;'  : 'John Snow',
-      '&what;' : 'nothing',
+      '&what;' : 'nothing'
     };
     expect(replaces(str, data)).to.be(challenge);
     expect(replaces(str, {})).to.be(str);
@@ -122,11 +121,6 @@ describe("strings functions", function() {
   it("should test crc32", function() {
     expect(crc32("foobar")).to.be(-1628037227);
     expect(crc32("café")).to.be(-1733475659);
-  });
-
-  it("should test hexToRgb", function() {
-    expect(hexToRgb('#FF0000')).to.eql(['FF', '00', '00']);
-    expect(hexToRgb('not_an_hexa')).to.be(null);
   });
 
   it("should test capitalize", function() { //for normal people

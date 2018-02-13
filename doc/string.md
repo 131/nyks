@@ -31,7 +31,7 @@ Capitalize the first letter of a string.
 ```javascript
 const capitalize = require('nyks/string/capitalize');
 
-// do something
+capitalize('john thegood'); // return 'John thegood'
 ```
 
 ------
@@ -44,7 +44,9 @@ Split a string into chunk of specified size.
 ```javascript
 const chunk = require('nyks/string/chunk');
 
-// do something
+chunk("abc");    // return ["a", "b", "c"]
+chunk("abc", 2); // return ["ab", "c"]
+chunk("abc", 0); // return ["abc"]
 ```
 
 ------
@@ -57,7 +59,7 @@ Crc32 of current string.
 ```javascript
 const crc32 = require('nyks/string/crc32');
 
-// do something
+crc32("foobar"); // return -1628037227
 ```
 
 ------
@@ -70,7 +72,17 @@ Lite equivalent for util.format/sprintf (from util.format).
 ```javascript
 const format = require('nyks/string/format');
 
-// do something
+let object = {go : 42};
+
+format("%d %s %j", -2, 'dummy', o)).to.eql('-2 dummy {"go":42}');
+
+/*
+  The tolerated types are :
+
+  * %s : convert into a String
+  * %d : convert into a Number
+  * %j : stringify an Object
+*/
 ```
 
 ------
@@ -78,13 +90,7 @@ const format = require('nyks/string/format');
 <a name="hexToRgb"></a>
 ## hexToRgb(str) : Array
 
-Convert Hexadecimal color code to RGB array.
-
-```javascript
-const hexToRgb = require('nyks/string/hexToRgb');
-
-// do something
-```
+Alias of [color/hexToRgb](./color.md#hexToRgb).
 
 ------
 
@@ -96,7 +102,10 @@ Return a pretty format of Bytes.
 ```javascript
 const prettyFileSize = require('nyks/string/prettyFileSize');
 
-// do something
+prettyFileSize(0);    // return "0B"
+prettyFileSize(1);    // return "1B"
+prettyFileSize(1024); // return "1kB"
+prettyFileSize(1023); // return "0.99kB"
 ```
 
 ------
@@ -109,7 +118,7 @@ Nothing fancy, alternative to mout.
 ```javascript
 const repeat = require('nyks/string/repeat');
 
-// do something
+repeat("abc", 3); // return "abcabcabc"
 ```
 
 ------
@@ -122,7 +131,13 @@ Replace collection in current string.
 ```javascript
 const replaces = require('nyks/string/replaces');
 
-// do something
+let str  = "You know &what;, &who;";
+let data = {
+  '&who;'  : 'John Snow',
+  '&what;' : 'nothing'
+};
+
+replaces(str, data); // return "You know nothing, John Snow"
 ```
 
 ------
@@ -135,7 +150,8 @@ Rot13 of current string.
 ```javascript
 const rot13 = require('nyks/string/rot13');
 
-// do something
+rot13("a"); // return "n"
+rot13("n"); // return "a"
 ```
 
 ------
@@ -148,7 +164,14 @@ Recursive (iterative) replaces.
 ```javascript
 const rreplaces = require('nyks/string/rreplaces');
 
-// do something
+let str  = "You know &&wh;at;, &&wh;o;";
+let data = {
+  '&who;'  : 'John Snow',
+  '&what;' : 'nothing',
+  '&wh;'   : 'wh'
+};
+
+rreplaces(str, data); // return "You know nothing, John Snow"
 ```
 
 ------
@@ -157,12 +180,7 @@ const rreplaces = require('nyks/string/rreplaces');
 ## sprintf(str[, arg1][, arg2][...]) : String
 
 Sprintf as you think it is (like format, but more complete).
-
-```javascript
-const sprintf = require('nyks/string/sprintf');
-
-// do something
-```
+For usage exemples, juste follow [this link](https://www.npmjs.com/package/sprintf)
 
 ------
 
@@ -174,7 +192,8 @@ Strip string pattern at end (complete mout/string/endsWith).
 ```javascript
 const stripEnd = require('nyks/string/stripEnd');
 
-// do something
+let str = "This is a string (yes it is)";
+stripEnd(str, "(yes it is)") // return "this is a string "
 ```
 
 ------
@@ -187,7 +206,8 @@ Strip string pattern at beginning (complete mout/string/startsWith).
 ```javascript
 const stripStart = require('nyks/string/stripStart');
 
-// do something
+let str = "This is a string (yes it is)";
+stripStart(str, "This is a string") // return " (yes it is)"
 ```
 
 ------
@@ -195,10 +215,13 @@ const stripStart = require('nyks/string/stripStart');
 <a name="truncate"></a>
 ## truncate(str[, pos][, concat) : String
 
-Truncate string to fixed length.
+Truncate string to fixed length (default length is 10).
 
 ```javascript
 const truncate = require('nyks/string/truncate');
 
-// do something
+truncate("123456789ABC");             // return "123456789…"
+truncate("123456789ABC", 8);          // return "1234567…"
+truncate("123456789ABC", 5, "...");   // return "12..."
+truncate("123456789ABC", -6, "[..]"); // return "[..]78"
 ```
