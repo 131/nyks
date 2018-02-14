@@ -3,11 +3,9 @@
 const cp    = require('child_process');
 const defer = require('../promise/defer');
 
-function wslpath(type, path) {
+function wslpath() {
   var defered = defer();
-  if (['-u', '-w', '-m', '-r', '-s'].indexOf(type) == -1)
-    return defer.reject('invalid type');
-  cp.execFile('wslpath',  [type, path], defered.chain);
+  cp.execFile('wslpath',  [].slice.apply(arguments), defered.chain);
   return defered.then(path => path.trim());
 }
 
