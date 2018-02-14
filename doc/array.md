@@ -61,5 +61,5 @@ const sum = require('nyks/array/sum');
 
 sum([1, 2, 3]); // return 6
 
-sum([]) // return 0
+sum([]); // return 0
 ```

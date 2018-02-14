@@ -14,7 +14,7 @@ const sleep      = require('../../async/sleep');
 describe("each", function() {
 
   async function eachIteratee(args, x) {
-    await sleep(x * 25);
+    await sleep(x * 100);
     args.push(x);
     return x;
   }

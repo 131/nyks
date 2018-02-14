@@ -31,9 +31,18 @@ Fs utilities
 Copy a file to another.
 
 ```javascript
-const copyFile = require('nyks/fs/copyFile');
+const fs = require('fs');
 
-// do something
+const copyFile = require('nyks/fs/copyFile');
+const tmppath  = require('nyks/fs/tmppath');
+
+let dest  = tmppath("tmp_package");
+let from = require('../package.json');
+
+copyFile(from, dest, function(err) {
+  // err = null
+  fs.readFileSync(dst); // return a copy of ./package.json content (from)
+});
 ```
 
 ------
@@ -44,9 +53,21 @@ const copyFile = require('nyks/fs/copyFile');
 Recursive folder deletion (sync).
 
 ```javascript
-const deleteFolderRecursive = require('nyks/fs/deleteFolderRecursive');
+const path = require('path');
 
-// do something
+const deleteFolderRecursive = require('nyks/fs/deleteFolderRecursive');
+const mkdirpSync            = require('nyks/fs/mkdirpSync');
+
+// Meta exemple
+let dir  = path.join(root, "this/is/a/dir");
+
+mkdirpSync(dir); // return dir
+
+// path "this/is/a/dir" now exists
+
+deleteFolderRecursive(dir);
+
+// path "this/is/a/dir" now doesn't exists
 ```
 
 ------
@@ -59,7 +80,7 @@ Return a file mtime, sync (usefull for collection/map).
 ```javascript
 const filemtimeSync = require('nyks/fs/filemtimeSync');
 
-// do something
+filemtimeSync('../package.json'); // return package.json creation date
 ```
 
 ------
@@ -70,9 +91,14 @@ const filemtimeSync = require('nyks/fs/filemtimeSync');
 Return a file size, sync (usefull for collection/map).
 
 ```javascript
+const fs = require('fs');
+
 const filesizeSync = require('nyks/fs/filesizeSync');
 
-// do something
+let file_name = "foo";
+fs.writeFileSync(file_name, "bar");
+
+filesizeSync(file_name); // return 3
 ```
 
 ------
@@ -85,7 +111,8 @@ Check if a path is a directory, sync (usefull as filter).
 ```javascript
 const isDirectorySync = require('nyks/fs/isDirectorySync');
 
-// do something
+isDirectorySync('../package.json'); // return false
+isDirectorySync('../fs'); // return true
 ```
 
 ------
@@ -98,7 +125,8 @@ Check if a path is a file, sync (usefull as filter).
 ```javascript
 const isFileSync = require('nyks/fs/isFileSync');
 
-// do something
+isFileSync('../package.json'); // return true
+isFileSync('../fs'); // return false
 ```
 
 ------
@@ -111,7 +139,7 @@ Read a JSON file, return its parsed content (sync).
 ```javascript
 const json = require('nyks/fs/JSON');
 
-// do something
+json('../package.json') ;// return package.json content as an Object
 ```
 
 ------
@@ -122,9 +150,18 @@ const json = require('nyks/fs/JSON');
 Callback version of a basic async md5 file digest.
 
 ```javascript
+const fs = require('fs');
+
 const md5File = require('nyks/fs/md5File');
 
-// do something
+let file_name = "foo";
+
+fs.writeFileSync(file_name, "bar");
+
+md5File(file_name, function(err, data) {
+  // err  = null
+  // data =  "37b51d194a7513e45b56f6524f2d51f2"
+});
 ```
 
 ------
@@ -135,9 +172,15 @@ const md5File = require('nyks/fs/md5File');
 Return md5 checksum of a file.
 
 ```javascript
+const fs = require('fs');
+
 const md5FileSync = require('nyks/fs/md5FileSync');
 
-// do something
+let file_name = "foo";
+
+fs.writeFileSync(file_name, "bar");
+
+md5FileSync(file_name); // return "37b51d194a7513e45b56f6524f2d51f2"
 ```
 
 ------
@@ -148,9 +191,21 @@ const md5FileSync = require('nyks/fs/md5FileSync');
 Create a directory (at any depth) sync.
 
 ```javascript
-const mkdirpSync = require('nyks/fs/mkdirpSync');
+const path = require('path');
 
-// do something
+const mkdirpSync            = require('nyks/fs/mkdirpSync');
+const deleteFolderRecursive = require('nyks/fs/deleteFolderRecursive');
+
+// Meta exemple
+let dir  = path.join(root, "this/is/a/dir");
+
+mkdirpSync(dir); // return dir
+
+// path "this/is/a/dir" now exists
+
+deleteFolderRecursive(dir);
+
+// path "this/is/a/dir" now doesn't exists
 ```
 
 ------
@@ -163,7 +218,21 @@ Apply a callback on an Object, write it on a differente target if specified.
 ```javascript
 const patchJSON = require('nyks/fs/patchJSON');
 
-// do something
+let src = '../package.json';
+
+patchJSON(src, function(body) {
+  body.name = 'New ' + body.name;
+});
+
+// package.json name is now 'New nyks'
+
+let target = '../new_package.json';
+
+patchJSON(target, function(body) {
+  body.name = body.name.replace('New ', 'Newest');
+}, src);
+
+// This created a new file 'new_package.json' with entry 'name' = 'Newest nyks'
 ```
 
 ------
@@ -181,9 +250,18 @@ Alias of [JSON](#JSON).
 Spawn a process that use real rmrf command (depend on the OS).
 
 ```javascript
+const path = require('path');
+
 const rmrf = require('nyks/fs/rmrf');
 
-// do something
+let root = "trashme";
+let dir  = path.join(root, "this/is/a/dir");
+mkdirpSync(dir);
+
+(async function() {
+  await rmrf(root); // removed "trashme" directory and all its childs
+})();
+
 ```
 
 ------
@@ -194,9 +272,18 @@ const rmrf = require('nyks/fs/rmrf');
 Callback version of a basic async sha1 file digest.
 
 ```javascript
+const fs = require('fs');
+
 const sha1File = require('nyks/fs/sha1File');
 
-// do something
+let file_name = "foo";
+
+fs.writeFileSync(file_name, "bar");
+
+sha1File(file, function(err, sha1) {
+  // err  = null
+  // sha1 = "62cdb7020ff920e5aa642c3d4066950dd1f01f4d"
+});
 ```
 
 ------
@@ -209,7 +296,13 @@ Return a unique, self-deletable, file path in OS temp dir.
 ```javascript
 const tmppath = require('nyks/fs/tmppath');
 
-// do something
+var tpath  = tmppath("json"); // create a tmp json file in tmp directory, depending on the OS
+var tpath2 = tmppath("json", false); // same as tpath, but will not be deleted after process exit
+
+process.exit();
+
+// now tpath file doesn't exist anymore
+// tpath2 still exists
 ```
 
 ------
@@ -220,7 +313,15 @@ const tmppath = require('nyks/fs/tmppath');
 Like fs.writeFileSync, but check if it needs to be updated before doing it.
 
 ```javascript
+const fs = require('fs');
+
 const writeLazySafeSync = require('nyks/fs/writeLazySafeSync');
 
-// do something
+let file_name = "foo";
+
+writeLazySafeSync(file_name, "bar"); // this will act like fs.writeFileSync
+
+writeLazySafeSync(file_name, "bar"); // this will not do anything, filemtime might not have change
+
+writeLazySafeSync(file_name, "Melon"); // this will act like fs.writeFileSync
 ```

@@ -13,7 +13,7 @@
   * [nyks/buffer/fromInt](./buffer.md#fromInt)     - Convert Int to Buffer.
   * [nyks/buffer/indexOf](./buffer.md#indexOf)     - Binary search of byte. Return -1 if not found.
   * [nyks/buffer/readUInt](./buffer.md#readUInt)   - Convert Buffer to Int.
-  * [nyks/buffer/writeBits](./buffer.md#writeBits) - PLACEHOLDER_DESC
+  * [nyks/buffer/writeBits](./buffer.md#writeBits) - Write Bits in a Bytes composed source.
 
 * # Child process
    * [nyks/child_process/exec](./child_process.md#exec)         - child_process.exec equivalent with sane API for arguments.
@@ -88,6 +88,10 @@
   * [nyks/object/jsonpath](./object.md#jsonpath)     - Return the value of an object through a specific path (with / as a separator).
   * [nyks/object/mask](./object.md#mask)             - Format a dictionnary to a mask sprintf(mask, k, v).
   * [nyks/object/sort](./object.md#sort)             - Return a new Object with only specified keys.
+
+* # Os
+  * [nyks/os/iswsl](./os.md#iswsl)     - Return true if we are in the Linux Subsystem on Windows.
+  * [nyks/os/wslpath](./os.md#wslpath) - Convert Unix and Windows format paths.
 
 * # Path
   * [nyks/path/extend](./path.md#extend) - Extend system PATH with new directories.

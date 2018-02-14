@@ -4,11 +4,17 @@
 
 const expect = require('expect.js');
 
+const hexToRgb = require('../color/hexToRgb');
 const Int2RGBA = require('../color/Int2RGBA');
 const RGBA2Int = require('../color/RGBA2Int');
 const RGB2HTML = require('../color/RGB2HTML');
 
 describe("Color functions", function() {
+
+  it("should test hexToRgb", function() {
+    expect(hexToRgb('#FF0000')).to.eql(['FF', '00', '00']);
+    expect(hexToRgb('not_an_hexa')).to.be(null);
+  });
 
   it("should test RGB2Int", function() {
     expect(RGBA2Int([0, 0, 0, 0])).to.eql(0);

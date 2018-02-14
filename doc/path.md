@@ -20,8 +20,12 @@ Extend system PATH with new directories.
 
 ```javascript
 const extend = require('nyks/path/extend');
+const which  = require('nyks/path/which');
 
-// do something
+// Meta exemple
+extend(__dirname); // add __dirname files to process env path
+which("path.md"); // return __filename value
+
 ```
 
 ------
@@ -34,7 +38,8 @@ Like path.join, but throw when attempting escape.
 ```javascript
 const jail = require('nyks/path/jail');
 
-// do something
+jail(__dirname, "ab", "..", "cd"); return equivalent of path.join(__dirname, 'ab/../cd')
+jail(__dirname, "../../etc/host"); this might throw with message /escape attempt/
 ```
 
 ------
@@ -48,7 +53,7 @@ Return a path with a file:// scheme syntax.
 ```javascript
 const url = require('nyks/path/url');
 
-// do something
+url('path.md'); // return equivalent of path.join('file://', __dirname, 'path.md')
 ```
 
 ------
@@ -59,7 +64,10 @@ const url = require('nyks/path/url');
 Search for a binary in env PATH.
 
 ```javascript
-const which = require('nyks/path/which');
+const which  = require('nyks/path/which');
+const extend = require('nyks/path/extend');
 
-// do something
+// Meta exemple
+extend(__dirname); // add __dirname files to process env path
+which("path.md"); // return __filename value
 ```

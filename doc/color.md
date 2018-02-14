@@ -6,9 +6,23 @@ Color utilities
 
 ## Table of Contents
 
+  * [hexToRgb()](#hexToRgb)
   * [Int2RGBA()](#Int2RGBA)
   * [RGB2HTML()](#RGB2HTML)
   * [RGBA2Int()](#RGBA2Int)
+
+------
+
+<a name="hexToRgb"></a>
+## hexToRgb(str) : Array
+
+Convert Hexadecimal color code to RGB array.
+
+```javascript
+const hexToRgb = require('nyks/string/hexToRgb');
+
+hexToRgb('#FF0000'); // return ['FF', '00', '00']
+```
 
 ------
 
@@ -19,8 +33,11 @@ Return an Object with Red Green Blue Alpha values from an Integer.
 
 ```javascript
 const Int2RGBA = require('nyks/color/Int2RGBA');
+const RGBA2Int = require('nyks/color/RGBA2Int');
 
-// do something
+// Meta exemple
+var color = {r : 0, g : 0, b : 24, a : 12};
+Int2RGBA(RGBA2Int(color)); // return ... color !
 ```
 
 ------
@@ -33,7 +50,8 @@ Return an Hexadecimal code from an array of rgba values.
 ```javascript
 const RGB2HTML = require('nyks/color/RGB2HTML');
 
-// do something
+var color = {r : 255, g : 0, b : 255, a : 12};
+RGB2HTML(color); // return "#ff00ff"
 ```
 
 ------
@@ -44,7 +62,10 @@ const RGB2HTML = require('nyks/color/RGB2HTML');
 Return an Integer value from an array of rgba values.
 
 ```javascript
+const Int2RGBA = require('nyks/color/Int2RGBA');
 const RGBA2Int = require('nyks/color/RGBA2Int');
 
-// do something
+// Meta exemple
+var color = {r : 0, g : 0, b : 24, a : 12};
+Int2RGBA(RGBA2Int(color)); // return ... color !
 ```

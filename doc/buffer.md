@@ -22,7 +22,7 @@ Return an Array of ASCII codes from a String.
 ```javascript
 const fromASCII = require('nyks/buffer/fromASCII');
 
-fromASCII("ABCD") // return [65, 66, 67, 68], ASCII codes for ABCD
+fromASCII("ABCD"); // return [65, 66, 67, 68], ASCII codes for ABCD
 ```
 
 ------
@@ -37,7 +37,7 @@ const fromInt  = require('nyks/buffer/fromInt');
 const readUInt = require('nyks/buffer/readUInt');
 
 // Meta exemple
-readUInt(fromInt(8)) // return ... 8 !
+readUInt(fromInt(8)); // return ... 8 !
 ```
 
 ------
@@ -52,12 +52,12 @@ const indexOf = require('nyks/buffer/indexOf');
 
 var arr  = new Buffer([1, 2, 3, 4, 5]);
 
-indexOf(arr, 1) // return 0
-indexOf(arr, new Buffer([3,4])) // return 1
-indexOf(arr, 9) // return -1
+indexOf(arr, 1); // return 0
+indexOf(arr, new Buffer([3,4])); // return 1
+indexOf(arr, 9); // return -1
 
 var str  = "cat eat mouses";
-indexOf(str, "mouses") // return 8
+indexOf(str, "mouses"); // return 8
 ```
 
 ------
@@ -72,7 +72,7 @@ const fromInt  = require('nyks/buffer/fromInt');
 const readUInt = require('nyks/buffer/readUInt');
 
 // Meta exemple
-readUInt(fromInt(8)) // return ... 8 !
+readUInt(fromInt(8)); // return ... 8 !
 ```
 
 ------
@@ -80,10 +80,12 @@ readUInt(fromInt(8)) // return ... 8 !
 <a name="writeBits"></a>
 ## writeBits(target, source, bitoffset[, sourcebitLength])
 
-PLACEHOLDER_DESC
+Write Bits in a Bytes composed source. Return the number of Bits written.
 
 ```javascript
 const writeBits = require('nyks/buffer/writeBits');
 
-// do something
+let tmp = Buffer([0]); // tmp = 00000000
+writeBits(tmp, Buffer([255]), 1); // return 7
+// now tmp = 01111111, or Int:127
 ```

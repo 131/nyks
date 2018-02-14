@@ -19,7 +19,7 @@ Return the module a file belong to.
 ```javascript
 const lookup = require('nyks/require/lookup');
 
-// do something
+lookup('./require.md'); // return nyks !
 ```
 
 ------
@@ -32,5 +32,5 @@ Simple / portable alternative to require.resolve.
 ```javascript
 const resolve = require('nyks/require/resolve');
 
-// do something
+resolve("mout"); // return path.join(__dirname, "..", "node_modules", "mout")
 ```

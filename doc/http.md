@@ -22,7 +22,9 @@ Convert 'get' function into a Promise.
 ```javascript
 const fetch = require('nyks/http/fetch');
 
-// do something
+(async function() {
+  await fetch('http://endpoint.com/services'); // return readable stream or throw
+})();
 ```
 
 ------
@@ -33,22 +35,23 @@ const fetch = require('nyks/http/fetch');
 Call http/https.get, depending on the enpoint Url.
 
 ```javascript
+const url = require('url');
+
 const get = require('nyks/http/get');
 
-// do something
-```
+get(url.parse('http://endpoint.com/services'), function(res) {
+  // res can be drained
+});
 
-------
+// works with https endpoint too
+get(url.parse('https://endpoint.com/services'), function(res) {
+  // res can be drained
+});
 
-<a name="getContents"></a>
-## getContents(src[, callback]) : void
-
-Get a file content, as a Buffer, through an endpoint Url.
-
-```javascript
-const getContents = require('nyks/http/getContents');
-
-// do something
+// works with url as string too
+get('http://endpoint.com/services', function(res) {
+  // res can be drained
+});
 ```
 
 ------
@@ -61,7 +64,24 @@ Helper for http/https.request.
 ```javascript
 const request = require('nyks/http/request');
 
-// do something
+let target = 'http://endpoint.com/services'; // you can also use an parsed Url
+let data   = {
+  name : 'Jean Lebon'
+};
+
+request(target, data, async function(err, data) {
+  // err might be null
+  // data can be drained
+});
+
+/*
+  You have multiple options here :
+
+    * You can pass GET arguments in Url.
+    * Passing an jar entry in parsed Url Object will create cookies from this jar.
+    * Target.method can be forced.
+    * you can passe query string in parsed Url Object, it will write GET parametters automatically (for ex : target.qs = {name : 'Jean'}).
+*/
 ```
 
 ------
@@ -70,9 +90,3 @@ const request = require('nyks/http/request');
 ## header/parse(str) : Object
 
 Return an Object of parsed headers (or cookies).
-
-```javascript
-const parse = require('nyks/http/header/parse');
-
-// do something
-```

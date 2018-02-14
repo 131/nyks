@@ -208,19 +208,23 @@ const sleep = require('nyks/async/sleep');
 ------
 
 <a name="timeout"></a>
-## timeout(time) : Promise
+## timeout(fn, time[, ctx]) : Promise
 
-Reject (throw) if timeout is reached.
+return a Promise that throw if 'fn' is not finished avec 'time'.
 
 ```javascript
 const timeout = require('nyks/async/timeout');
 
 (async function() {
 
-  let zzz   = sleep(3000);
-  let crash = timeout(2000);
+  let fn   = async function() {
+    sleep(2000);
+    return 'ok';
+  }
 
-  await Promise.all([zzz, crash]); // this is going to throw after 2 secondes
+  await timeout(fn, 3000); // return 'ok'
+
+  await timeout(fn, 1000); // this will throw with message 'timeout'
 
 })();
 ```

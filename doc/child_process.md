@@ -21,15 +21,15 @@ child_process.exec equivalent with sane API for arguments.
 const exec = require('nyks/child_process/exec');
 
 exec("node", ['-e', "console.log('Hello world');"], function(err, stdout, stderr) {
-  // err is null;
-  // stdout is "Hello world";
-  // stderr is null;
+  // err    = null
+  // stdout = "Hello world"
+  // stderr = null
 });
 
 exec("node", ['-e', "console.error(22);process.exit(42);"], function(err, stdout, stderr) {
-  // err is 42;
-  // stdout is null;
-  // stderr is 22;
+  // err    = 42
+  // stdout = null
+  // stderr = 22
 });
 ```
 
@@ -44,13 +44,13 @@ Like exec, but with stdout & stderr bound to current process IO streams.
 const passthru = require('nyks/child_process/passthru');
 
 passthru("node", ['-e', 'process.exit()'], function(err, exit) {
-  // err is null;
-  // exit is 0;
+  // err  = null
+  // exit = 0
 });
 
 passthru("node", ['-e', 'process.exit(33)'], function(err, exit) {
-  // err is "Bad exit code 33";
-  // exit is 33;
+  // err  = "Bad exit code 33"
+  // exit = 33
 });
 ```
 
