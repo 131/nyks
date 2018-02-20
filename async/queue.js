@@ -3,6 +3,7 @@
 //st exupery style
 
 module.exports = function(thunk, workers) {
+  var workerChain = [];
 
   var process = async function() {
     await pickworker();
@@ -11,23 +12,25 @@ module.exports = function(thunk, workers) {
     return Promise.resolve(ret);
   };
 
-  var out         = process;  // better candidate than {}
-  out.push        = process; // per compatibility
-  out.workerChain = [];
-
   var pickworker = function () {
     if(!workers) //no available worker, waiting
       return new Promise(function(resolve) {
-        out.workerChain.push(resolve);
+        workerChain.push(resolve);
       });
     return Promise.resolve(workers--); //worker id
   };
 
   var freeworker = function() {
     workers++;
-    if(out.workerChain.length)
-      out.workerChain.shift()(pickworker());
+    if(workerChain.length)
+      workerChain.shift()(pickworker());
   };
+
+  var out    = process; // better candidate than {}
+  out.push   = process; // per compatibility
+  //out.getLength = () => { workerChain.length; };
+  //out.filter = (cb) => { workerChain = workerChain.filter(cb); };
+  out.drain = () => { workerChain = []; };
 
   return out;
 };
