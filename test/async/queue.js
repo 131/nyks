@@ -117,4 +117,24 @@ describe('queue', function() {
     expect(results).to.eql(['bar', 'bur', 'fooError']);
   });
 
+  it("test drain", async function() {
+
+    var timeline = [];
+    var q = queue(async function (time) {
+      timeline.push(time);
+      return await sleep(time);
+    }, 1);
+
+    q.push(1000);
+    q.push(1000);
+    q.push(1000);
+
+    // cleanup tasks list
+    q.drain();
+
+    await q.push(100);
+
+    expect(timeline).to.eql([1000, 100]); // with a latence of 50 ms.
+  });
+
 });

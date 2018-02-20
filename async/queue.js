@@ -5,9 +5,9 @@
 module.exports = function(thunk, workers) {
   var workerChain = [];
 
-  var process = async function(task) {
+  var process = async function() {
     await pickworker();
-    var ret = await thunk.call(this, task);
+    var ret = await thunk.apply(this, arguments);
     freeworker();
     return Promise.resolve(ret);
   };
@@ -26,7 +26,11 @@ module.exports = function(thunk, workers) {
       workerChain.shift()(pickworker());
   };
 
-  var out  = process;  // better candidate than {}
-  out.push = process; // per compatibility
+  var out    = process; // better candidate than {}
+  out.push   = process; // per compatibility
+  //out.getLength = () => { workerChain.length; };
+  //out.filter = (cb) => { workerChain = workerChain.filter(cb); };
+  out.drain = () => { workerChain = []; };
+
   return out;
 };
