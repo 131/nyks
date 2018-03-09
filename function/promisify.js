@@ -12,7 +12,7 @@ module.exports = function(fn, ctx) {
 
     return new Promise(function (resolve, reject) {
       args.push(function (err, res) {
-        if (err)
+        if(err)
           return reject(err);
         resolve(res);
       });

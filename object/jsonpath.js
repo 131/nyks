@@ -8,13 +8,12 @@ module.exports = function(obj, fqnn_path) {
   var cursor = obj;
   var step;
 
-  for (var i = 0; i < path.length; i++) {
+  for(var i = 0; i < path.length; i++) {
     step = path[i];
-    if(cursor && cursor[step]) {
+    if(cursor && cursor[step])
       cursor = cursor[step];
-    } else {
+    else
       return null;
-    }
   }
   return cursor;
 };

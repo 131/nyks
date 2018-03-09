@@ -24,7 +24,7 @@ var table = (function() {
     table[n] = c;
   }
   return use_in32 ? new Int32Array(table) : table;
-})();
+}());
 
 /* much much faster to intertwine utf8 and crc */
 /* istanbul ignore next */

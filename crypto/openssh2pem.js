@@ -5,7 +5,7 @@ const SSH_RSA      = 'ssh-rsa';
 
 function ASN_len(s) {
   var len = s.length;
-  if (len < ASN_LONG_LEN)
+  if(len < ASN_LONG_LEN)
     return new Buffer([len]);
 
   var data = len.toString(16);
@@ -35,7 +35,7 @@ module.exports = function(openssh_data) {
   var i       = 4;
   var alg     = data.slice(i, i += alg_len).toString('ascii');
 
-  if (alg !== SSH_RSA)
+  if(alg !== SSH_RSA)
     throw "Not rsa";
 
   var e_len = unpack(data.slice(i, i += 4))[0];

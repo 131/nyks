@@ -59,7 +59,7 @@ describe("Child process functions", function() {
     var process_2 = require('child_process').spawn('node', ['-e', 'process.exit(1)']);
     try {
       await wait(process_2);
-    } catch (err) {
+    } catch(err) {
       expect(err).to.be("Invalid process exit code");
     }
   });

@@ -29,8 +29,8 @@ describe("Testing functions helpers", function() {
     var f = function() { return arguments.length; };
     var g = unary(f);
 
-    expect(f(1,2)).to.be(2);
-    expect(g(1,2)).to.be(1);
+    expect(f(1, 2)).to.be(2);
+    expect(g(1, 2)).to.be(1);
   });
 
   it("should test detach", function(chain) {

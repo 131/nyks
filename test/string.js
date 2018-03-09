@@ -86,10 +86,10 @@ describe("strings functions", function() {
   });
 
   it("shoult test chunk", function() {
-    expect(chunk("abc",1)).to.eql(["a","b", "c"]);
-    expect(chunk("abc")).to.eql(["a","b", "c"]);
-    expect(chunk("abc",2)).to.eql(["ab", "c"]);
-    expect(chunk("abc",0)).to.eql(["abc"]);
+    expect(chunk("abc", 1)).to.eql(["a", "b", "c"]);
+    expect(chunk("abc")).to.eql(["a", "b", "c"]);
+    expect(chunk("abc", 2)).to.eql(["ab", "c"]);
+    expect(chunk("abc", 0)).to.eql(["abc"]);
   });
 
   it("should test stripStart", function() {

@@ -26,9 +26,9 @@ describe("Testing http", function() {
     var d = function (s) { return decodeURIComponent(s.replace(a, " ")); };
     var q = base;
 
-    while ((e = r.exec(q))) {
+    while((e = r.exec(q)))
       hashParams[d(e[1])] = d(e[2]);
-    }
+
     return hashParams;
   };
 
@@ -41,17 +41,17 @@ describe("Testing http", function() {
     if(current_url.pathname == "/ping")
       return resp.end("pong");
 
-    if (current_url.pathname == "/request")
+    if(current_url.pathname == "/request")
       return resp.end(JSON.stringify(hash));
 
-    if (current_url.pathname == "/show_cookies")
+    if(current_url.pathname == "/show_cookies")
       return resp.end(req.headers.cookie);
 
-    if (current_url.pathname == '/throwme') {
+    if(current_url.pathname == '/throwme') {
       resp.statusCode = 500;
       resp.end('Nop');
     }
-    if (current_url.pathname == '/stream') {
+    if(current_url.pathname == '/stream') {
       let result = '' + (await drain(req));
       resp.end(result);
       return;

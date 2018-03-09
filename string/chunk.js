@@ -7,8 +7,8 @@ module.exports = function(str, chunkSize) {
   var chunks = [];
   chunkSize = chunkSize || 1;
 
-  while (str) {
-    if (str.length < chunkSize) {
+  while(str) {
+    if(str.length < chunkSize) {
       chunks.push(str);
       break;
     } else {

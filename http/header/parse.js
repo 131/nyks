@@ -7,9 +7,8 @@ const split = new RegExp("\\s*(.+?)(?:=\\s*(?:\"([^\"]*)\"|'([^']*)'|(.*?)))?\\s
 var parse = function(str) {
   var res;
   var out = {};
-  while ((res =  split.exec(str))) {
+  while((res = split.exec(str)))
     out[res[1]] = res[2] || res[3] || res[4] || null;
-  }
 
   return out;
 };

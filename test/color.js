@@ -34,7 +34,7 @@ describe("Color functions", function() {
   it("Shoud test html encoder", function() {
     var a = {r : 255, g : 0, b : 255, a : 12};
     expect(RGB2HTML(a)).to.eql("#ff00ff");
-    expect(RGB2HTML([0,255,0])).to.eql("#00ff00");
+    expect(RGB2HTML([0, 255, 0])).to.eql("#00ff00");
   });
 
 });

@@ -12,7 +12,7 @@ describe("Process functions", function() {
 
   it("Should test formatArgs", function() {
     expect(formatArgs({foo : 'foo', bar : 'bar'})).to.eql(["--foo=foo", "--bar=bar"]);
-    expect(formatArgs({foo : 'foo',bar : 'bar'}, true)).to.eql(["--foo", "foo", "--bar", "bar"]);
+    expect(formatArgs({foo : 'foo', bar : 'bar'}, true)).to.eql(["--foo", "foo", "--bar", "bar"]);
     expect(formatArgs({foo : true, bar : 'bar'})).to.eql(["--foo", "--bar=bar"]);
     expect(formatArgs({foo : null})).to.eql([]);
     expect(formatArgs()).to.eql([]);
