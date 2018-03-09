@@ -217,11 +217,11 @@ describe("FS functions", function() {
     // test with only one file
     var new_name = 'This is new name';
     patchJSON(target, function(body) {
-      body.name = new_name;
+      return {name : new_name};
     });
 
     new_file_content = readFileJSONSync(target);
-    expect(new_file_content.name).to.be(new_name);
+    expect(new_file_content).to.eql({name : new_name});
 
     // cleanup
     fs.unlinkSync(target);
