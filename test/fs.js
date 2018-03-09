@@ -43,7 +43,7 @@ describe("FS functions", function() {
   it("should test mkdirpSync/deleteFolderRecursive", function() {
     var root = "trashme";
     var dir  = path.join(root, "this is/a/dir");
-    var file = path.join(dir,"foo");
+    var file = path.join(dir, "foo");
     var out  = mkdirpSync(dir);
 
     expect(out).to.be(dir);
@@ -71,7 +71,7 @@ describe("FS functions", function() {
   it("should test rmrf", async function() {
     var root = "trashme";
     var dir  = path.join(root, "this is/a/dir");
-    var file = path.join(dir,"foo");
+    var file = path.join(dir, "foo");
     var out  = mkdirpSync(dir);
 
     expect(out).to.be(dir);
@@ -216,7 +216,7 @@ describe("FS functions", function() {
 
     // test with only one file
     var new_name = 'This is new name';
-    patchJSON(target, function(body) {
+    patchJSON(target, function() {
       return {name : new_name};
     });
 

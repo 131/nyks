@@ -41,7 +41,7 @@ describe("Require functions", function() {
     try {
       lookup(toto_path);
       expect().fail("Never here");
-    } catch (err) {
+    } catch(err) {
       expect(err).to.be(`can't find ${toto_path} package`);
     }
   });

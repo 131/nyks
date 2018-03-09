@@ -37,7 +37,9 @@ module.exports = function(argv) {
           dict[k] = [dict[k]];
 
         dict[k].push(v);
-      } else dict[k] = v;
+      } else {
+        dict[k] = v;
+      }
     }
   });
 

@@ -2,7 +2,7 @@
 
 module.exports = function(fn) {
   var f = function () {
-    if (f.called)
+    if(f.called)
       return f.value;
     f.called = true;
     return f.value = fn.apply(this, arguments);

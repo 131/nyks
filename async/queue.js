@@ -13,10 +13,11 @@ module.exports = function(thunk, workers) {
   };
 
   var pickworker = function () {
-    if(!workers) //no available worker, waiting
+    if(!workers) { //no available worker, waiting
       return new Promise(function(resolve) {
         workerChain.push(resolve);
       });
+    }
     return Promise.resolve(workers--); //worker id
   };
 

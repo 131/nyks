@@ -7,7 +7,7 @@ const isArray   = require('mout/lang/isArray');
 const compact   = require('mout/array/compact');
 
 var fmt = (unix, k, v) => {
-  if (v == undefined || v == null)
+  if(v == undefined || v == null)
     return [];
   if(typeof v == "boolean" && v)
     return [sprintf("--%s", k)];
@@ -18,7 +18,7 @@ module.exports = function(args, unix) {
   var cmds = [];
   forIn(args || {}, function (value, name) {
     var cmd = [];
-    if (isArray(value))
+    if(isArray(value))
       value.forEach(value => cmd.push.apply(cmd, fmt(unix, name, value)));
     else
       cmd = fmt(unix, name, value);

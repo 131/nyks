@@ -9,7 +9,7 @@ var exitListenerAttached = false;
 var filesToDelete = [];
 
 function deleteOnExit(file_path) {
-  if (!exitListenerAttached) {
+  if(!exitListenerAttached) {
     process.on('exit', cleanupFilesSync);
     process.on('fsgc', cleanupFilesSync); //force cleanup
 
@@ -24,7 +24,7 @@ function deleteOnExit(file_path) {
 
 function cleanupFilesSync() {
   var toDelete;
-  while ((toDelete = filesToDelete.shift()) !== undefined) {
+  while((toDelete = filesToDelete.shift()) !== undefined) {
     if(fs.existsSync(toDelete))
       fs.unlinkSync(toDelete);
   }

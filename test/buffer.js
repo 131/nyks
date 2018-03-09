@@ -45,9 +45,9 @@ describe("Buffer writeBits", function() {
     expect(writeBits(tmp, fromInt(3), 11, -2)).to.eql(2);
     expect(tmp).to.eql(Buffer([0, 219]));
 
-    tmp = Buffer([0,0,0, 195]);
+    tmp = Buffer([0, 0, 0, 195]);
     expect(writeBits(tmp, fromInt(3), 27, -2)).to.eql(2);
-    expect(tmp).to.eql(Buffer([0,0,0, 219]));
+    expect(tmp).to.eql(Buffer([0, 0, 0, 219]));
 
     tmp = Buffer([0]);
     expect(writeBits(tmp, Buffer([192]), 0, 2)).to.eql(2);
@@ -58,9 +58,9 @@ describe("Buffer writeBits", function() {
 
     // [129, 5, 39] 10000001 00000101 00100111
     // [129, 5, 39] 10001000 10000101 00100111  (write 17 at 4)
-    tmp = Buffer([129,5,39]);
+    tmp = Buffer([129, 5, 39]);
     expect(writeBits(tmp, fromInt(17), 4, -5)).to.eql(5);
-    expect(tmp).to.eql(Buffer([136,133,39]));
+    expect(tmp).to.eql(Buffer([136, 133, 39]));
   });
 
 });
@@ -75,7 +75,7 @@ describe("Crypto Buffer indexOf", function() {
   it("should find an easy char", function() {
     expect(indexOf(body, 1)).to.be(0);
     expect(indexOf(body, 2)).to.be(1);
-    expect(indexOf(body, new Buffer([3,4]))).to.be(2);
+    expect(indexOf(body, new Buffer([3, 4]))).to.be(2);
     expect(indexOf(body, new Buffer([95]))).to.be(-1);
   });
 

@@ -4,15 +4,17 @@
 
 function pipe(src, dest) {
 
-  if(src.then)
+  if(src.then) {
     return src.then(function(tmp) {
       return pipe(tmp, dest);
     });
+  }
 
-  if(dest.then)
+  if(dest.then) {
     return dest.then(function(tmp) {
       return pipe(src, tmp);
     });
+  }
 
   return new Promise(function(resolve, reject) {
     src.pipe(dest);

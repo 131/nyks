@@ -53,7 +53,7 @@ describe("testing one at a time", function() {
   it("should emmit error if run simultaneously", async function() {
     var a       = 0;
     var wait200 = async function() {
-      a = a + 1 ;
+      a = a + 1;
       await sleep(200);
       return "done";
     };

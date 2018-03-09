@@ -1,9 +1,10 @@
 "use strict";
 
 var indexOfc = function(buf, chr, offset, stop) {
-  for (var i = offset || 0; i < stop ; i++)
+  for(var i = offset || 0; i < stop; i++) {
     if(buf[i] == chr)
       return i;
+  }
   return -1;
 };
 

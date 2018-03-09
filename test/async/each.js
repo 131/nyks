@@ -21,15 +21,15 @@ describe("each", function() {
 
   it('each', async function () {
     var args = [];
-    await each([1,3,2], eachIteratee.bind(this, args));
-    expect(args).to.eql([1,2,3]);
+    await each([1, 3, 2], eachIteratee.bind(this, args));
+    expect(args).to.eql([1, 2, 3]);
   });
 
   it('each return value', async function () {
     var args     = [];
-    var response = await each([1,3,2], eachIteratee.bind(this, args));
-    expect(args).to.eql([1,2,3]);
-    expect(response).to.eql([1,3,2]);
+    var response = await each([1, 3, 2], eachIteratee.bind(this, args));
+    expect(args).to.eql([1, 2, 3]);
+    expect(response).to.eql([1, 3, 2]);
   });
 
   //per design, each extra callback cannot be tested
@@ -43,7 +43,7 @@ describe("each", function() {
 
   it('each error', async function() {
     try {
-      await each([1,2,3], async function () { throw 'error'; });
+      await each([1, 2, 3], async function () { throw 'error'; });
       throw "Never here";
     } catch(err) {
       expect(err).to.equal('error');
@@ -59,8 +59,8 @@ describe("each", function() {
 
   it('eachSeries', async function () {
     var args = [];
-    await eachSeries([1,3,2], eachIteratee.bind(this, args));
-    expect(args).to.eql([1,3,2]);
+    await eachSeries([1, 3, 2], eachIteratee.bind(this, args));
+    expect(args).to.eql([1, 3, 2]);
   });
 
   it('eachSeries empty array', async function () {
@@ -74,7 +74,7 @@ describe("each", function() {
   it('eachSeries error', async function () {
     var call_order = [];
     try {
-      await eachSeries([1,2,3], async function (x) {
+      await eachSeries([1, 2, 3], async function (x) {
         call_order.push(x);
         throw "error";
       });
@@ -87,7 +87,7 @@ describe("each", function() {
 
   it('eachLimit', async function () {
     var args = [];
-    var arr  = [0,1,2,3,4,5,6,7,8,9];
+    var arr  = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     await eachLimit(arr, 2, async function (x) {
       await sleep(x * 5);
       args.push(x);
@@ -105,14 +105,14 @@ describe("each", function() {
 
   it('eachLimit limit exceeds size', async function () {
     var args = [];
-    var arr  = [0,1,2,3,4,5,6,7,8,9];
+    var arr  = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     await eachLimit(arr, 20, eachIteratee.bind(this, args));
     expect(args).to.eql(arr);
   });
 
   it('eachLimit limit equal size', async function () {
     var args = [];
-    var arr  = [0,1,2,3,4,5,6,7,8,9];
+    var arr  = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     await eachLimit(arr, 10, eachIteratee.bind(this, args));
     expect(args).to.eql(arr);
   });
@@ -120,42 +120,42 @@ describe("each", function() {
   //per sanity eachLimit zero limit will never be supported
   //per design eachLimit no callback cannot be tested
   it('eachLimit error', async function () {
-    var arr        = [0,1,2,3,4,5,6,7,8,9];
+    var arr        = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     var call_order = [];
 
     try {
       await eachLimit(arr, 3, async function (x) {
         call_order.push(x);
-        if (x === 2)
+        if(x === 2)
           throw 'error';
       });
       throw "never here";
     } catch(err) {
-      expect(call_order).to.eql([0,1,2]);
+      expect(call_order).to.eql([0, 1, 2]);
       expect(err).to.equal('error');
     }
   });
 
   it('eachLimit synchronous', async function () {
     var args = [];
-    var arr  = [0,1,2];
+    var arr  = [0, 1, 2];
     await eachLimit(arr, 5, async function(x) { args.push(x); });
     expect(args).to.eql(arr);
   });
 
   it('eachLimit does not continue replenishing after error', async function () {
     var started = 0;
-    var arr     = [0,1,2,3,4,5,6,7,8,9];
+    var arr     = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     var delay   = 10;
     var limit   = 3;
     var maxTime = 10 * arr.length;
 
-    await [
+    await Promise.all([
       async function() {
         try {
           await eachLimit(arr, limit, async function () {
             started++;
-            if (started === 3)
+            if(started === 3)
               throw "Test Error";
             await sleep(delay);
           });
@@ -168,7 +168,7 @@ describe("each", function() {
         await sleep(maxTime);
         expect(started).to.equal(3);
       }
-    ];
+    ]);
   });
 
 });

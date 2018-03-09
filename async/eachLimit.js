@@ -10,7 +10,7 @@ module.exports = async function(series, n, thunk, ctx) {
   var cancel = false;
 
   var next = async function() {
-    if (index >= series.length || cancel)
+    if(index >= series.length || cancel)
       return;
 
     let i = index++;
@@ -29,9 +29,8 @@ module.exports = async function(series, n, thunk, ctx) {
   };
 
   var lanes = [];
-  while (n--) {
+  while(n--)
     lanes.push(next());
-  }
 
   await Promise.all(lanes);
 

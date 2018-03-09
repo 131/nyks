@@ -40,7 +40,7 @@ describe("Crypto testing functions", function() {
     try {
       openssh2pem(rsa_key);
       expect().fail("Never here");
-    } catch (err) {
+    } catch(err) {
       expect(err).to.be('Not rsa');
     }
   });

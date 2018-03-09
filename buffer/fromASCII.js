@@ -3,8 +3,7 @@
 module.exports = function(str) {
   var ret = new Array(str.length);
   var len = str.length;
-  while(len--) {
+  while(len--)
     ret[len] = str.charCodeAt(len);
-  }
   return ret;
 };
