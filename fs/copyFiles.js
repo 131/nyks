@@ -31,6 +31,6 @@ function copyFiles(files, target_dir, options) {
     fs.writeFileSync(path.join(target_dir, file_path), content);
   });
 
-};
+}
 
 module.exports = copyFiles;
