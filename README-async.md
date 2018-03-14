@@ -311,8 +311,8 @@ nyks/async is tested against async test suite (of course)
 <a name="Credits"></a>
 # Credits
 * [131](https://github.com/131)
-* not dependant upon, yet relying on [co](https://github.com/tj/co)
 * inspired from the excellent [async](https://github.com/caolan/async)
+* Derived from [async-co](https://github.com/131/async-co)
 
 ------
 
