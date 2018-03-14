@@ -7,6 +7,7 @@ Fs utilities
 ## Table of Contents
 
   * [copyFile()](#copyFile)
+  * [copyFiles()](#copyFiles)
   * [deleteFolderRecursive()](#deleteFolderRecursive)
   * [filemtimeSync()](#filemtimeSync)
   * [filesizeSync()](#filesizeSync)
@@ -42,6 +43,30 @@ let from = require('../package.json');
 copyFile(from, dest, function(err) {
   // err = null
   fs.readFileSync(dst); // return a copy of ./package.json content (from)
+});
+```
+
+------
+
+<a name="copyFile"></a>
+## copyFiles(files_list target_dir[, options]) : void
+
+Copy a list of files to a target directory. Options is an Object that can recieve cwd (default if process.cwd()) and process (callback that return the file content you want in the target dir).
+
+```javascript
+const glob = require('glob').sync;
+
+const copyFiles = require('nyks/fs/copyFiles');
+
+let files_list = glob('resources/**/*.css');
+let target_dir = 'dist';
+let header     = '/* Css file, property of myself */\n';
+
+copyFiles(files_list, target_dir, {
+  process : function(content, file_path, index) {
+    console.log('file ' + file_path + ' has been copied and patched');
+    return header + content;
+  }
 });
 ```
 

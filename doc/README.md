@@ -41,6 +41,7 @@
 
 * # Fs
   * [nyks/fs/copyFile](./fs.md#copyFile)                           - Copy a file to another. 
+  * [nyks/fs/copyFiles](./fs.md#copyFiles)                         - Copy a list of files to a target directory.
   * [nyks/fs/deleteFolderRecursive](./fs.md#deleteFolderRecursive) - Recursive folder deletion (sync).
   * [nyks/fs/filemtimeSync](./fs.md#filemtimeSync)                 - Return a file mtime, sync (usefull for collection/map).
   * [nyks/fs/filesizeSync](./fs.md#filesizeSync)                   - Return a file size, sync (usefull for collection/map).
