@@ -23,6 +23,7 @@
   "devDependencies": {
     "eslint-plugin-ivs": "^1.0.7",
     "expect.js": "^0.3.1",
+    "glob": "^7.1.2",
     "istanbul": "^1.1.0-alpha.1",
     "ivs-jssc": "^2.1.1",
     "mocha": "^3.1.2"

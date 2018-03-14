@@ -7,7 +7,10 @@ const expect = require('expect.js');
 const fs     = require('fs');
 const path   = require('path');
 
+const glob   = require('glob').sync;
+
 const copyFile              = require('../fs/copyFile');
+const copyFiles             = require('../fs/copyFiles');
 const deleteFolderRecursive = require('../fs/deleteFolderRecursive');
 const filemtimeSync         = require('../fs/filemtimeSync');
 const filesizeSync          = require('../fs/filesizeSync');
@@ -38,6 +41,50 @@ describe("FS functions", function() {
       fs.unlinkSync(dst);
       done();
     });
+  });
+
+  it("should test copyFiles", async function() {
+    var TOP_CONTENT = 'THIS IS TOP FILE CONTENT';
+    var target_dir  = 'target_copyfiles';
+    var pattern     = 'fs/**';
+
+    var files       = glob(pattern);
+
+    copyFiles(files, target_dir);
+
+    var new_files = glob(pattern, {cwd : target_dir});
+
+    expect(files).to.eql(new_files);
+
+    await rmrf(target_dir);
+
+    // test with only one file
+    var file_path = 'fs/copyFiles.js';
+    copyFiles(file_path, target_dir);
+
+    new_files = glob(pattern, {cwd : target_dir, nodir : true});
+
+    expect(new_files.length).to.be(1);
+    expect(new_files[0]).to.be(file_path);
+
+    await rmrf(target_dir);
+
+    // now with path Callback
+    var file_content = '' + fs.readFileSync(file_path);
+
+    copyFiles(file_path, target_dir, function(content) {
+      return TOP_CONTENT + content;
+    });
+
+    new_files = glob(pattern, {cwd : target_dir, nodir : true});
+
+    var new_file_content = '' + fs.readFileSync(path.join(target_dir, file_path));
+
+    expect(new_files.length).to.be(1);
+    expect(new_files[0]).to.be(file_path);
+    expect(new_file_content).to.be(TOP_CONTENT + file_content);
+
+    await rmrf(target_dir);
   });
 
   it("should test mkdirpSync/deleteFolderRecursive", function() {
