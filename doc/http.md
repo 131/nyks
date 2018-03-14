@@ -8,7 +8,6 @@ Http utilities
 
   * [fetch()](#fetch)
   * [get()](#get)
-  * [getContents()](#getContents)
   * [request()](#request)
   * [header/parse()](#parse)
 
