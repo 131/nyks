@@ -16,7 +16,7 @@ function copyFiles(files, target_dir, options) {
 
   var cwd = options.cwd || process.cwd();
 
-  files.forEach((file_path) => {
+  files.forEach((file_path, index) => {
     if(!isFileSync(file_path))
       return;
 
@@ -26,7 +26,7 @@ function copyFiles(files, target_dir, options) {
     mkdirpSync(path.join(target_dir, current_dir));
 
     if(options.process)
-      content = options.process(content);
+      content = options.process(content, file_path, index);
 
     fs.writeFileSync(path.join(target_dir, file_path), content);
   });
