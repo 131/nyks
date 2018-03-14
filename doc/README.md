@@ -70,7 +70,6 @@
 * # Http
   * [nyks/http/fetch](./http.md#fetch)             - Convert 'nyks/http/get' function into a Promise.
   * [nyks/http/get](./http.md#get)                 - Call http/https.get, depending on the enpoint Url.
-  * [nyks/http/getContents](./http.md#getContents) - Get a file content, as a Buffer, through an endpoint Url.
   * [nyks/http/request](./http.md#request)         - Helper for http/https.request.
   * ## Http Headers
     * [nyks/http/header/parse](./http.md#parse)    - Return an Object of parsed headers (or cookies).
