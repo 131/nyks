@@ -47,6 +47,9 @@ describe("FS functions", function() {
     var TOP_CONTENT = 'THIS IS TOP FILE CONTENT';
     var target_dir  = 'target_copyfiles';
     var pattern     = 'fs/**';
+    var process     = function(content) {
+      return TOP_CONTENT + content;
+    };
 
     var files       = glob(pattern);
 
@@ -72,13 +75,11 @@ describe("FS functions", function() {
     // now with path Callback
     var file_content = '' + fs.readFileSync(file_path);
 
-    copyFiles(file_path, target_dir, function(content) {
-      return TOP_CONTENT + content;
-    });
+    copyFiles(file_path, target_dir, {process});
 
     new_files = glob(pattern, {cwd : target_dir, nodir : true});
 
-    var new_file_content = '' + fs.readFileSync(path.join(target_dir, file_path));
+    var new_file_content = fs.readFileSync(path.join(target_dir, file_path), 'utf-8');
 
     expect(new_files.length).to.be(1);
     expect(new_files[0]).to.be(file_path);

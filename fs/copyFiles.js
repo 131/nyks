@@ -5,26 +5,32 @@ const path = require('path');
 
 const isFileSync = require('./isFileSync');
 const mkdirpSync = require('./mkdirpSync');
-const sprintf    = require('../string/format');
 
-module.exports = function copyFiles(files, target_dir, patchCb) {
+function copyFiles(files, target_dir, options) {
+
+  if(!options)
+    options = {};
 
   if(typeof files == 'string')
     files = [files];
+
+  var cwd = options.cwd || process.cwd();
 
   files.forEach((file_path) => {
     if(!isFileSync(file_path))
       return;
 
     let current_dir = path.dirname(file_path);
-    let content     = '' + fs.readFileSync(file_path);
+    let content     = fs.readFileSync(path.join(cwd, file_path));
 
-    mkdirpSync(sprintf('%s/%s', target_dir, current_dir));
+    mkdirpSync(path.join(target_dir, current_dir));
 
-    if(typeof patchCb == 'function')
-      content = patchCb(content);
+    if(options.process)
+      content = options.process(content);
 
-    fs.writeFileSync(sprintf('%s/%s', target_dir, file_path), content);
+    fs.writeFileSync(path.join(target_dir, file_path), content);
   });
 
 };
+
+module.exports = copyFiles;
