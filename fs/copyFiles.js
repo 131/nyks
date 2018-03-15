@@ -17,7 +17,7 @@ function copyFiles(files, target_dir, options) {
   var cwd = options.cwd || process.cwd();
 
   files.forEach((file_path, index) => {
-    if(!isFileSync(file_path))
+    if(!isFileSync(path.join(cwd, file_path)))
       return;
 
     let current_dir = path.dirname(file_path);
