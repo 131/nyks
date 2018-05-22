@@ -27,6 +27,7 @@ describe("testing one at a time", function() {
 
     try {
       await oneAtATImeReject();
+      expect(false).to.eql(true);
     } catch(err) {
       expect(err).to.eql("reject");
     }
@@ -66,11 +67,9 @@ describe("testing one at a time", function() {
     await runOneAtATIme();
     expect(a).to.eql(2);
 
-    try {
-      res = await Promise.all([runOneAtATIme(), runOneAtATIme(), runOneAtATIme()]);
-    } catch(err) {
-      expect(err).to.eql("Already running !");
-    }
+
+    res = await Promise.all([runOneAtATIme(), runOneAtATIme(), runOneAtATIme()]);
+    expect(res).to.eql(['done', 'done', 'done']);
     expect(a).to.eql(3);
     await sleep(201);
     await runOneAtATIme();
