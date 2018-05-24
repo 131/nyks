@@ -4,6 +4,7 @@
 
 const expect = require('expect.js');
 
+const sleep     = require('../async/sleep');
 const cache     = require('../function/cache');
 const detach    = require('../function/detach');
 const once      = require('../function/once');
@@ -52,7 +53,7 @@ describe("Testing functions helpers", function() {
     }, 100);
   });
 
-  it("should test cache", function() {
+  it("should test cache", async () => {
     var cost = 0;
 
     function reverse(str) { //heavy CPU intensive operation
@@ -60,7 +61,7 @@ describe("Testing functions helpers", function() {
       return str.toUpperCase();
     }
 
-    var creverse = cache(reverse);
+    var creverse = cache(reverse, 100);
 
     expect(creverse("summer")).to.eql("SUMMER");
     expect(creverse("summer")).to.eql("SUMMER");
@@ -68,7 +69,15 @@ describe("Testing functions helpers", function() {
     expect(creverse("winter")).to.eql("WINTER");
     expect(creverse("winter")).to.eql("WINTER");
     expect(cost).to.eql(2);
+
+    await sleep(100 * 2);
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(cost).to.eql(3);
   });
+
 
   it("should test thunk", function() {
 

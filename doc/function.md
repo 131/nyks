@@ -17,7 +17,7 @@ Function utilities
 ------
 
 <a name="cache"></a>
-## cache(fn) : Function
+## cache(fn(a) [, timeout=3600 * 1000 ]) : Function
 
 Protect a function, cache & debounce multiple calls with same parameter.
 
@@ -47,6 +47,8 @@ creverse("winter"); // return "WINTER"
 
 // cost = 2
 ```
+
+A cached entry will expire after `timeout`ms, the callback'll then get called once again.
 
 ------
 

@@ -75,7 +75,7 @@ sprintf.format = function(parse_tree, argv) {
       if(re.number.test(match[8]))
         is_positive = arg >= 0;
 
-      switch (match[8]) {
+      switch(match[8]) {
         case "b":
           arg = arg.toString(2);
           break;

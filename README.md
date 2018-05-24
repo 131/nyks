@@ -9,6 +9,7 @@ Use browserify if you need nyks module in a browser environnement.
 [![Coverage Status](https://coveralls.io/repos/github/131/nyks/badge.svg?branch=master)](https://coveralls.io/github/131/nyks?branch=master)
 [![Version](https://img.shields.io/npm/v/nyks.svg)](https://www.npmjs.com/package/nyks)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+[![Code style](https://img.shields.io/badge/code%2fstyle-ivs-green.svg)](https://www.npmjs.com/package/eslint-plugin-ivs)
 
 
 ## Main goals
