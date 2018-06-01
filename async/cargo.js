@@ -11,7 +11,7 @@ module.exports = function(thunk, payload) {
     tasks.push(task);
   };
 
-  (async () => {
+  var out = (async () => {
     do {
       var slice = tasks.splice(0, payload);
 
@@ -25,7 +25,6 @@ module.exports = function(thunk, payload) {
     } while(true);
   })();
 
-  var out    = process;// better candidate than {}
   out.push   = process;
 
   return out;
