@@ -3,14 +3,14 @@
 const sleep = require('./sleep');
 
 const setLoop = async (task, delay, reject) => {
-  if(!reject)
-    reject = console.log.bind(console, "Failure in task", task);
 
   do {
     var start = Date.now();
     try {
       await task();
     } catch(err) {
+      if(!reject)
+        throw err;
       reject(err);
     }
     var duration = Date.now() - start;

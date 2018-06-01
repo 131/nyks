@@ -34,18 +34,21 @@ describe("testing timeout", function() {
 
 
 
-  it("should test setloop (console)", (done) => {
+  it("should test setloop (console)", async () => {
     var i = 0;
 
-    (async () => {
+    try {
       await setLoop(async () => {
         await sleep(100);
         if(i++ == 5)
-          done();
+          throw "nope";
       }, 200);
-
       expect().to.fail("Never here");
-    })();
+    } catch(err) {
+      expect(err).to.be("nope");
+    }
+
+
   });
 
 
