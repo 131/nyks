@@ -1,5 +1,4 @@
 "use strict";
-/* eslint-env node,mocha */
 
 
 const fs     = require('fs');

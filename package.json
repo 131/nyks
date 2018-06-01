@@ -21,11 +21,10 @@
     "mout": "^1.0.0"
   },
   "devDependencies": {
-    "eslint-plugin-ivs": "^1.0.7",
+    "eslint-plugin-ivs": "^1.3.0",
     "expect.js": "^0.3.1",
     "glob": "^7.1.2",
     "istanbul": "^1.1.0-alpha.1",
-    "ivs-jssc": "^2.1.1",
     "mocha": "^3.1.2"
   },
   "homepage": "http://github.com/131/nyks",
@@ -40,7 +39,8 @@
     "url": "git@github.com:131/nyks.git"
   },
   "scripts": {
-    "mocha": "node node_modules/mocha/bin/_mocha",
+    "preversion": "npm run eslint",
+    "mocha": "mocha",
     "eslint": "eslint test array async buffer child_process collection color crypto date fs function http lang math object os path process promise require stream string",
     "cover": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha --recursive",
     "test": "npm run cover  test test/async && npm run eslint",

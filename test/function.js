@@ -1,5 +1,4 @@
 "use strict";
-/* eslint-env node,mocha */
 
 
 const expect = require('expect.js');
@@ -62,20 +61,38 @@ describe("Testing functions helpers", function() {
     }
 
     var creverse = cache(reverse, 100);
-
     expect(creverse("summer")).to.eql("SUMMER");
+    await sleep(50);
     expect(creverse("summer")).to.eql("SUMMER");
     expect(cost).to.eql(1);
-    expect(creverse("winter")).to.eql("WINTER");
+
     expect(creverse("winter")).to.eql("WINTER");
     expect(cost).to.eql(2);
+
+    await sleep(50);
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(cost).to.eql(2);
+    expect(creverse("summer")).to.eql("SUMMER");
+    expect(cost).to.eql(3);
+
 
     await sleep(100 * 2);
     expect(creverse("winter")).to.eql("WINTER");
     expect(creverse("winter")).to.eql("WINTER");
     expect(creverse("winter")).to.eql("WINTER");
     expect(creverse("winter")).to.eql("WINTER");
-    expect(cost).to.eql(3);
+    expect(cost).to.eql(4);
+
+
+    var creverse2 = cache(reverse);
+
+    expect(creverse2("winter")).to.eql("WINTER");
+    expect(creverse2("winter")).to.eql("WINTER");
+    expect(creverse2("winter")).to.eql("WINTER");
+    expect(creverse2("winter")).to.eql("WINTER");
+    expect(cost).to.eql(5);
+
+
   });
 
 
