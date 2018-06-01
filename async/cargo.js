@@ -11,7 +11,7 @@ module.exports = function(thunk, payload) {
     tasks.push(task);
   };
 
-  var loop = async function() {
+  (async () => {
     do {
       var slice = tasks.splice(0, payload);
 
@@ -23,7 +23,7 @@ module.exports = function(thunk, payload) {
       await new Promise(resolve => haswork = resolve);
       haswork = null;
     } while(true);
-  }; loop();
+  })();
 
   var out    = process;// better candidate than {}
   out.push   = process;
