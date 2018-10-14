@@ -24,8 +24,8 @@
     "eslint-plugin-ivs": "^1.3.0",
     "expect.js": "^0.3.1",
     "glob": "^7.1.2",
-    "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "nyc": "^13.0.1"
   },
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
@@ -42,7 +42,7 @@
     "preversion": "npm run eslint",
     "mocha": "mocha",
     "eslint": "eslint test array async buffer child_process collection color crypto date fs function http lang math object os path process promise require stream string",
-    "cover": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha --recursive",
+    "cover": "nyc  --temp-directory=coverage/.nyc_output --reporter=text-summary --reporter=html --reporter=lcov  mocha",
     "test": "npm run cover  test test/async && npm run eslint",
     "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },

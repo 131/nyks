@@ -23,6 +23,9 @@ describe('queue', function() {
       return Promise.resolve('arg');
     }, 2);
 
+    var drain = 0;
+    q.drain = () => drain++;
+
     await Promise.all([
       (async function() {
         var arg = await q.push(1);
@@ -42,6 +45,8 @@ describe('queue', function() {
         call_order.push('callback ' + 4);
       }())
     ]);
+
+    expect(drain).to.eql(1);
 
     expect(call_order).to.eql([
       'process 2', 'callback 2',
@@ -122,23 +127,26 @@ describe('queue', function() {
     expect(results).to.eql(['bar', 'bur', 'fooError']);
   });
 
-  it("test drain", async function() {
+  it("test kill", async function() {
 
     var timeline = [];
+    var done = false;
     var q = queue(async function (time) {
       timeline.push(time);
       return await sleep(time);
     }, 1);
+    q.drain  = () => done = true;
 
     q.push(1000);
     q.push(1000);
     q.push(1000);
 
     // cleanup tasks list
-    q.drain();
+    q.kill();
 
     await q.push(100);
 
+    expect(done).to.eql(false);
     expect(timeline).to.eql([1000, 100]); // with a latence of 50 ms.
   });
 
