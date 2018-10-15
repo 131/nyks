@@ -25,8 +25,22 @@ const rmrf                  = require('../fs/rmrf');
 const sha1File              = require('../fs/sha1File');
 const tmppath               = require('../fs/tmppath');
 const writeLazySafeSync     = require('../fs/writeLazySafeSync');
+const readdir               = require('../fs/readdir');
 
 describe("FS functions", function() {
+
+  it("should test readdir", async function() {
+    var files = [];
+    var foo = glob("test/**", {nodir : true, dot : true});
+
+    for(var entry of readdir("test"))
+      files.push(entry);
+
+    files.sort();
+    foo.sort();
+    expect(foo).to.eql(files);
+
+  });
 
   it("should test copyFile", function(done) {
     var dst  = tmppath("too");

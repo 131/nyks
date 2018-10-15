@@ -40,7 +40,7 @@
   },
   "scripts": {
     "preversion": "npm run eslint",
-    "mocha": "mocha",
+    "mocha": "mocha -b",
     "eslint": "eslint test array async buffer child_process collection color crypto date fs function http lang math object os path process promise require stream string",
     "cover": "nyc  --temp-directory=coverage/.nyc_output --reporter=text-summary --reporter=html --reporter=lcov  mocha",
     "test": "npm run cover  test test/async && npm run eslint",

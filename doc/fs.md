@@ -20,9 +20,13 @@ Fs utilities
   * [patchJSON()](#patchJSON)
   * [readFileJSONSync()](#readFileJSONSync)
   * [rmrf()](#rmrf)
+  * [readdir()](#readdir)
   * [sha1File()](#sha1File)
   * [tmppath()](#tmppath)
   * [writeLazySafeSync()](#writeLazySafeSync)
+
+
+
 
 ------
 
@@ -286,6 +290,22 @@ mkdirpSync(dir);
 (async function() {
   await rmrf(root); // removed "trashme" directory and all its childs
 })();
+
+```
+
+------
+
+<a name="readdir"></a>
+## * readdir(string dir) : RecursiveDirectoryIterator
+
+list, recursiverly, all files in a directory through an iterator
+
+```javascript
+
+const readdir = require('nyks/fs/readdir');
+
+for(var file_path of readdir("/path/to/huge/directory"))
+  await md5computation(file_path);
 
 ```
 
