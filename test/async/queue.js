@@ -60,10 +60,6 @@ describe('queue', function() {
     var call_order = [];
     var delays     = [40, 20, 60, 20];
 
-    // worker1: --1-4
-    // worker2: -2---3
-    // order of completion: 2,1,4,3
-
     var q = queue(async function (task) {
       await sleep(delays.shift());
       call_order.push('process ' + task);
@@ -95,6 +91,32 @@ describe('queue', function() {
       'process 2', 'callback 2',
       'process 3', 'callback 3',
       'process 4', 'callback 4',
+    ]);
+  });
+
+
+
+
+  it('should test unshift', async function() {
+    var call_order = [];
+
+    var q = queue(async function (task, delay) {
+      await sleep(delay);
+      call_order.push('process ' + task);
+    }, 1);
+
+    q.push(1, 40);
+    q.push(2, 20);
+    q.unshift(3, 60);
+    q.push(4, 20);
+
+    await new Promise(resolve => q.drain = resolve);
+
+    expect(call_order).to.eql([
+      'process 1',
+      'process 3',
+      'process 2',
+      'process 4',
     ]);
   });
 
