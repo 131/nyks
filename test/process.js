@@ -58,6 +58,12 @@ describe("Process functions", function() {
 
   });
 
+  it("testing parseArgs / json", function() {
+    var foo = {"this" : "is", "a" : ["complex", null, 45, "object"]};
+    expect(parseArgs(["--foo::json=" + JSON.stringify(foo)])).to.eql({args : [], dict : {foo}, rest : undefined});
+  });
+
+
   //invalid argument description are dropped
   it("should drop invalid args", function() {
     expect(parseArgs(["-=foo", "bar"])).to.eql({args : ["bar"], dict : {}, rest : undefined});

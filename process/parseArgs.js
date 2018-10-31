@@ -3,6 +3,8 @@
 const startsWith = require('mout/string/startsWith');
 const isArray    = require('mout/lang/isArray');
 
+const JSON_ARGS = new RegExp("::json$");
+
 module.exports = function(argv) {
 
   /* istanbul ignore if  */
@@ -28,6 +30,10 @@ module.exports = function(argv) {
       r = e.exec(arg);
       k = r[1], v = r[2] === undefined ? true : r[2];
 
+      if(JSON_ARGS.test(k)) {
+        k = k.substr(0, k.length - 6);
+        v = JSON.parse(v);
+      }
 
       if(typeof v === 'string' && v !== '' && isFinite(v)) //mout isFinite force parseFloat
         v = parseFloat(v);
