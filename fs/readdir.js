@@ -6,6 +6,7 @@ const path     = require('path');
 
 const readdir = function * (dir) {
   var entries = fs.readdirSync(dir);
+  entries.sort();
 
   for(let entry of entries) {
     let filepath = path.join(dir, entry);
