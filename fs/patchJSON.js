@@ -1,14 +1,18 @@
 "use strict";
 
-const path       = require('path');
 const fs         = require('fs');
-const mkdirpSync = require('./mkdirpSync');
+const writeLazySafeSync = require('./writeLazySafeSync');
 
 function patchJSON(target, cb, src) {
-  var entry = JSON.parse(fs.readFileSync(src || target));
+  var entry = {};
+  try {
+    entry = JSON.parse(fs.readFileSync(src || target));
+  } catch(err) { }
+
   let returned = cb(entry);
-  mkdirpSync(path.dirname(target));
-  fs.writeFileSync(target, JSON.stringify((returned === undefined) ? entry : returned, null, 2));
+
+  returned = JSON.stringify((returned === undefined) ? entry : returned, null, 2);
+  writeLazySafeSync(target, returned);
 }
 
 module.exports = patchJSON;
