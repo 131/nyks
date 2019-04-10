@@ -37,6 +37,7 @@ describe("Date functions", function() {
 
   it("should test humanDiff", function() {
     expect(humanDiff(0)).to.eql("0s");
+    expect(humanDiff(0.656)).to.eql("1s");
     expect(humanDiff(1)).to.eql("1s");
     expect(humanDiff(3600)).to.eql("1h");
     expect(humanDiff(3601)).to.eql("1h 1s");

@@ -28,9 +28,10 @@ module.exports = function(timestamp, max = 2, format = FORMAT_LIGHT) {
   let steps = FORMATS[format];
   let name = Object.keys(steps)[0];
   let out = {};
-
+  timestamp = Math.ceil(timestamp);
   if(!timestamp)
     return sprintf(name, 0);
+
 
   let current;
   for(name in steps) {
