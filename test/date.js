@@ -5,6 +5,7 @@ const expect = require('expect.js');
 
 const getSeason = require('../date/getSeason');
 const strftime  = require('../date/strftime');
+const humanDiff = require('../date/humanDiff');
 
 describe("Date functions", function() {
 
@@ -32,5 +33,15 @@ describe("Date functions", function() {
     expect(strftime(date, '%%')).to.eql("%");
     expect(strftime(date, '%g')).to.eql("%g"); //doesn't exist
   });
+
+
+  it("should test humanDiff", function() {
+    expect(humanDiff(0)).to.eql("0s");
+    expect(humanDiff(1)).to.eql("1s");
+    expect(humanDiff(3600)).to.eql("1h");
+    expect(humanDiff(3601)).to.eql("1h 1s");
+    expect(humanDiff(86400 * 365 + 11 * 3600)).to.eql("1y 5d"); //at 30days per month
+  });
+
 
 });
