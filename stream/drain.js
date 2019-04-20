@@ -13,7 +13,7 @@ function drain(stream) {
 
     //if stream as already been drained (or is closed), returns a void buffer
     var state = stream._readableState;
-    if(state && state.ended && (state.destroyed || state.endEmitted))
+    if(state && state.ended && !state.length)
       resolve(Buffer.concat(body));
 
     stream.on('error', reject);

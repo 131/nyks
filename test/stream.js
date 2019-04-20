@@ -7,8 +7,11 @@ const expect = require('expect.js');
 const tmppath    = require('../fs/tmppath');
 
 const drain      = require('../stream/drain');
+const read       = require('../stream/read');
 const fromBuffer = require('../stream/fromBuffer');
 const pipe       = require('../stream/pipe');
+
+
 
 describe("Stream functions", function() {
 
@@ -22,6 +25,34 @@ describe("Stream functions", function() {
       done();
     });
   });
+
+  it("should test read", async function() {
+    var body  = "café";
+    var buf   = new Buffer(body);
+    var input = fromBuffer(buf, false);
+
+    await read(input).then(function(contents) {
+      expect("" + contents).to.eql(body);
+    });
+
+    input.pause();
+    input.write("foo");
+
+    await read(input).then(function(contents) {
+      expect("" + contents).to.eql("foo");
+    });
+
+    input.end();
+    await read(input).then(function(contents) {
+      expect(contents).to.eql(null);
+    });
+    input.resume();
+    await read(Promise.resolve(input)).then(function(contents) {
+      expect(contents).to.eql(null);
+    });
+
+  });
+
 
   it("should test drain (from a promise)", function(done) {
     var body  = "café";
