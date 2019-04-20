@@ -17,9 +17,21 @@ function read(stream) {
     if(stream.isPaused())
       resolve(stream.read());
 
-    stream.once('data', resolve);
-    stream.once('end', resolve);
-    stream.on('error', reject);
+
+    let onData = function (result) { cleanup(); resolve(result); };
+    let onEnd = function () { cleanup(); resolve(null); };
+    let onError = function (err) { cleanup(); reject(err); };
+
+    stream.once('data', onData);
+    stream.once('end', onEnd);
+    stream.once('error', onError);
+
+    let cleanup = function() {
+      stream.removeListener('data', onData);
+      stream.removeListener('error', onError);
+      stream.removeListener('end', onEnd);
+    };
+
     return stream;
   });
 }
