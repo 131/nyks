@@ -93,7 +93,7 @@ describe("Promise functions", function() {
     expect(result).to.eql("okay");
   });
 
-  it("should test nodeify", async function() {
+  it("should test nodeify", function(done) {
     var lazyMath = async function(int) {
       await sleep(500);
       return int * 2;
@@ -103,6 +103,7 @@ describe("Promise functions", function() {
 
     worker(8, function(err, result) {
       expect(result).to.be(16);
+      done();
     });
   });
 

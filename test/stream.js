@@ -53,6 +53,25 @@ describe("Stream functions", function() {
 
   });
 
+  it("should test read crash", async function() {
+    var body  = "café";
+    var buf   = new Buffer(body);
+    var input = fromBuffer(buf, false);
+
+    await read(input).then(function(contents) {
+      expect("" + contents).to.eql(body);
+    });
+
+    setTimeout(function() { input.emit("error", "foo"); }, 100);
+    try {
+      await read(input);
+      throw "Never here";
+    } catch(err) {
+      expect(err).to.eql("foo");
+    }
+
+  });
+
 
   it("should test drain (from a promise)", function(done) {
     var body  = "café";

@@ -9,6 +9,8 @@ const splitArgs  = require('../process/splitArgs');
 
 describe("Process functions", function() {
 
+
+
   it("Should test formatArgs", function() {
     expect(formatArgs({foo : 'foo', bar : 'bar'})).to.eql(["--foo=foo", "--bar=bar"]);
     expect(formatArgs({foo : 'foo', bar : 'bar'}, true)).to.eql(["--foo", "foo", "--bar", "bar"]);
@@ -20,6 +22,7 @@ describe("Process functions", function() {
 
   it("should test splitArgs", function() {
     expect(splitArgs("--foo=42 bar -- --this --is --unparsed")).to.eql(["--foo=42", "bar", "--", "--this --is --unparsed"]);
+    expect(splitArgs("--foo=42 bar -- --this --is --u'nparsed")).to.eql(["--foo=42", "bar", "--", "--this --is --u'nparsed"]);
 
     expect(splitArgs("a b c  d")).to.eql(["a", "b", "c", "d"]);
     expect(splitArgs("a 127.0.0.1 d")).to.eql(["a", "127.0.0.1", "d"]);
@@ -35,10 +38,34 @@ describe("Process functions", function() {
     expect(typeof splitArgs('"0.124"')[0]).to.eql("string");
     expect(typeof splitArgs("12")[0]).to.eql("number");
     expect(typeof splitArgs("0")[0]).to.eql("number");
-
-    expect(splitArgs("'foo''foobar'")).to.eql(["foo"]);
-    expect(splitArgs("'foo'foobar'")).to.eql(["foo"]);
   });
+
+  it("should test splitArgs - multibloc", function() {
+
+    expect(splitArgs("'foo''foobar'")).to.eql(["foofoobar"]);
+    expect(splitArgs("'foo'kfdokf'fooo'")).to.eql(["fookfdokffooo"]);
+    expect(splitArgs("'foo'kfd-- okf'fooo'")).to.eql(["fookfd--", "okffooo"]);
+
+
+    var test = '"C:\\FOO Client\\app\\node-webkit\\nw.exe" --mixed-context --explicitly-allowed-ports=6000 --remote-debugging-port=0 --user-data-dir=./Data/.nwjscache --user-data-dir="C:\\FOO Client\\Data\\.nwjscache" --no-sandbox --no-zygote --flag-switches-begin --flag-switches-end --nwapp="App\\app" --original-process-start-time=13200767136475118 "App\\app" "Client\\nw.exe --autoload=demo"';
+
+
+    expect(splitArgs(test)).to.eql(['C:\\FOO Client\\app\\node-webkit\\nw.exe',
+      '--mixed-context',
+      '--explicitly-allowed-ports=6000',
+      '--remote-debugging-port=0',
+      '--user-data-dir=./Data/.nwjscache',
+      '--user-data-dir=C:\\FOO Client\\Data\\.nwjscache',
+      '--no-sandbox',
+      '--no-zygote',
+      '--flag-switches-begin',
+      '--flag-switches-end',
+      '--nwapp=App\\app',
+      '--original-process-start-time=13200767136475118',
+      'App\\app',
+      'Client\\nw.exe --autoload=demo']);
+  });
+
 
   it("testing parseArgs", function() {
     expect(parseArgs(["--foo"])).to.eql({args : [], dict : {foo : true}, rest : undefined});
