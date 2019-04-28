@@ -21,6 +21,9 @@ describe("Process functions", function() {
   });
 
   it("should test splitArgs", function() {
+    expect(splitArgs()).to.eql([]);
+    expect(splitArgs(" ")).to.eql([]);
+
     expect(splitArgs("--foo=42 bar -- --this --is --unparsed")).to.eql(["--foo=42", "bar", "--", "--this --is --unparsed"]);
     expect(splitArgs("--foo=42 bar -- --this --is --u'nparsed")).to.eql(["--foo=42", "bar", "--", "--this --is --u'nparsed"]);
 
