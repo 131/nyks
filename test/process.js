@@ -20,10 +20,21 @@ describe("Process functions", function() {
     expect(formatArgs({foo : [1, 2, 3]})).to.eql(["--foo=1", "--foo=2", "--foo=3"]);
   });
 
-  it("should test splitArgs", function() {
+  it("should test splitArgs on void", function() {
+    //argv0 must be a string...
     expect(splitArgs()).to.eql([]);
-    expect(splitArgs(" ")).to.eql([]);
+    expect(splitArgs(false)).to.eql([]);
+    expect(splitArgs(0)).to.eql([]);
+    expect(splitArgs(null)).to.eql([]);
 
+    expect(splitArgs("")).to.eql([]);
+    expect(splitArgs(" ")).to.eql([]);
+    expect(splitArgs(" 0")).to.eql([0]);
+    expect(splitArgs(" 0 ")).to.eql([0]);
+    expect(splitArgs(' "0" ')).to.eql(["0"]);
+  });
+
+  it("should test splitArgs", function() {
     expect(splitArgs("--foo=42 bar -- --this --is --unparsed")).to.eql(["--foo=42", "bar", "--", "--this --is --unparsed"]);
     expect(splitArgs("--foo=42 bar -- --this --is --u'nparsed")).to.eql(["--foo=42", "bar", "--", "--this --is --u'nparsed"]);
 

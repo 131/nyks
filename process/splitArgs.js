@@ -7,10 +7,8 @@ module.exports = function(str) {
   var r = new RegExp(mask, "g");
   var args = [], i = 0;
   var step, sep, value, quoted;
-  if(str === undefined)
-    return args;
 
-  while((step = r.exec(str))) {
+  while((step = r.exec(str || ""))) {
     sep   = step[1] !== undefined;
     quoted = step[4] !== undefined || step[5] !== undefined;
     value = step[3] || step[4] || step[5] || "";
