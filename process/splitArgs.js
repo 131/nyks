@@ -22,7 +22,8 @@ module.exports = function(str) {
     }
 
     if(sep) {
-      i++;
+      if(args.length)
+        i++;
       continue;
     }
 

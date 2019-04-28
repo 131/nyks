@@ -24,7 +24,7 @@ describe("Process functions", function() {
     expect(splitArgs("--foo=42 bar -- --this --is --unparsed")).to.eql(["--foo=42", "bar", "--", "--this --is --unparsed"]);
     expect(splitArgs("--foo=42 bar -- --this --is --u'nparsed")).to.eql(["--foo=42", "bar", "--", "--this --is --u'nparsed"]);
 
-    expect(splitArgs("a b c  d")).to.eql(["a", "b", "c", "d"]);
+    expect(splitArgs(" a b c  d")).to.eql(["a", "b", "c", "d"]);
     expect(splitArgs("a 127.0.0.1 d")).to.eql(["a", "127.0.0.1", "d"]);
     expect(splitArgs("a 12 d")).to.eql(["a", 12, "d"]);
     expect(splitArgs("a 'b' c  d")).to.eql(["a", "b", "c", "d"]);
