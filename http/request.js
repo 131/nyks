@@ -57,8 +57,13 @@ module.exports = function(/*target, [data,], chain */) {
   var transport = query.protocol == 'https:' ? https : http;
 
   var req = transport.request(query, function(res) {
-    if(!(res.statusCode >= 200 && res.statusCode < 300))
-      return chain({err : `Invalid status code '${res.statusCode}' for '${req.path}'`, res});
+    if(!(res.statusCode >= 200 && res.statusCode < 300)) {
+      let message = `Invalid status code '${res.statusCode}' for '${req.path}'`;
+      let error = new Error(message);
+      error.err = message;
+      error.res = res;
+      return chain(error);
+    }
     chain(null, res);
   });
 
