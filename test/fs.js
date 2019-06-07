@@ -25,6 +25,7 @@ const rmrf                  = require('../fs/rmrf');
 const sha1File              = require('../fs/sha1File');
 const tmppath               = require('../fs/tmppath');
 const writeLazySafeSync     = require('../fs/writeLazySafeSync');
+const createWriteStream     = require('../fs/createWriteStream');
 const readdir               = require('../fs/readdir');
 
 describe("FS functions", function() {
@@ -54,6 +55,20 @@ describe("FS functions", function() {
       fs.unlinkSync(dst);
       done();
     });
+  });
+
+  it("should test createWriteStream", async function() {
+    try {
+      let dst = await createWriteStream("this/path/does/not/exists");
+      dst.write("ok");
+      throw "Never here";
+    } catch(err) {
+      expect(err.code).to.eql('ENOENT');
+    }
+
+    let tmp = tmppath();
+    let dst = await createWriteStream(tmp);
+    expect(dst.fd).to.be.ok();
   });
 
   it("should test copyFiles", async function() {
