@@ -26,6 +26,7 @@ const sha1File              = require('../fs/sha1File');
 const tmppath               = require('../fs/tmppath');
 const writeLazySafeSync     = require('../fs/writeLazySafeSync');
 const createWriteStream     = require('../fs/createWriteStream');
+const rename                = require('../fs/rename');
 const readdir               = require('../fs/readdir');
 
 describe("FS functions", function() {
@@ -39,6 +40,8 @@ describe("FS functions", function() {
 
     files.sort();
     foo.sort();
+    files = files.map(path.normalize);
+    foo   = foo.map(path.normalize);
     expect(foo).to.eql(files);
 
   });
@@ -69,6 +72,13 @@ describe("FS functions", function() {
     let tmp = tmppath();
     let dst = await createWriteStream(tmp);
     expect(dst.fd).to.be.ok();
+  });
+
+  it("should test rename", async function() {
+    let src_path = tmppath();
+    fs.createWriteStream(src_path); //leave it open..
+    await rename(src_path, src_path + "after");
+    expect(fs.existsSync(src_path + "after")).to.be.ok();
   });
 
   it("should test copyFiles", async function() {
