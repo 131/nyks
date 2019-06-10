@@ -28,6 +28,7 @@ const writeLazySafeSync     = require('../fs/writeLazySafeSync');
 const createWriteStream     = require('../fs/createWriteStream');
 const rename                = require('../fs/rename');
 const readdir               = require('../fs/readdir');
+const hashFile              = require('../fs/hashFile');
 
 describe("FS functions", function() {
 
@@ -201,6 +202,33 @@ describe("FS functions", function() {
       done();
     });
   });
+
+
+  it("should test hashFile", function(done) {
+    var file = "test/rsrcs/empty";
+
+    hashFile(file, ["md5", "sha1", "sha256"], function(err, hashes) {
+      expect(hashes).to.eql({
+        "md5" : "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1" : "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      });
+
+      done();
+    });
+  });
+
+  it("should test hashFile (2)", function(done) {
+    var file = "test/rsrcs/null";
+
+    hashFile(file, ["sha256"], function(err, hashes) {
+      expect(hashes).to.eql({
+        "sha256" : "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      });
+      done();
+    });
+  });
+
 
   it("should test filemtimeSync", function() {
     var file = "dummy";
