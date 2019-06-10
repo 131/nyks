@@ -221,7 +221,7 @@ describe("FS functions", function() {
   it("should test hashFile (2)", function(done) {
     var file = "test/rsrcs/null";
 
-    hashFile(file, ["sha256"], function(err, hashes) {
+    hashFile(file, "sha256", function(err, hashes) {
       expect(hashes).to.eql({
         "sha256" : "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
       });
