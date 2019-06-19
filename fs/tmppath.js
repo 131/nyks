@@ -25,8 +25,10 @@ function deleteOnExit(file_path) {
 function cleanupFilesSync() {
   var toDelete;
   while((toDelete = filesToDelete.shift()) !== undefined) {
-    if(fs.existsSync(toDelete))
-      fs.unlinkSync(toDelete);
+    try {
+      if(fs.existsSync(toDelete))
+        fs.unlinkSync(toDelete);
+    } catch(err) {} //maybe buzy
   }
 }
 

@@ -23,16 +23,12 @@ if(process.platform === "win32") {
       //retry later
       if(err
           && (err.code === "EACCES" || err.code === "EPERM")
-          && Date.now() - start < 2000) {
+          && Date.now() - start < 60 * 1000) {
 
         setTimeout(function() {
-          fs.stat(to, function (stater) {
-            if(stater && stater.code === "ENOENT")
-              fs.rename(from, to, CB); //retry
-            else
-              cb(err);
-          });
+          fs.rename(from, to, CB); //retry
         }, backoff);
+
         if(backoff < 100)
           backoff += 10;
         return;
