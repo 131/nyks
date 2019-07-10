@@ -189,7 +189,7 @@ const eachOfSeries = require('nyks/async/eachOfSeries');
 ```
 
 <a name="sleep"></a>
-## sleep(timeout) : Promise
+## sleep(delay) : Promise
 
 setTimeout as a promise.
 
@@ -208,24 +208,15 @@ const sleep = require('nyks/async/sleep');
 ------
 
 <a name="timeout"></a>
-## timeout(fn, time[, ctx]) : Promise
+## timeout(delay, [, reason]) : Promise
 
-return a Promise that throw if 'fn' is not finished avec 'time'.
+return a Promise that reject after delay (with reason = 'timeout')
 
 ```javascript
 const timeout = require('nyks/async/timeout');
 
 (async function() {
-
-  let fn   = async function() {
-    sleep(2000);
-    return 'ok';
-  }
-
-  await timeout(fn, 3000); // return 'ok'
-
-  await timeout(fn, 1000); // this will throw with message 'timeout'
-
+  await timeout(1000); // this will throw with message 'timeout'
 })();
 ```
 
