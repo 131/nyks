@@ -6,7 +6,7 @@ const expect  = require('expect.js');
 const setLoop = require('../../async/setLoop');
 const sleep   = require('../../async/sleep');
 
-describe("testing timeout", function() {
+describe("testing setLoop", function() {
   this.timeout(5 * 1000);
 
   it("should test setloop", async () => {

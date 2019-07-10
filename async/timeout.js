@@ -1,30 +1,7 @@
 "use strict";
 
-const defer      = require('../promise/defer');
-const isNumber   = require('mout/lang/isNumber');
-
-module.exports =  function(fn, timeout, ctx) {
-  if(!timeout)
-    return fn;
-
-  if(!isNumber(timeout))
-    throw "timeout must be a number";
-
-  var my = async function () {
-    var args = [].slice.call(arguments);
-    var self = ctx || this;
-    var defered = defer();
-
-    setTimeout(defered.reject.bind(defered, "timeout"), timeout);
-
-    let job = async function() {
-      var response = await fn.apply(self, args);
-      defered.resolve(response);
-    };
-    await Promise.all([job(), defered]);
-
-    return defered;
-  };
-
-  return my;
+module.exports = (delay, reason) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(reject.bind(this, reason || 'timeout'), delay);
+  });
 };
