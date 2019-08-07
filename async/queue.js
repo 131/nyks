@@ -2,7 +2,7 @@
 
 //st exupery style
 
-module.exports = function(thunk, workers) {
+module.exports = function(thunk, workers = 1) {
   var workerChain = [], slots = workers;
 
   var process = async function() {

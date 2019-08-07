@@ -156,7 +156,7 @@ describe('queue', function() {
     var q = queue(async function (time) {
       timeline.push(time);
       return await sleep(time);
-    }, 1);
+    });
     q.drain  = () => done = true;
 
     q.push(1000);
