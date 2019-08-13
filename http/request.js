@@ -46,7 +46,7 @@ module.exports = function(/*target, [data,], chain */) {
     query.path += "?" + qs.stringify(query.qs);
   }
 
-  if(data && typeof data.pipe != "function") {
+  if(data && typeof data.pipe != "function" && !Buffer.isBuffer(data)) {
     if(typeof data != "string")
       data = query.json ? JSON.stringify(data) : trim(encode(data), "?");
     Object.assign(query.headers, {

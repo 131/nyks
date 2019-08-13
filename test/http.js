@@ -7,12 +7,14 @@ const url    = require('url');
 const util   = require('util');
 const fs     = require('fs');
 
+const promisify   = require('../function/promisify');
 const fetch       = require('../http/fetch');
-const request     = require('../http/request');
 
-const pipe        = require('../stream/pipe');
+const request     = promisify(require('../http/request'));
+
 const drain       = require('../stream/drain');
 const tmppath     = require('../fs/tmppath');
+const md5         = require('../crypto/md5');
 
 describe("Testing http", function() {
 
@@ -50,6 +52,12 @@ describe("Testing http", function() {
       resp.statusCode = 500;
       resp.end('Nop');
     }
+
+    if(current_url.pathname == '/md5') {
+      let payload = await drain(req);
+      resp.end(md5(payload));
+    }
+
     if(current_url.pathname == '/stream') {
       let result = '' + (await drain(req));
       resp.end(result);
@@ -60,37 +68,35 @@ describe("Testing http", function() {
     resp.end("bye");
   });
 
-  it("should start a dummy http instance", function(done) {
-    server.listen(function() {
-      port = server.address().port;
-      done();
+  it("should start a dummy http instance", async () => {
+    port = await new Promise((resolve) => {
+      server.listen(function() {
+        resolve(server.address().port);
+      });
     });
+    console.log("Got testing server listening on %d", port);
   });
 
 
-  it("Should test fetch ", function(done) {
-    var tmp_file = tmppath();
-    var dest = fs.createWriteStream(tmp_file);
+  it("Should test fetch ", async () => {
     var testurl = util.format("http://127.0.0.1:%d/ping", port);
-    pipe(fetch(testurl), dest).then(function() {
-      var body = fs.readFileSync(tmp_file, 'utf-8');
-      expect(body).to.be("pong");
-      done();
-    });
+    let body = String(await drain(fetch(testurl)));
+    expect(body).to.be("pong");
   });
 
-  it("Should test fetch on https endpoint and fail", function(done) {
+  it("Should test fetch on https endpoint and fail",  async () => {
     var testurl = util.format("https://127.0.0.1:%d/ping", port);
-    fetch(url.parse(testurl)).then(function() {
+    try {
+      await fetch(url.parse(testurl));
       expect().fail("Never here");
-    }).catch(function(err) {
-      expect(err).to.be.ok();
-      done();
-    });
+    } catch(err) {
+      expect(err).not.to.be("Never here");
+    }
   });
 
 
-  it("Should test request with target as string", function(done) {
+
+  it("Should test request with target as string", async () => {
     var target = util.format("http://127.0.0.1:%d/ping", port);
 
     //this is for coverage, used to force POST method from a String URL
@@ -98,41 +104,38 @@ describe("Testing http", function() {
       name : 'Jean Lebon'
     };
 
-    request(target, data, async function(err, data) {
-      expect(err).to.be(null);
-
-      var body = '' + (await drain(data));
-      expect(body).to.be("pong");
-
-      done();
-    });
+    let res = await request(target, data);
+    let body = String(await drain(res));
+    expect(body).to.be("pong");
   });
 
-  it("Should test request with target as Url", function(done) {
+  it("Should test request with a buffer payload", async () => {
+    var testurl = util.format("http://127.0.0.1:%d/md5", port);
+    let payload = Buffer.from("this is foo de bar");
+
+    let res = await request({...url.parse(testurl), method : 'PUT'}, payload);
+    let body = String(await drain(res));
+    expect(body).to.eql(md5(payload));
+  });
+
+
+
+  it("Should test request with target as Url", async () => {
     var target = url.parse(util.format("http://127.0.0.1:%d/ping", port));
-
-    request(target, async function(err, data) {
-      expect(err).to.be(null);
-
-      var body = '' + (await drain(data));
-      expect(body).to.be("pong");
-      done();
-    });
+    let res = await request(target);
+    let body = String(await drain(res));
+    expect(body).to.be("pong");
   });
 
-  it("Should test request with GET args", function(done) {
+  it("Should test request with GET args", async () => {
     var target = url.parse(util.format("http://127.0.0.1:%d/request?get_var=melon", port));
 
-    request(target, async function(err, data) {
-      expect(err).to.be(null);
-
-      var body = JSON.parse(await drain(data));
-      expect(body).to.eql({get_var : 'melon'});
-      done();
-    });
+    let res = await request(target);
+    let body = JSON.parse(await drain(res));
+    expect(body).to.eql({get_var : 'melon'});
   });
 
-  it("Should test jar header", function(done) {
+  it("Should test jar header", async () => {
     var target = url.parse(util.format("http://127.0.0.1:%d/show_cookies", port));
 
     var key_1         = 'first';
@@ -152,31 +155,23 @@ describe("Testing http", function() {
       }
     };
 
-    request(target, async function(err, data) {
-      expect(err).to.be(null);
-
-      var body = '' + (await drain(data));
-      expect(body).to.be(expected_full);
-      done();
-    });
+    let res = await request(target);
+    let body = String(await drain(res));
+    expect(body).to.be(expected_full);
   });
 
-  it("Should test request with forced Headers & Method", function(done) {
+  it("Should test request with forced Headers & Method", async () => {
     var target = url.parse(util.format("http://127.0.0.1:%d/ping", port));
 
     target.headers = {};
     target.method  = 'GET';
 
-    request(target, async function(err, data) {
-      expect(err).to.be(null);
-
-      var body = '' + (await drain(data));
-      expect(body).to.be("pong");
-      done();
-    });
+    let res = await request(target);
+    let body = String(await drain(res));
+    expect(body).to.be("pong");
   });
 
-  it("Should test request with Query String flag on", function(done) {
+  it("Should test request with Query String flag on", async () => {
     var target = url.parse(util.format("http://127.0.0.1:%d/request", port));
 
     var expected = {
@@ -185,46 +180,44 @@ describe("Testing http", function() {
 
     target.qs = expected;
 
-    request(target, async function(err, data) {
-      expect(err).to.be(null);
-
-      var body = JSON.parse(await drain(data));
-      expect(body).to.eql(expected);
-      done();
-    });
+    let res = await request(target);
+    let body = JSON.parse(await drain(res));
+    expect(body).to.eql(expected);
   });
 
-  it("Should test request with Query String AND QUERY STRING (and it should explode)", function(done) {
+  it("Should test request with Query String AND QUERY STRING (and it should explode)", async () => {
     var target = url.parse(util.format("http://127.0.0.1:%d/request?lastname=Lebon", port));
-
     var expected = {
       firstname : 'Jean'
     };
-
     target.qs = expected;
 
-    request(target, async function(err/*, data*/) {
-      expect(err).to.be.ok();
-      done();
-    });
+    try {
+      await request(target);
+      expect().to.fail("Never here");
+    } catch(err) {
+      expect(err).not.to.be("Never here");
+    }
   });
 
-  it("Should test request and throw", function(done) {
+  it("Should test request and throw", async () => {
     var throw_path = '/throwme';
     var code       = 500;
 
     var target = url.parse(util.format("http://127.0.0.1:%d%s", port, throw_path));
 
-    request(target, async function(err) {
+    try {
+      await request(target);
+      expect().to.fail("Never here");
+    } catch(err) {
       expect(err.err).to.be(`Invalid status code '${code}' for '${throw_path}'`);
-
-      var body = '' + (await drain(err.res));
+      let body = String(await drain(err.res));
       expect(body).to.be('Nop');
-      done();
-    });
+    }
+
   });
 
-  it("Should test request with data as Stream", function(done) {
+  it("Should test request with data as Stream", async () => {
     var target       = url.parse(util.format("http://127.0.0.1:%d/stream", port));
     var file_content = "dummy";
     var tmp_file     = tmppath();
@@ -233,57 +226,43 @@ describe("Testing http", function() {
 
     var dest = fs.createReadStream(tmp_file);
 
-    request(target, dest, async function(err, data) {
-      expect(err).to.be(null);
-
-      var body = '' + (await drain(data));
-      expect(body).to.be(file_content);
-      fs.unlinkSync(tmp_file);
-      done();
-    });
-
+    let res = await request(target, dest);
+    let body = String(await drain(res));
+    expect(body).to.be(file_content);
+    fs.unlinkSync(tmp_file);
   });
 
-  it("Should test request with json flag On", function(done) {
+  it("Should test request with json flag On", async () => {
     var target = url.parse(util.format("http://127.0.0.1:%d/stream", port));
-
     target.json = true;
 
     let data = {
       name : 'Juan Elbueno'
     };
 
-    request(target, data, async function(err, resp) {
-      expect(err).to.be(null);
-
-      var body = JSON.parse(await drain(resp));
-      expect(body).to.eql(data);
-      done();
-    });
+    let res = await request(target, data);
+    let body = JSON.parse(await drain(res));
+    expect(body).to.eql(data);
   });
 
-  it("Should test request with data as string", function(done) {
-    var target = url.parse(util.format("http://127.0.0.1:%d/stream", port));
-
+  it("Should test request with data as string", async () => {
+    let target = url.parse(util.format("http://127.0.0.1:%d/stream", port));
     let data = "name='Juan Elbueno'";
 
-    request(target, data, async function(err, resp) {
-      expect(err).to.be(null);
-
-      var body = '' + await drain(resp);
-      expect(body).to.be(data);
-      done();
-    });
+    let res = await request(target, data);
+    let body = String(await drain(res));
+    expect(body).to.be(data);
   });
 
-  it("Should test request with https endpoint", function(done) {
-    var target = url.parse(util.format("https://127.0.0.1:%d/ping", port));
-
-    request(target, async function(err) {
-      expect(err).to.be.ok();
-      // server shouldn't work with https endpoint, but request still answer socket error.
-      done();
-    });
+  it("Should test request on https endpoint and fail",  async () => {
+    var testurl = util.format("https://127.0.0.1:%d/ping", port);
+    try {
+      await request(url.parse(testurl));
+      expect().fail("Never here");
+    } catch(err) {
+      expect(err).not.to.be("Never here");
+    }
   });
+
 
 });

@@ -1,8 +1,9 @@
 "use strict";
 
+const os      = require('os');
+const path    = require('path');
 
 const expect  = require('expect.js');
-const path    = require('path');
 
 const lookup  = require('../require/lookup');
 const resolve = require('../require/resolve');
@@ -35,11 +36,12 @@ describe("Require functions", function() {
   });
 
   it("Should test Lookup throw", function() {
-    var toto_path = path.join(__dirname, "..", "..", "nop.js");
+    var toto_path = path.join(os.tmpdir(), "..", "..", "nop.js");
 
     try {
-      lookup(toto_path);
-      expect().fail("Never here");
+      let where = lookup(toto_path);
+      console.log(where);
+      expect().fail(`Should NOT have found toto_path in ${where}`);
     } catch(err) {
       expect(err).to.be(`can't find ${toto_path} package`);
     }
