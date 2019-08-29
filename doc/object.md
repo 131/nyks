@@ -7,11 +7,30 @@ Object utilities
 ## Table of Contents
 
   * [combine()](#combine)
+  * [dive()](#dive)
   * [difference()](#difference)
   * [indexOf()](#indexOf)
   * [jsonpath()](#jsonpath)
   * [mask()](#mask)
   * [sort()](#sort)
+
+------
+
+<a name="dive"></a>
+## dive(obj, ...parts) : Object
+
+Dive an object to a specific path, spliting parts using dots '.', hence this function is drop-in compliant with mout/object/get.
+
+```javascript
+const dive = require('nyks/object/dive');
+
+let obj   = [0, [{"foo" : { "bar" : {"color" : "blue" }}}]];
+
+dive(obj, 1, 0, "foo", "bar.color");
+/*
+  return "blue"
+*/
+```
 
 ------
 

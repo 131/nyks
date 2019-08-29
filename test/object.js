@@ -9,9 +9,31 @@ const indexOf    = require('../object/indexOf');
 const jsonpath   = require('../object/jsonpath');
 const mask       = require('../object/mask');
 const sort       = require('../object/sort');
+const dive       = require('../object/dive');
 
 //I feel a little sorry for that
 describe("object functions", function() {
+
+  it("should test dive", function() {
+    var obj = {
+      "foo" : {
+        "bar" : [
+          {"color" : "blue"}
+        ],
+      }
+    };
+
+    expect(dive(obj)).to.be(obj);
+    expect(dive(null, "nope")).not.to.be.ok();
+    expect(dive(obj, "foo")).to.be(obj.foo);
+    expect(dive(obj, null, "foo")).to.be(undefined);
+    expect(dive(obj, "foo", "bar", 0, "color")).to.be("blue");
+    expect(dive(obj, "foo", "bar", "0.color")).to.be("blue");
+    expect(dive(obj, "foo", "bar", "0..color")).to.be(undefined);
+    expect(dive(obj, "nope", "bar", 0, "color")).to.be(undefined);
+  });
+
+
 
   it("should test sort", function() {
     var keys = {
@@ -24,6 +46,7 @@ describe("object functions", function() {
       "italy"  : "pizza"
     });
   });
+
 
   it("should test difference", function() {
     var obj1 = {a : 5, c : 2, d : "aa"};
