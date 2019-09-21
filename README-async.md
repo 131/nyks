@@ -14,6 +14,7 @@ Control flow ala ES7 async/await with async.js (v2) signatures
     * [eachOf()](#eachOf)
     * [eachSeries()](#eachSeries)
     * [eachOfSeries()](#eachOfSeries)
+    * [retryUntil()](#retryUntil)
     * [sleep()](#sleep)
     * [timeout()](#timeout)
     * [setImmediate()](#setImmediate)
@@ -187,6 +188,28 @@ const eachOfSeries = require('nyks/async/eachOfSeries');
 
 })();
 ```
+
+------
+
+<a name="retryUntil"></a>
+## retryUntil(thunk, timeout, delay, [, failure]) : Function
+
+Run thunk until it resolves a truthy value, until timeout is reached. Wait **delay** between each attempt. On timeout, reject with a generic "Timeout" error message (or the specified failure, if any).
+
+```javascript
+const retryUntil = require('nyks/async/retryUntil');
+
+(async function() {
+
+  await tryUntil(async () => {
+    return net.connect(...)
+  }, 60 * 1000, 1000, 'Could not connect to remote socket');
+
+})();
+```
+
+
+
 
 <a name="sleep"></a>
 ## sleep(delay) : Promise
