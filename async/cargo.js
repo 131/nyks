@@ -5,10 +5,10 @@ module.exports = function(thunk, payload) {
   var tasks = [];
   var haswork;
 
-  var process = function(task) {
+  var process = function(...tsks) {
     if(haswork)
       haswork();
-    tasks.push(task);
+    tasks.push(...tsks);
   };
 
   var out = (async () => {
