@@ -6,6 +6,7 @@ const expect = require('expect.js');
 const url    = require('url');
 const util   = require('util');
 const fs     = require('fs');
+const {PassThrough} = require('stream');
 
 const promisify   = require('../function/promisify');
 const fetch       = require('../http/fetch');
@@ -95,7 +96,7 @@ describe("Testing http", function() {
   it("Should test fetch with failed timeout", async () => {
     var testurl = util.format("http://127.0.0.1:%d/timeout", port);
     try {
-      let res = await fetch(testurl, {timeout : 200});
+      await fetch(testurl, {timeout : 200});
     } catch(err) {
       expect(err).to.match(/Timeout in http fetch/);
     }
@@ -239,6 +240,42 @@ describe("Testing http", function() {
     }
 
   });
+
+
+  this.timeout(60 * 1000);
+
+  it("Should test request with a timeout", async () => {
+
+    var target = url.parse(util.format("http://127.0.0.1:%d/timeout", port));
+    let input = new PassThrough();
+    setTimeout(function() {
+      input.end("foo de bar");
+    }, 1800);
+
+
+    try {
+      await request({...target, reqtimeout : 200}, input);
+      expect().to.fail("Never here");
+    } catch(err) {
+      expect(err).to.match(/http request timeout/);
+    }
+
+    let res = await request(target, input);
+    expect(res.statusCode).to.eql(200);
+  });
+
+  it("Should test request with failed a timeout", async () => {
+    var target = url.parse(util.format("http://127.0.0.1:%d/timeout", port));
+    let input = new PassThrough();
+    setTimeout(function() {
+      input.end("foo de bar");
+    }, 1800);
+
+    let res = await request({...target, reqtimeout : 2000}, input);
+    expect(res.statusCode).to.eql(200);
+  });
+
+
 
   it("Should test request with data as Stream", async () => {
     var target       = url.parse(util.format("http://127.0.0.1:%d/stream", port));

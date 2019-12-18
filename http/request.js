@@ -56,7 +56,13 @@ module.exports = function(/*target, [data,], chain */) {
 
   var transport = query.protocol == 'https:' ? https : http;
 
+  let ti;
+  let timeout = query.reqtimeout || 60 * 1000;
+
   var req = transport.request(query, function(res) {
+    req.removeAllListeners('error');
+    clearTimeout(ti);
+
     if(!(res.statusCode >= 200 && res.statusCode < 300)) {
       let message = `Invalid status code '${res.statusCode}' for '${req.path}'`;
       let error = new Error(message);
@@ -67,11 +73,17 @@ module.exports = function(/*target, [data,], chain */) {
     chain(null, res);
   });
 
-  req.once('error', chain);
+  req.on('finish', function() {
+    // query has been sent, now we can wait for timeout
+    let msg = `http request timeout for ${url.format(query)}`;
+    ti = setTimeout(req.emit.bind(req), timeout, 'error', msg);
+  });
 
+  req.once('error', chain);
   if(data && typeof data.pipe == "function") {
     data.on('error', chain);
-    return data.pipe(req);
+    data.pipe(req);
+    return;
   }
 
   if(data)
