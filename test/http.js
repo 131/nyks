@@ -53,6 +53,14 @@ describe("Testing http", function() {
       resp.end('Nop');
     }
 
+    if(current_url.pathname == "/timeout") {
+      setTimeout(function() {
+        resp.end('pong');
+      }, 1.8 * 1000);
+
+      return;
+    }
+
     if(current_url.pathname == '/md5') {
       let payload = await drain(req);
       resp.end(md5(payload));
@@ -82,6 +90,21 @@ describe("Testing http", function() {
     var testurl = util.format("http://127.0.0.1:%d/ping", port);
     let body = String(await drain(fetch(testurl)));
     expect(body).to.be("pong");
+  });
+
+  it("Should test fetch with failed timeout", async () => {
+    var testurl = util.format("http://127.0.0.1:%d/timeout", port);
+    try {
+      let res = await fetch(testurl, {timeout : 200});
+    } catch(err) {
+      expect(err).to.match(/Timeout in http fetch/);
+    }
+  });
+
+  it("Should test fetch with sufficient timeout", async () => {
+    var testurl = util.format("http://127.0.0.1:%d/timeout", port);
+    let res = await fetch(testurl, {timeout : 2000});
+    expect(res.statusCode).to.be(200);
   });
 
   it("Should test fetch on https endpoint and fail",  async () => {
