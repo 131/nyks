@@ -9,6 +9,7 @@ const path   = require('path');
 const glob   = require('glob').sync;
 
 const sleep   = require('../async/sleep');
+const promisify   = require('../function/promisify');
 
 const copyFile              = require('../fs/copyFile');
 const copyFiles             = require('../fs/copyFiles');
@@ -27,7 +28,7 @@ const rmrf                  = require('../fs/rmrf');
 const sha1File              = require('../fs/sha1File');
 const tmppath               = require('../fs/tmppath');
 const writeLazySafeSync     = require('../fs/writeLazySafeSync');
-const writeLazySafe         = require('../fs/writeLazySafe');
+const writeLazySafe         = promisify(require('../fs/writeLazySafe'));
 const createWriteStream     = require('../fs/createWriteStream');
 const rename                = require('../fs/rename');
 const readdir               = require('../fs/readdir');
