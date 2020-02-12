@@ -8,6 +8,8 @@ const path   = require('path');
 
 const glob   = require('glob').sync;
 
+const sleep   = require('../async/sleep');
+
 const copyFile              = require('../fs/copyFile');
 const copyFiles             = require('../fs/copyFiles');
 const deleteFolderRecursive = require('../fs/deleteFolderRecursive');
@@ -25,6 +27,7 @@ const rmrf                  = require('../fs/rmrf');
 const sha1File              = require('../fs/sha1File');
 const tmppath               = require('../fs/tmppath');
 const writeLazySafeSync     = require('../fs/writeLazySafeSync');
+const writeLazySafe         = require('../fs/writeLazySafe');
 const createWriteStream     = require('../fs/createWriteStream');
 const rename                = require('../fs/rename');
 const readdir               = require('../fs/readdir');
@@ -312,6 +315,34 @@ describe("FS functions", function() {
       done();
     }, 1000);
   });
+
+
+  it("should test writeLazySafe", async () => {
+    var target = 'test/path/to/tash/me';
+    var str    = `some 
+    text
+    to
+    ${Date.now()}
+    write
+    `;
+    var once = await writeLazySafe(target, str);
+    expect(once).to.be.ok();
+    fs.writeFileSync(target, 'nope'); //alter file
+    var twice = await writeLazySafe(target, str);
+    expect(twice).to.be.ok();
+
+    expect(fs.existsSync(target + 'tmp')).to.be(false);
+    //var fileStats = fs.statSync(target);
+    await sleep(1000);
+
+    await writeLazySafe(target, str);
+    expect(fs.existsSync(target + 'tmp')).to.be(false);
+
+    expect(fs.readFileSync(target, 'utf-8')).to.eql(str);
+    fs.unlinkSync(target);
+
+  });
+
 
   it("should test patchJSON AND JSON AND readFileJSONSync", function() {
     var target = 'package_tmp.json';
