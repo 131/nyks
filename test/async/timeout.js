@@ -28,4 +28,13 @@ describe("testing timeout", function() {
 
   });
 
+  it("test clearTimeout", async function() {
+    let fail = timeout(100);
+    fail.clearTimeout();
+    await Promise.race([fail, sleep(200)]);
+
+  });
+
+
+
 });

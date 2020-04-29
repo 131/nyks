@@ -1,7 +1,10 @@
 "use strict";
 
 module.exports = (delay, reason) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(reject.bind(this, reason || 'timeout'), delay);
+  let b;
+  let a = new Promise((resolve, reject) => {
+    b = setTimeout(reject.bind(this, reason || 'timeout'), delay);
   });
+  a.clearTimeout = () => { clearTimeout(b); };
+  return a;
 };
