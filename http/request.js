@@ -60,7 +60,6 @@ module.exports = function(/*target, [data,], chain */) {
   let timeout = query.reqtimeout || 60 * 1000;
 
   var req = transport.request(query, function(res) {
-    req.removeAllListeners('error');
     clearTimeout(ti);
 
     if(!(res.statusCode >= 200 && res.statusCode < 300)) {
@@ -76,7 +75,7 @@ module.exports = function(/*target, [data,], chain */) {
   req.on('finish', function() {
     // query has been sent, now we can wait for timeout
     let msg = `http request timeout for ${url.format(query)}`;
-    ti = setTimeout(req.emit.bind(req), timeout, 'error', msg);
+    ti = setTimeout(chain, timeout, msg);
   });
 
   req.once('error', chain);
