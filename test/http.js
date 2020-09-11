@@ -8,14 +8,15 @@ const util   = require('util');
 const fs     = require('fs');
 const {PassThrough} = require('stream');
 
-const promisify   = require('../function/promisify');
 const fetch       = require('../http/fetch');
 
-const request     = promisify(require('../http/request'));
+const request     = require('../http/request');
 
 const drain       = require('../stream/drain');
 const tmppath     = require('../fs/tmppath');
 const md5         = require('../crypto/md5');
+
+const HTTP_CODE_ERRR = 500;
 
 describe("Testing http", function() {
 
@@ -50,7 +51,7 @@ describe("Testing http", function() {
       return resp.end(req.headers.cookie);
 
     if(current_url.pathname == '/throwme') {
-      resp.statusCode = 500;
+      resp.statusCode = HTTP_CODE_ERRR;
       resp.end('Nop');
     }
 
@@ -73,7 +74,7 @@ describe("Testing http", function() {
       return;
     }
 
-    resp.statusCode = 500;
+    resp.statusCode = HTTP_CODE_ERRR;
     resp.end("bye");
   });
 
@@ -226,20 +227,33 @@ describe("Testing http", function() {
 
   it("Should test request and throw", async () => {
     var throw_path = '/throwme';
-    var code       = 500;
+
+    var target = url.parse(util.format("http://127.0.0.1:%d%s", port, throw_path));
+
+    var res = await request(target);
+    expect(res.statusCode).to.eql(HTTP_CODE_ERRR);
+    let body = String(await drain(res));
+    expect(body).to.be('Nop');
+
+  });
+
+  it("Should test request and throw with expect", async () => {
+    var throw_path = '/throwme';
 
     var target = url.parse(util.format("http://127.0.0.1:%d%s", port, throw_path));
 
     try {
-      await request(target);
+      await request({...target, expect : 200});
       expect().to.fail("Never here");
     } catch(err) {
-      expect(err.err).to.be(`Invalid status code '${code}' for '${throw_path}'`);
+      expect(err.err).to.be(`Invalid status code '${HTTP_CODE_ERRR}' for '${throw_path}'`);
       let body = String(await drain(err.res));
       expect(body).to.be('Nop');
     }
-
   });
+
+
+
 
 
   this.timeout(60 * 1000);

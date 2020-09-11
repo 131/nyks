@@ -9,15 +9,12 @@ const pluck  = require('mout/object/pluck');
 const encode = require('mout/queryString/encode');
 const merge  = require('mout/object/merge');
 const trim   = require('mout/string/trim');
+const defer  = require('../promise/defer');
 
 const mask   = require('../object/mask');
 
-module.exports = function(/*target, [data,], chain */) {
+module.exports = function(target, data) {
 
-  var args   = [].slice.apply(arguments);
-  var chain  = args.pop();
-  var target = args.shift();
-  var data   = args.shift() || null;
   var query  = typeof target == "string" ? url.parse(target) : target;
 
   if(!query.method)
@@ -59,34 +56,37 @@ module.exports = function(/*target, [data,], chain */) {
   let ti;
   let timeout = query.reqtimeout || 60 * 1000;
 
+  var defered = defer();
+
   var req = transport.request(query, function(res) {
     clearTimeout(ti);
 
-    if(!(res.statusCode >= 200 && res.statusCode < 300)) {
+    if(query.expect && query.expect !== res.statusCode) {
       let message = `Invalid status code '${res.statusCode}' for '${req.path}'`;
       let error = new Error(message);
       error.err = message;
       error.res = res;
-      return chain(error);
+      return defered.reject(error);
     }
-    chain(null, res);
+
+    defered.resolve(res);
   });
 
   req.on('finish', function() {
     // query has been sent, now we can wait for timeout
     let msg = `http request timeout for ${url.format(query)}`;
-    ti = setTimeout(chain, timeout, msg);
+    ti = setTimeout(defered.reject, timeout, msg);
   });
 
-  req.once('error', chain);
+  req.once('error', defered.reject);
   if(data && typeof data.pipe == "function") {
-    data.on('error', chain);
+    data.on('error', defered.reject);
     data.pipe(req);
-    return;
+  } else {
+    if(data)
+      req.write(data);
+    req.end();
   }
 
-  if(data)
-    req.write(data);
-
-  req.end();
+  return defered;
 };

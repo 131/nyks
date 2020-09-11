@@ -56,7 +56,7 @@ get('http://endpoint.com/services', function(res) {
 ------
 
 <a name="request"></a>
-## request(url[, data], callback) : void
+## request(url[, data]) : void
 
 Helper for http/https.request.
 
@@ -68,10 +68,9 @@ let data   = {
   name : 'Jean Lebon'
 };
 
-request(target, data, async function(err, data) {
-  // err might be null
-  // data can be drained
-});
+await res = request(target, data);
+// res can be drained
+// you need to check for the statusCode yourself, or pass {expect : 200} in the target
 
 /*
   You have multiple options here :
