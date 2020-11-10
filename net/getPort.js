@@ -1,0 +1,30 @@
+"use strict";
+
+const net = require('net');
+
+const range     = require('mout/array/range');
+const shuffle   = require('mout/array/shuffle');
+
+
+function getPort(ports = 1025, maxPort = 65535, host = '0.0.0.0') {
+  if(!Array.isArray(ports))
+    ports = shuffle(range(ports, maxPort));
+
+  let port = ports.shift();
+  if(port === undefined)
+    return Promise.reject(`No available port`);
+
+  let server = net.createServer();
+
+  return new Promise((resolve) => {
+    server.once('error', () => resolve(getPort(ports, null, host)));
+    server.once('listening', function() {
+      port = server.address().port;
+      server.close(() => resolve(port));
+    });
+    server.listen(port);
+  });
+}
+
+
+module.exports = getPort;
