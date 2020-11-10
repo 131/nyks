@@ -5,7 +5,7 @@ Module are exported in standard commonJS module format and written in pure ES5/E
 
 Use browserify if you need nyks module in a browser environnement.
 
-[![Build Status](https://travis-ci.org/131/nyks.svg?branch=master)](https://travis-ci.org/131/nyks)
+[![Build Status](https://travis-ci.com/131/nyks.svg?branch=master)](https://travis-ci.com/131/nyks)
 [![Coverage Status](https://coveralls.io/repos/github/131/nyks/badge.svg?branch=master)](https://coveralls.io/github/131/nyks?branch=master)
 [![Version](https://img.shields.io/npm/v/nyks.svg)](https://www.npmjs.com/package/nyks)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
