@@ -8,7 +8,7 @@ const shuffle   = require('mout/array/shuffle');
 
 function getPort(ports = 1025, maxPort = 65535, host = '0.0.0.0') {
   if(!Array.isArray(ports))
-    ports = shuffle(range(ports, maxPort));
+    ports = shuffle(range(parseInt(ports), parseInt(maxPort)));
 
   let port = ports.shift();
   if(port === undefined)
