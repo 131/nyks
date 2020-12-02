@@ -4,11 +4,13 @@
 const expect = require('expect.js');
 
 const eachIteratorLimit       = require('../../async/eachIteratorLimit');
-
 const sleep      = require('../../async/sleep');
+
+const SLEEP_MULT = 20; //5ms is too low
 
 describe("testing async iterators", function() {
 
+  this.timeout(20 * 1000);
 
 
   it('eachIteratorLimit', async function () {
@@ -23,7 +25,7 @@ describe("testing async iterators", function() {
     };
     var liste = it();
     await eachIteratorLimit(liste, 2, async function (x) {
-      await sleep(x * 5);
+      await sleep(x * SLEEP_MULT);
       args.push(x);
     });
 
@@ -45,7 +47,7 @@ describe("testing async iterators", function() {
     var liste = it();
     try {
       await eachIteratorLimit(liste, 2, async function (x) {
-        await sleep(x * 5);
+        await sleep(x * SLEEP_MULT);
         args.push(x);
       });
       expect().to.fail("Never here");
@@ -72,7 +74,7 @@ describe("testing async iterators", function() {
       await eachIteratorLimit(liste, 2, async function (x) {
         if(x == 4)
           throw "Nope";
-        await sleep(x * 5);
+        await sleep(x * SLEEP_MULT);
         args.push(x);
       });
       expect().to.fail("Never here");

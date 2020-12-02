@@ -54,6 +54,12 @@ describe("Promise functions", function() {
     }
   });
 
+  it("testing defer callee", async () => {
+    await defer(defered => defered.resolve());
+  });
+
+
+
   it("testing defer chain", async function() {
     var defered = defer();
 

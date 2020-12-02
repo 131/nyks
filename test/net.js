@@ -1,12 +1,20 @@
 "use strict";
 
+const os = require('os');
 const net = require('net');
 const expect         = require('expect.js');
 
 const getPort       = require('../net/getPort');
 const randInt       = require('mout/random/randInt');
 
-describe("net functions", function() {
+
+const IS_WSL = os.platform() == 'linux' && /microsoft/i.test(os.release());
+
+let runner = describe;
+if(IS_WSL)
+  runner = describe.skip;
+
+runner("net (getPort) functions", function() {
   this.timeout(60 * 1000);
 
   it("should get a free port in a range", async function() {

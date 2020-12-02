@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function() {
+module.exports = function(callee) {
   var thisresolve;
   var thisreject;
 
@@ -16,6 +16,8 @@ module.exports = function() {
       return defer.reject(err);
     return defer.resolve(body);
   };
+  if(callee)
+    callee(defer);
 
   return defer;
 };

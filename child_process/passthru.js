@@ -15,15 +15,19 @@ module.exports = function(cmd /*, options, chain*/) {
 
   options.stdio = ['inherit', 'inherit', 'inherit'];
 
-  var ps = cp.spawn(cmd, options.args || [], options);
+  try {
+    var ps = cp.spawn(cmd, options.args || [], options);
 
-  ps.on('error', chain);
+    ps.on('error', chain);
 
-  ps.on('close', function(exit) {
-    var err = null;
-    if(exit !== 0)
-      err = "Bad exit code " + exit;
-    return chain(err, exit);
-  });
+    ps.on('close', function(exit) {
+      var err = null;
+      if(exit !== 0)
+        err = "Bad exit code " + exit;
+      return chain(err, exit);
+    });
+  } catch(err) {
+    chain(err);
+  }
 };
 
