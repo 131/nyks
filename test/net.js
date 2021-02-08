@@ -8,6 +8,8 @@ const getPort       = require('../net/getPort');
 const randInt       = require('mout/random/randInt');
 
 
+const host  = '127.0.0.1';
+
 const IS_WSL = os.platform() == 'linux' && /microsoft/i.test(os.release());
 
 let runner = describe;
@@ -23,7 +25,7 @@ runner("net (getPort) functions", function() {
     let srv = {};
     for(let i = ports[0]; i <= ports[1]; i++) {
       srv[i] = await new Promise((resolve) => {
-        let server = net.createServer().once('listening', () => resolve(server)).listen(i);
+        let server = net.createServer().once('listening', () => resolve(server)).listen(i, host);
       });
     }
 
@@ -42,7 +44,7 @@ runner("net (getPort) functions", function() {
     let srv = {};
     for(let i = ports[0]; i <= ports[1]; i++) {
       srv[i] = await new Promise((resolve) => {
-        let server = net.createServer().once('listening', () => resolve(server)).listen(i);
+        let server = net.createServer().once('listening', () => resolve(server)).listen(i, host);
       });
     }
 

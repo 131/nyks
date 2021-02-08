@@ -6,7 +6,8 @@ const range     = require('mout/array/range');
 const shuffle   = require('mout/array/shuffle');
 
 
-function getPort(ports = 1025, maxPort = 65535, host = '0.0.0.0') {
+function getPort(ports = 1025, maxPort = 65535, host = '127.0.0.1') {
+
   if(!Array.isArray(ports))
     ports = shuffle(range(parseInt(ports), parseInt(maxPort)));
 
@@ -17,12 +18,12 @@ function getPort(ports = 1025, maxPort = 65535, host = '0.0.0.0') {
   let server = net.createServer();
 
   return new Promise((resolve) => {
-    server.once('error', () => resolve(getPort(ports, null, host)));
+    server.once('error', () => resolve(getPort(ports, undefined, host)));
     server.once('listening', function() {
       port = server.address().port;
       server.close(() => resolve(port));
     });
-    server.listen(port);
+    server.listen(port, host);
   });
 }
 
