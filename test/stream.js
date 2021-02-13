@@ -12,6 +12,9 @@ const fromBuffer = require('../stream/fromBuffer');
 const pipe       = require('../stream/pipe');
 
 
+const { PassThrough  } = require('stream');
+
+
 
 describe("Stream functions", function() {
 
@@ -24,6 +27,46 @@ describe("Stream functions", function() {
       expect("" + contents).to.eql(body);
       done();
     });
+  });
+
+  it("should test pipe 0", async function() {
+    var body     = "café";
+    var buf      = new Buffer(body);
+    var tmp_path = tmppath("too");
+    var dest     = fs.createWriteStream(tmp_path);
+    var input    = fromBuffer(buf);
+
+    await pipe(input, dest);
+    expect("" + fs.readFileSync(tmp_path)).to.eql(body);
+    fs.unlinkSync(tmp_path);
+  });
+
+  it("should test pipe 1", async function() {
+    var body     = "café";
+    var buf      = new Buffer(body);
+    var tmp_path = tmppath("too");
+    var input    = new Promise(function(resolve) {
+      resolve(fromBuffer(buf));
+    });
+    var dest     = new Promise(function(resolve) {
+      resolve(fs.createWriteStream(tmp_path));
+    });
+
+    await pipe(input, dest);
+    expect("" + fs.readFileSync(tmp_path)).to.eql(body);
+    fs.unlinkSync(tmp_path);
+  });
+
+  it("should test pipe 2", async function() {
+    var body  = "café";
+    var buf   = new Buffer(body);
+    var input = fromBuffer(buf);
+    var dst   = new PassThrough();
+
+    await pipe(input, dst);
+
+    let contents = await drain(dst);
+    expect("" + contents).to.eql(body);
   });
 
   it("should test read", async function() {
@@ -98,40 +141,6 @@ describe("Stream functions", function() {
     });
   });
 
-  it("should test pipe", function(done) {
-    var body     = "café";
-    var buf      = new Buffer(body);
-    var tmp_path = tmppath("too");
-    var dest     = fs.createWriteStream(tmp_path);
-    var input    = fromBuffer(buf);
 
-    pipe(input, dest).then(function() {
-      expect("" + fs.readFileSync(tmp_path)).to.eql(body);
-      fs.unlinkSync(tmp_path);
-      done();
-    }).catch(function(err) {
-      console.log(err);
-    });
-  });
-
-  it("should test pipe", function(done) {
-    var body     = "café";
-    var buf      = new Buffer(body);
-    var tmp_path = tmppath("too");
-    var input    = new Promise(function(resolve) {
-      resolve(fromBuffer(buf));
-    });
-    var dest     = new Promise(function(resolve) {
-      resolve(fs.createWriteStream(tmp_path));
-    });
-
-    pipe(input, dest).then(function() {
-      expect("" + fs.readFileSync(tmp_path)).to.eql(body);
-      fs.unlinkSync(tmp_path);
-      done();
-    }).catch(function(err) {
-      console.log(err);
-    });
-  });
 
 });

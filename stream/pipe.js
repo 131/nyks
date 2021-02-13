@@ -19,7 +19,8 @@ function pipe(src, dest) {
   return new Promise(function(resolve, reject) {
     src.pipe(dest);
     src.on('error', reject);
-    dest.on('finish', resolve);
+    if(!("fd" in dest))
+      dest.on('finish', resolve);
     dest.on('close', resolve);
   });
 

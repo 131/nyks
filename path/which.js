@@ -8,9 +8,7 @@ module.exports = function(bin) {
   /*istanbul ignore next*/
   var exts  = process.env.PATHEXT ? process.env.PATHEXT.split(path.delimiter) : [""];
 
-  exts = exts.filter(function(val) {
-    return !!val;
-  });
+  exts = exts.filter(Boolean);
   exts.push(""); //handle direct bin calls
 
   for(var i = 0; i < paths.length; i++) {
