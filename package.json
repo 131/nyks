@@ -1,6 +1,6 @@
 {
   "name": "nyks",
-  "version": "6.1.5",
+  "version": "6.1.7",
   "description": "nodejs exupery style",
   "keywords": [
     "native",
@@ -43,8 +43,7 @@
     "mocha": "mocha -b",
     "eslint": "eslint .",
     "cover": "nyc --temp-directory coverage/.nyc_output --reporter text-summary --reporter html --reporter lcov  mocha",
-    "test": "npm run cover  test test/async && npm run eslint",
-    "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
+    "test": "npm run cover  test test/async && npm run eslint"
   },
   "readme": "# nyks toolkit\r\n\r\nExtend nodejs & javascript native API of missing functions.\r\n",
   "readmeFilename": "README.md",
