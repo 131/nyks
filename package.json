@@ -25,7 +25,7 @@
     "expect.js": "^0.3.1",
     "glob": "^7.1.2",
     "mocha": "^3.1.2",
-    "nyc": "^13.0.1"
+    "nyc": "^15.1.0"
   },
   "homepage": "http://github.com/131/nyks",
   "main": "./index.js",
@@ -42,7 +42,7 @@
     "preversion": "npm run eslint",
     "mocha": "mocha -b",
     "eslint": "eslint .",
-    "cover": "nyc --temp-directory coverage/.nyc_output --reporter text-summary --reporter html --reporter lcov  mocha",
+    "cover": "nyc mocha",
     "test": "npm run cover  test test/async && npm run eslint"
   },
   "readme": "# nyks toolkit\r\n\r\nExtend nodejs & javascript native API of missing functions.\r\n",

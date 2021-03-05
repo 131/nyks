@@ -1,7 +1,6 @@
 /node_modules
-/.npmignore
 npm-debug.log
 /coverage
 /test
 /doc
-/.github
+/.*
