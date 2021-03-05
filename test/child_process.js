@@ -10,26 +10,35 @@ const wait     = require('../child_process/wait');
 
 describe("Child process functions", function() {
 
-  it("should test passthru", function(chain) {
-    passthru("hostname", function(err, exit) {
-      expect(exit).to.be(0);
-      chain();
-    });
+  it("should test passthru", async () => {
+    await passthru(process.execPath, ['-e', 'process.exit()']);
   });
 
-  it("should test a failure", function(chain) {
-    passthru("NUL", {}, function(err) {
-      expect(err).to.be.ok();
-      chain();
-    });
+  it("should test a failure", async () => {
+    try {
+      await passthru("NUL");
+      expect().to.fail("Never here");
+    } catch(err) {
+      expect(err).not.to.match(/Invalid process exit code/);
+    }
   });
 
-  it("should passthru failure", function(chain) {
-    passthru("node", ['-e', 'process.exit(33)'], function(err, exit) {
-      expect(err).to.be("Bad exit code 33");
-      expect(exit).to.be(33);
-      chain();
-    });
+  it("should test a failure 2", async () => {
+    try {
+      await passthru("NUL", {cwd  : "nowhere"});
+      expect().to.fail("Never here");
+    } catch(err) {
+      expect(err).not.to.match(/Invalid process exit code/);
+    }
+  });
+
+  it("should passthru failure", async () => {
+    try {
+      await passthru(process.execPath, {args : ['-e', 'process.exit(33)']});
+      expect().to.fail("Never here");
+    } catch(err) {
+      expect(err).to.match(/Invalid process exit code/);
+    }
   });
 
   it("should test exec", function(chain) {

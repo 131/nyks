@@ -5,6 +5,9 @@
 * TODO : complete tests (see tests/sprintf.js) for full coverage
 */
 
+/* eslint  no-prototype-builtins: "off" */
+/* istanbul ignore file */
+
 const kindOf = require('mout/lang/kindOf');
 const repeat = require('../string/repeat');
 
@@ -30,7 +33,6 @@ function sprintf() {
   return sprintf.format.call(null, cache[key], arguments);
 }
 
-/* istanbul ignore next */
 sprintf.format = function(parse_tree, argv) {
   var cursor      = 1;
   var tree_length = parse_tree.length;

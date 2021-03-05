@@ -36,22 +36,18 @@ exec("node", ['-e', "console.error(22);process.exit(42);"], function(err, stdout
 ------
 
 <a name="passthru"></a>
-## passthru(cmd[, args], callback) : void
+## promise passthru(cmd[, args]) : void
 
 Like exec, but with stdout & stderr bound to current process IO streams.
 
 ```javascript
 const passthru = require('nyks/child_process/passthru');
 
-passthru("node", ['-e', 'process.exit()'], function(err, exit) {
-  // err  = null
-  // exit = 0
-});
+await passthru("node", ['-e', 'process.exit()'])
 
-passthru("node", ['-e', 'process.exit(33)'], function(err, exit) {
-  // err  = "Bad exit code 33"
-  // exit = 33
-});
+
+passthru("node", ['-e', 'process.exit(33)']);
+//throw "Bad exit code 33"
 ```
 
 ------

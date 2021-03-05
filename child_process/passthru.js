@@ -1,33 +1,14 @@
 "use strict";
 
-const cp    = require('child_process');
-const once  = require('../function/once');
+const {spawn} = require('child_process');
+const wait  = require('./wait');
 
+module.exports = function(cmd, args = [], options = {}) {
+  if(!Array.isArray(args))
+    (options = args), (args = options.args || []);
 
-module.exports = function(cmd /*, options, chain*/) {
-  var args = Array.from(arguments);
-  var chain    = once(args.pop());
-  cmd      = args.shift();
-  var options  = args.shift() || {};
-
-  if(Array.isArray(options))
-    options = { args : options};
-
-  options.stdio = ['inherit', 'inherit', 'inherit'];
-
-  try {
-    var ps = cp.spawn(cmd, options.args || [], options);
-
-    ps.on('error', chain);
-
-    ps.on('close', function(exit) {
-      var err = null;
-      if(exit !== 0)
-        err = "Bad exit code " + exit;
-      return chain(err, exit);
-    });
-  } catch(err) {
-    chain(err);
-  }
+  options.stdio = 'inherit';
+  var child = spawn(cmd, args, options);
+  return wait(child);
 };
 
