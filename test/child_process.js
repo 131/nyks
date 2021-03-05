@@ -3,6 +3,8 @@
 
 const expect = require('expect.js');
 const os     = require('os');
+const {spawn} = require('child_process');
+
 
 const exec     = require('../child_process/exec');
 const passthru = require('../child_process/passthru');
@@ -41,30 +43,35 @@ describe("Child process functions", function() {
     }
   });
 
-  it("should test exec", function(chain) {
-    exec("hostname", function(err, body) {
-      expect(err).not.to.be.ok();
-      expect(body.trim()).to.be(os.hostname());
-      chain();
-    });
+  it("should test exec", async () => {
+    let body = String(await exec("hostname"));
+    expect(body.trim()).to.be(os.hostname());
+
+    let FOO = "okay";
+    body = String(await exec(process.execPath, {env : {FOO}, args : ['-p', 'process.env.FOO']}));
+    expect(body.trim()).to.be(FOO);
+
+    body = String(await exec("hostname", {}));
+    expect(body.trim()).to.be(os.hostname());
   });
 
-  it("should test failure", function(chain) {
-    exec("node", ['-e', "console.error(22);process.exit(42);"], function(err, stdout, stderr) {
-      expect(err).to.be(42);
-      expect(stderr.trim()).to.eql(22);
-      chain();
-    });
+  it("should test failure", async () => {
+    try {
+      await exec("node", ['-e', "console.error(22);process.exit(42);"]);
+      expect().to.fail("Never here");
+    } catch(err) {
+      expect(err).to.match(/Invalid process exit code/);
+    }
   });
 
-  it("should test wait", async function() {
-    var process_1 = require('child_process').spawn('node', ['-e', 'process.exit(0)']);
+  it("should test wait", async () => {
+    var process_1 = spawn('node', ['-e', 'process.exit(0)']);
     var result  = await wait(process_1);
 
     //wait doesn't return any stdout
     expect(result).to.be.undefinded;
 
-    var process_2 = require('child_process').spawn('node', ['-e', 'process.exit(1)']);
+    var process_2 = spawn('node', ['-e', 'process.exit(1)']);
     try {
       await wait(process_2);
     } catch(err) {

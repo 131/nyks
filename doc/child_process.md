@@ -13,30 +13,21 @@ Child Process utilities
 ------
 
 <a name="exec"></a>
-## exec(cmd[, options], callback) : ChildProcess
+## promise exec(cmd[, args[, options]]) : ChildProcess
 
-child_process.exec equivalent with sane API for arguments.
+Promised version of child_process.spawn.
 
 ```javascript
 const exec = require('nyks/child_process/exec');
 
-exec("node", ['-e', "console.log('Hello world');"], function(err, stdout, stderr) {
-  // err    = null
-  // stdout = "Hello world"
-  // stderr = null
-});
+await exec("hostname") == os.hostname();
 
-exec("node", ['-e', "console.error(22);process.exit(42);"], function(err, stdout, stderr) {
-  // err    = 42
-  // stdout = null
-  // stderr = 22
-});
 ```
 
 ------
 
 <a name="passthru"></a>
-## promise passthru(cmd[, args]) : void
+## promise passthru(cmd[, args[, options]]) : void
 
 Like exec, but with stdout & stderr bound to current process IO streams.
 
