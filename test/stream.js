@@ -154,11 +154,12 @@ describe("Stream functions", function() {
     let challenge = await drain(input.pipe(hash).pipe(hash2));
 
     let md5  = hash.digest("hex").md5;
-    let sha1 = hash2.digest("hex").sha1;
+    let {size, sha1} = hash2.digest("hex");
 
     expect("" + challenge).to.eql(body);
     expect(md5).to.eql("07117fe4a1ebd544965dc19573183da2");
     expect(sha1).to.eql("f424452a9673918c6f09b0cdd35b20be8e6ae7d7");
+    expect(size).to.eql(5);
   });
 
 
