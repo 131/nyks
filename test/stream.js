@@ -10,6 +10,7 @@ const drain      = require('../stream/drain');
 const read       = require('../stream/read');
 const fromBuffer = require('../stream/fromBuffer');
 const pipe       = require('../stream/pipe');
+const digest     = require('../stream/digest');
 
 
 const { PassThrough  } = require('stream');
@@ -139,6 +140,25 @@ describe("Stream functions", function() {
         done();
       });
     });
+  });
+
+
+  it("should test digest", async function() {
+    var body  = "café";
+    var buf   = new Buffer(body);
+    var input = fromBuffer(buf);
+
+    var hash = digest("md5");
+    var hash2 = digest(["sha1"]);
+
+    let challenge = await drain(input.pipe(hash).pipe(hash2));
+
+    let md5  = hash.digest("hex").md5;
+    let sha1 = hash2.digest("hex").sha1;
+
+    expect("" + challenge).to.eql(body);
+    expect(md5).to.eql("07117fe4a1ebd544965dc19573183da2");
+    expect(sha1).to.eql("f424452a9673918c6f09b0cdd35b20be8e6ae7d7");
   });
 
 
