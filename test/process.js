@@ -6,6 +6,7 @@ const expect     = require('expect.js');
 const formatArgs = require('../process/formatArgs');
 const parseArgs  = require('../process/parseArgs');
 const splitArgs  = require('../process/splitArgs');
+const trim = require('mout/string/trim');
 
 describe("Process functions", function() {
 
@@ -102,6 +103,12 @@ describe("Process functions", function() {
   it("testing parseArgs / json", function() {
     var foo = {"this" : "is", "a" : ["complex", null, 45, "object"]};
     expect(parseArgs(["--foo::json=" + JSON.stringify(foo)])).to.eql({args : [], dict : {foo}, rest : undefined});
+  });
+
+  it("testing parseArgs / base64", function() {
+    var foo = {"this" : "is", "a" : ["complex", null, 45, "object"]};
+    let input = trim(Buffer.from(JSON.stringify(foo)).toString('base64'), "=");
+    expect(parseArgs(["--foo::json::base64=" + input])).to.eql({args : [], dict : {foo}, rest : undefined});
   });
 
 
