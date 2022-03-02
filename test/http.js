@@ -44,6 +44,19 @@ describe("Testing http", function() {
     if(current_url.pathname == "/ping")
       return resp.end("pong");
 
+
+    if(current_url.pathname == "/reloc/front") {
+      resp.statusCode = 302;
+      resp.setHeader('location', '/ping');
+      resp.end();
+    }
+
+    if(current_url.pathname == "/reloc/infinity") {
+      resp.statusCode = 302;
+      resp.setHeader('location', '/reloc/infinity');
+      resp.end();
+    }
+
     if(current_url.pathname == "/request")
       return resp.end(JSON.stringify(hash));
 
@@ -109,6 +122,11 @@ describe("Testing http", function() {
     expect(res.statusCode).to.be(200);
   });
 
+
+
+
+
+
   it("Should test fetch on https endpoint and fail",  async () => {
     var testurl = util.format("https://127.0.0.1:%d/ping", port);
     try {
@@ -120,6 +138,30 @@ describe("Testing http", function() {
   });
 
 
+  it("Should NOT follow redirect by default", async () => {
+    var testurl = util.format("http://127.0.0.1:%d/reloc/front", port);
+    let res = await request(testurl);
+    expect(res.statusCode).to.be(302);
+  });
+
+  it("Should follow redirect, when asked", async () => {
+    var testurl = util.format("http://127.0.0.1:%d/reloc/front", port);
+    let res = await request({...url.parse(testurl), followRedirect : true});
+    expect(res.statusCode).to.be(200);
+    expect(String(await drain(res))).to.be("pong");
+  });
+
+
+  it("Should crash on unlimited redirection", async () => {
+    var testurl = util.format("http://127.0.0.1:%d/reloc/infinity", port);
+
+    try {
+      await request({...url.parse(testurl), followRedirect : true});
+      expect().to.fail("Never here");
+    } catch(err) {
+      expect(err).to.match(/Too many redirections/);
+    }
+  });
 
   it("Should test request with target as string", async () => {
     var target = util.format("http://127.0.0.1:%d/ping", port);

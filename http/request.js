@@ -13,12 +13,15 @@ const defer  = require('../promise/defer');
 
 const mask   = require('../object/mask');
 
-module.exports = function(target, data) {
-
+const request = function(target, data) {
   var query  = typeof target == "string" ? url.parse(target) : target;
 
   if(!query.method)
     query.method =  data ? 'POST' : 'GET';
+
+  if(query.followRedirect && query.redirectLimit == undefined)
+    query.redirectLimit = 10;
+
 
   //Cookie:X-APPLE-WEB-KB-ASPCOB8QBWQ1JVMLAKEOFWELBME="v=1:t=AQAAAABWzO-1XtFLiXxOmZG3SlR66fcav3ExgY4~";
   if(!query.headers)
@@ -69,6 +72,17 @@ module.exports = function(target, data) {
       return defered.reject(error);
     }
 
+    if(query.followRedirect && res.statusCode == 302) {
+      if(query.redirectLimit-- < 0)
+        return defered.reject("Too many redirections");
+
+      let {location} = res.headers;
+      location = url.parse(url.resolve(url.format(query), location));
+      location.followRedirect = query.followRedirect;
+      location.redirectLimit = query.redirectLimit;
+      return defered.resolve(request(location));
+    }
+
     defered.resolve(res);
   });
 
@@ -90,3 +104,6 @@ module.exports = function(target, data) {
 
   return defered;
 };
+
+module.exports = request;
+
