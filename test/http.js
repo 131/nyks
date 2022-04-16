@@ -4,6 +4,7 @@
 const expect = require('expect.js');
 
 const url    = require('url');
+const querystring = require('querystring');
 const util   = require('util');
 const fs     = require('fs');
 const {PassThrough} = require('stream');
@@ -36,6 +37,8 @@ describe("Testing http", function() {
   };
 
   var port;
+  var entrypoint;
+
   var http   = require('http');
   var server = http.createServer(async function(req, resp) {
     let current_url = url.parse(req.url);
@@ -98,17 +101,18 @@ describe("Testing http", function() {
       });
     });
     console.log("Got testing server listening on %d", port);
+    entrypoint = util.format("http://127.0.0.1:%d", port);
   });
 
 
   it("Should test fetch ", async () => {
-    var testurl = util.format("http://127.0.0.1:%d/ping", port);
+    var testurl = `${entrypoint}/ping`;
     let body = String(await drain(fetch(testurl)));
     expect(body).to.be("pong");
   });
 
   it("Should test fetch with failed timeout", async () => {
-    var testurl = util.format("http://127.0.0.1:%d/timeout", port);
+    var testurl = `${entrypoint}/timeout`;
     try {
       await fetch(testurl, {timeout : 200});
     } catch(err) {
@@ -117,7 +121,7 @@ describe("Testing http", function() {
   });
 
   it("Should test fetch with sufficient timeout", async () => {
-    var testurl = util.format("http://127.0.0.1:%d/timeout", port);
+    var testurl = `${entrypoint}/timeout`;
     let res = await fetch(testurl, {timeout : 2000});
     expect(res.statusCode).to.be(200);
   });
@@ -139,13 +143,13 @@ describe("Testing http", function() {
 
 
   it("Should NOT follow redirect by default", async () => {
-    var testurl = util.format("http://127.0.0.1:%d/reloc/front", port);
+    var testurl = `${entrypoint}/reloc/front`;
     let res = await request(testurl);
     expect(res.statusCode).to.be(302);
   });
 
   it("Should follow redirect, when asked", async () => {
-    var testurl = util.format("http://127.0.0.1:%d/reloc/front", port);
+    var testurl = `${entrypoint}/reloc/front`;
     let res = await request({...url.parse(testurl), followRedirect : true});
     expect(res.statusCode).to.be(200);
     expect(String(await drain(res))).to.be("pong");
@@ -153,7 +157,7 @@ describe("Testing http", function() {
 
 
   it("Should crash on unlimited redirection", async () => {
-    var testurl = util.format("http://127.0.0.1:%d/reloc/infinity", port);
+    var testurl = `${entrypoint}/reloc/infinity`;
 
     try {
       await request({...url.parse(testurl), followRedirect : true});
@@ -164,7 +168,7 @@ describe("Testing http", function() {
   });
 
   it("Should test request with target as string", async () => {
-    var target = util.format("http://127.0.0.1:%d/ping", port);
+    var target = `${entrypoint}/ping`;
 
     //this is for coverage, used to force POST method from a String URL
     let data = {
@@ -177,7 +181,7 @@ describe("Testing http", function() {
   });
 
   it("Should test request with a buffer payload", async () => {
-    var testurl = util.format("http://127.0.0.1:%d/md5", port);
+    var testurl = `${entrypoint}/md5`;
     let payload = Buffer.from("this is foo de bar");
 
     let res = await request({...url.parse(testurl), method : 'PUT'}, payload);
@@ -188,14 +192,15 @@ describe("Testing http", function() {
 
 
   it("Should test request with target as Url", async () => {
-    var target = url.parse(util.format("http://127.0.0.1:%d/ping", port));
+    var target = `${entrypoint}/ping`;
+
     let res = await request(target);
     let body = String(await drain(res));
     expect(body).to.be("pong");
   });
 
   it("Should test request with GET args", async () => {
-    var target = url.parse(util.format("http://127.0.0.1:%d/request?get_var=melon", port));
+    var target = `${entrypoint}/request?get_var=melon`;
 
     let res = await request(target);
     let body = JSON.parse(await drain(res));
@@ -203,7 +208,7 @@ describe("Testing http", function() {
   });
 
   it("Should test jar header", async () => {
-    var target = url.parse(util.format("http://127.0.0.1:%d/show_cookies", port));
+    var target = url.parse(`${entrypoint}/show_cookies`);
 
     var key_1         = 'first';
     var key_2         = 'second';
@@ -228,7 +233,7 @@ describe("Testing http", function() {
   });
 
   it("Should test request with forced Headers & Method", async () => {
-    var target = url.parse(util.format("http://127.0.0.1:%d/ping", port));
+    var target = url.parse(`${entrypoint}/ping`);
 
     target.headers = {};
     target.method  = 'GET';
@@ -239,7 +244,7 @@ describe("Testing http", function() {
   });
 
   it("Should test request with Query String flag on", async () => {
-    var target = url.parse(util.format("http://127.0.0.1:%d/request", port));
+    var target = url.parse(`${entrypoint}/request`);
 
     var expected = {
       firstname : 'Jean'
@@ -252,8 +257,23 @@ describe("Testing http", function() {
     expect(body).to.eql(expected);
   });
 
+  it("Should test request with search", async () => {
+    var target = url.parse(`${entrypoint}/request`);
+
+    var expected = {
+      firstname : 'Jean'
+    };
+
+    target.search = '?' + querystring.stringify(expected);
+
+    let res = await request(target);
+    let body = JSON.parse(await drain(res));
+    expect(body).to.eql(expected);
+  });
+
   it("Should test request with Query String AND QUERY STRING (and it should explode)", async () => {
-    var target = url.parse(util.format("http://127.0.0.1:%d/request?lastname=Lebon", port));
+    var target = url.parse(`${entrypoint}/request?lastname=Lebon`);
+
     var expected = {
       firstname : 'Jean'
     };
@@ -268,10 +288,7 @@ describe("Testing http", function() {
   });
 
   it("Should test request and throw", async () => {
-    var throw_path = '/throwme';
-
-    var target = url.parse(util.format("http://127.0.0.1:%d%s", port, throw_path));
-
+    var target = url.parse(`${entrypoint}/throwme`);
     var res = await request(target);
     expect(res.statusCode).to.eql(HTTP_CODE_ERRR);
     let body = String(await drain(res));
@@ -280,15 +297,13 @@ describe("Testing http", function() {
   });
 
   it("Should test request and throw with expect", async () => {
-    var throw_path = '/throwme';
-
-    var target = url.parse(util.format("http://127.0.0.1:%d%s", port, throw_path));
+    var target = url.parse(`${entrypoint}/throwme`);
 
     try {
       await request({...target, expect : 200});
       expect().to.fail("Never here");
     } catch(err) {
-      expect(err.err).to.be(`Invalid status code '${HTTP_CODE_ERRR}' for '${throw_path}'`);
+      expect(err.err).to.be(`Invalid status code '${HTTP_CODE_ERRR}' for '/throwme'`);
       let body = String(await drain(err.res));
       expect(body).to.be('Nop');
     }
@@ -301,8 +316,8 @@ describe("Testing http", function() {
   this.timeout(60 * 1000);
 
   it("Should test request with a timeout", async () => {
+    var target = url.parse(`${entrypoint}/timeout`);
 
-    var target = url.parse(util.format("http://127.0.0.1:%d/timeout", port));
     let input = new PassThrough();
     setTimeout(function() {
       input.end("foo de bar");
@@ -321,7 +336,8 @@ describe("Testing http", function() {
   });
 
   it("Should test request with failed a timeout", async () => {
-    var target = url.parse(util.format("http://127.0.0.1:%d/timeout", port));
+    var target = url.parse(`${entrypoint}/timeout`);
+
     let input = new PassThrough();
     setTimeout(function() {
       input.end("foo de bar");
@@ -334,7 +350,7 @@ describe("Testing http", function() {
 
 
   it("Should test request with data as Stream", async () => {
-    var target       = url.parse(util.format("http://127.0.0.1:%d/stream", port));
+    var target        = url.parse(`${entrypoint}/stream`);
     var file_content = "dummy";
     var tmp_file     = tmppath();
 
@@ -349,7 +365,8 @@ describe("Testing http", function() {
   });
 
   it("Should test request with json flag On", async () => {
-    var target = url.parse(util.format("http://127.0.0.1:%d/stream", port));
+    var target = url.parse(`${entrypoint}/stream`);
+
     target.json = true;
 
     let data = {
@@ -362,7 +379,7 @@ describe("Testing http", function() {
   });
 
   it("Should test request with data as string", async () => {
-    let target = url.parse(util.format("http://127.0.0.1:%d/stream", port));
+    var target        = url.parse(`${entrypoint}/stream`);
     let data = "name='Juan Elbueno'";
 
     let res = await request(target, data);
@@ -371,7 +388,8 @@ describe("Testing http", function() {
   });
 
   it("Should test request on https endpoint and fail",  async () => {
-    var testurl = util.format("https://127.0.0.1:%d/ping", port);
+    var testurl = url.format(`${entrypoint}/ping`);
+
     try {
       await request(url.parse(testurl));
       expect().fail("Never here");

@@ -33,13 +33,17 @@ const request = function(target, data) {
     query.headers.cookie = cookie;
   }
 
+  var i      = query.path.indexOf('?');
+
+  if(query.search)
+    query.path = query.path.substr(0, i == -1 ? query.path.length : i) + query.search;
+
   if(query.qs) {
-    var i      = query.path.indexOf('?');
     var params = {};
 
     if(i !== -1) {
       params = qs.parse(query.path.substr(i + 1));
-      query.path = query.path.substr(i);
+      query.path = query.path.substr(0, i - 1);
     }
 
     query.qs = merge(params, query.qs);
