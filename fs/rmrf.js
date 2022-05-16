@@ -5,6 +5,10 @@ const existsSync = require('fs').existsSync;
 const sprintf = require('../string/format');
 const defer = require('../promise/defer');
 
+const opts = {
+  windowsHide  : true,
+};
+
 const IS_WINDOWS = require('os').platform() == 'win32';
 
 function rmrf(dir) {
@@ -14,7 +18,7 @@ function rmrf(dir) {
   var defered = defer();
   /*istanbul ignore next*/
   var cmd = sprintf(IS_WINDOWS ? 'rd /s /q "%s"' : 'rm -rf "%s"', dir);
-  exec(cmd, defered.chain);
+  exec(cmd, opts, defered.chain);
   return defered;
 }
 
