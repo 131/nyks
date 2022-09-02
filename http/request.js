@@ -27,6 +27,8 @@ const request = function(target, data) {
   if(!query.headers)
     query.headers = {};
 
+  query.headers = {...query.headers};
+
   if(query.jar) {
     var cookie = query.headers.cookie || "";
     cookie += ";" + mask(pluck(query.jar, "value"), '%s="%s"', "; ");
