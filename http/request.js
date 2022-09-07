@@ -78,7 +78,7 @@ const request = function(target, data) {
       return defered.reject(error);
     }
 
-    if(query.followRedirect && res.statusCode == 302) {
+    if(query.followRedirect && [301, 302].includes(res.statusCode)) {
       if(query.redirectLimit-- < 0)
         return defered.reject("Too many redirections");
 
