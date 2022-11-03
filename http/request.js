@@ -92,6 +92,10 @@ const request = function(target, data) {
     defered.resolve(res);
   });
 
+  req.on('upgrade', (res, socket, upgradeHead) => {
+    defered.resolve({res, socket, upgradeHead});
+  });
+
   req.on('finish', function() {
     // query has been sent, now we can wait for timeout
     let msg = `http request timeout for ${url.format(query)}`;
