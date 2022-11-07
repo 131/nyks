@@ -7,12 +7,49 @@ const combine    = require('../object/combine');
 const difference = require('../object/difference');
 const indexOf    = require('../object/indexOf');
 const jsonpath   = require('../object/jsonpath');
+const jqpath     = require('../object/jqpath');
 const mask       = require('../object/mask');
 const sort       = require('../object/sort');
 const dive       = require('../object/dive');
 
 //I feel a little sorry for that
 describe("object functions", function() {
+
+  it("should test jqpath", function() {
+    var obj = {
+      "foo" : {
+        "bar" : [
+          {"color" : "blue"}
+        ],
+      },
+      "" : "empty",
+      " " : "empty",
+
+      "-test" : {
+        ".wi.th" : {
+          "." : {
+            "${nested}"  : {
+              "[weird']" : ["stuffs"],
+            }
+          }
+        }
+      }
+    };
+
+    expect(jqpath(obj)).to.be(obj);
+    expect(jqpath(obj, ".")).to.be(obj);
+    expect(jqpath(obj, "nope")).to.be(undefined);
+    expect(jqpath(obj, "......")).to.be(obj);
+    expect(jqpath(obj, '.""')).to.be(obj['']);
+    expect(jqpath(obj, '." "')).to.be(obj[' ']);
+    expect(jqpath(obj, ".foo")).to.be(obj.foo);
+    expect(jqpath(obj, ".foo.bar.0.color")).to.be("blue");
+    expect(jqpath(obj, ".foo.bar.0.color")).to.be("blue");
+    expect(jqpath(obj, '."-test"')).to.be(obj["-test"]);
+    expect(jqpath(obj, '."-test".\'.wi.th\'."."."${nested}"."[weird\']".0')).to.be("stuffs");
+    expect(jqpath(obj, '.["-test"].[\'.wi.th\'].["."].["${nested}"].["[weird\']"].["0"]')).to.be("stuffs");
+  });
+
 
   it("should test dive", function() {
     var obj = {
@@ -25,12 +62,16 @@ describe("object functions", function() {
 
     expect(dive(obj)).to.be(obj);
     expect(dive(null, "nope")).not.to.be.ok();
+    expect(dive(undefined)).to.be(undefined);
     expect(dive(obj, "foo")).to.be(obj.foo);
     expect(dive(obj, null, "foo")).to.be(undefined);
     expect(dive(obj, "foo", "bar", 0, "color")).to.be("blue");
     expect(dive(obj, "foo", "bar", "0.color")).to.be("blue");
-    expect(dive(obj, "foo", "bar", "0..color")).to.be(undefined);
+    expect(dive(obj, "foo", "bar", "0..color")).to.be("blue");
+    expect(dive(obj, "foo.bar.0.color")).to.be("blue");
+    expect(dive(obj, "['foo'].bar['0'][\"color\"]")).to.be("blue");
     expect(dive(obj, "nope", "bar", 0, "color")).to.be(undefined);
+    expect(dive(obj, "-")).to.be(undefined);
   });
 
 
