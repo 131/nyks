@@ -8,6 +8,7 @@ const difference = require('../object/difference');
 const indexOf    = require('../object/indexOf');
 const jsonpath   = require('../object/jsonpath');
 const jqpath     = require('../object/jqpath');
+const jqdive     = require('../object/jqdive');
 const mask       = require('../object/mask');
 const sort       = require('../object/sort');
 const dive       = require('../object/dive');
@@ -67,11 +68,35 @@ describe("object functions", function() {
     expect(dive(obj, null, "foo")).to.be(undefined);
     expect(dive(obj, "foo", "bar", 0, "color")).to.be("blue");
     expect(dive(obj, "foo", "bar", "0.color")).to.be("blue");
-    expect(dive(obj, "foo", "bar", "0..color")).to.be("blue");
+    expect(dive(obj, "foo", "bar", "0..color")).to.be(undefined);
     expect(dive(obj, "foo.bar.0.color")).to.be("blue");
-    expect(dive(obj, "['foo'].bar['0'][\"color\"]")).to.be("blue");
     expect(dive(obj, "nope", "bar", 0, "color")).to.be(undefined);
     expect(dive(obj, "-")).to.be(undefined);
+  });
+
+
+
+  it("should test jqdive", function() {
+    var obj = {
+      "foo" : {
+        "bar" : [
+          {"color" : "blue"}
+        ],
+      }
+    };
+
+    expect(jqdive(obj)).to.be(obj);
+    expect(jqdive(null, "nope")).not.to.be.ok();
+    expect(jqdive(undefined)).to.be(undefined);
+    expect(jqdive(obj, "foo")).to.be(obj.foo);
+    expect(jqdive(obj, null, "foo")).to.be(undefined);
+    expect(jqdive(obj, "foo", "bar", 0, "color")).to.be("blue");
+    expect(jqdive(obj, "foo", "bar", "0.color")).to.be("blue");
+    expect(jqdive(obj, "foo", "bar", "0..color")).to.be("blue");
+    expect(jqdive(obj, "foo.bar.0.color")).to.be("blue");
+    expect(jqdive(obj, "['foo'].bar['0'][\"color\"]")).to.be("blue");
+    expect(jqdive(obj, "nope", "bar", 0, "color")).to.be(undefined);
+    expect(jqdive(obj, "-")).to.be(undefined);
   });
 
 
