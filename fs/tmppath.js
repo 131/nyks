@@ -33,13 +33,10 @@ function cleanupFilesSync() {
 }
 
 
-function tmppath(ext, trash, len) {
-  ext = ext || "tmp"; len = len || 8;
-  if(trash === undefined) trash = true;
-
+function tmppath(ext = "tmp", trash = true, len = 8, basedir = os.tmpdir()) {
   var body = crypto.randomBytes(len).toString('base64').replace(/\//g, '+').substr(0, len);
   var fname = ext + "-" + body + "." + ext;
-  var file_path = path.join(os.tmpdir(), fname);
+  var file_path = path.join(basedir, fname);
 
   var fullpath = fs.existsSync(file_path) ? tmppath(ext, trash, len + 1) : file_path;
   if(trash)
@@ -47,5 +44,6 @@ function tmppath(ext, trash, len) {
 
   return fullpath;
 }
+
 
 module.exports = tmppath;
