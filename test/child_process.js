@@ -11,7 +11,7 @@ const passthru = require('../child_process/passthru');
 const wait     = require('../child_process/wait');
 
 describe("Child process functions", function() {
-
+  this.timeout(10 * 1000);
   it("should test passthru", async () => {
     await passthru(process.execPath, ['-e', 'process.exit()']);
   });
