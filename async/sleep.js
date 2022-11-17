@@ -4,7 +4,7 @@ let max = 2147483647
 
 module.exports = async function sleep(timeout) {
   /* istanbul ignore else */
-  if(timeout < max) {
+  if(timeout <= max) {
     return new Promise(function(resolve) {
       setTimeout(resolve, timeout);
     });
