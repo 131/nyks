@@ -14,10 +14,10 @@ module.exports =  function(fn, ctx) {
       wait = defer();
       var res = await fn.apply(ctx || this, args);
       wait.resolve(res);
-      return res;
+      return wait;
     } catch(err) {
       wait.reject(err);
-      throw err;
+      return wait;
     } finally {
       wait = null;
     }

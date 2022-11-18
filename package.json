@@ -42,7 +42,7 @@
     "preversion": "npm run eslint",
     "mocha": "mocha -b",
     "eslint": "eslint .",
-    "cover": "nyc mocha",
+    "cover": "nyc mocha test test/async",
     "test": "npm run cover  test test/async && npm run eslint"
   },
   "readme": "# nyks toolkit\r\n\r\nExtend nodejs & javascript native API of missing functions.\r\n",
