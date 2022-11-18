@@ -1,8 +1,9 @@
 "use strict";
 
-let max = 2147483647
+let max = 2147483647;
 
 module.exports = async function sleep(timeout) {
+  console.log({timeout});
   /* istanbul ignore else */
   if(timeout <= max) {
     return new Promise(function(resolve) {
@@ -10,7 +11,7 @@ module.exports = async function sleep(timeout) {
     });
   } else {
     let t = Math.floor(timeout / max), r = timeout % max;
-    for (let i = 0; i < t; i++)
+    for(let i = 0; i < t; i++)
       await sleep(max);
 
     return sleep(r);
