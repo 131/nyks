@@ -3,7 +3,7 @@
 let max = 2147483647;
 
 module.exports = async function sleep(timeout) {
-  if(isNaN(timeout) || typeof timeout != "number")
+  if(!timeout)
     return;
 
   /* istanbul ignore else */
