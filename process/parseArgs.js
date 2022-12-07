@@ -1,10 +1,12 @@
 "use strict";
 
-const startsWith = require('mout/string/startsWith');
-const isArray    = require('mout/lang/isArray');
+const startsWith    = require('mout/string/startsWith');
+const isArray       = require('mout/lang/isArray');
+const binaryReviver = require('../lang/binaryReviver');
 
-const JSON_ARGS = new RegExp("::json$");
-const B64_ARGS  = new RegExp("::base64$");
+const JSONB_ARGS = new RegExp("::jsonb$");
+const JSON_ARGS  = new RegExp("::json$");
+const B64_ARGS   = new RegExp("::base64$");
 
 module.exports = function(argv) {
 
@@ -40,6 +42,11 @@ module.exports = function(argv) {
       if(JSON_ARGS.test(k)) {
         k = k.substr(0, k.length - 6);
         v = JSON.parse(v);
+      }
+
+      if(JSONB_ARGS.test(k)) {
+        k = k.substr(0, k.length - 7);
+        v = JSON.parse(v, binaryReviver);
       }
 
 

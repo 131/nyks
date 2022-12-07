@@ -106,9 +106,22 @@ describe("Process functions", function() {
   });
 
   it("testing parseArgs / base64", function() {
-    var foo = {"this" : "is", "a" : ["complex", null, 45, "object"]};
+    var foo = {"this" : "is", "a" : ["complex", null, 45, "object"], "skip" : Buffer.from([1,2,3])};
     let input = trim(Buffer.from(JSON.stringify(foo)).toString('base64'), "=");
-    expect(parseArgs(["--foo::json::base64=" + input])).to.eql({args : [], dict : {foo}, rest : undefined});
+
+    let target = parseArgs(["--foo::json::base64=" + input]);
+    expect(target.skip).not.to.eql(foo.skip);
+    delete target.dict.foo.skip;
+    delete foo.skip;
+
+    expect(target).to.eql({args : [], dict : {foo}, rest : undefined});
+  });
+
+
+  it("testing parseArgs / jsonb / base64", function() {
+    var foo = {"this" : "is", "a" : ["complex", null, 45, "object"], "keep" : Buffer.from([1,2,3])};
+    let input = trim(Buffer.from(JSON.stringify(foo)).toString('base64'), "=");
+    expect(parseArgs(["--foo::jsonb::base64=" + input])).to.eql({args : [], dict : {foo}, rest : undefined});
   });
 
 
