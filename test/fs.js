@@ -81,7 +81,7 @@ describe("FS functions", function() {
 
   it("should test rename", async function() {
     let src_path = tmppath();
-    fs.createWriteStream(src_path); //leave it open..
+    await createWriteStream(src_path); //leave it open..
     await rename(src_path, src_path + "after");
     expect(fs.existsSync(src_path + "after")).to.be.ok();
   });

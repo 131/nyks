@@ -51,13 +51,13 @@ describe("Testing http", function() {
     if(current_url.pathname == "/reloc/front") {
       resp.statusCode = 302;
       resp.setHeader('location', '/ping');
-      resp.end();
+      return resp.end();
     }
 
     if(current_url.pathname == "/reloc/infinity") {
       resp.statusCode = 302;
       resp.setHeader('location', '/reloc/infinity');
-      resp.end();
+      return resp.end();
     }
 
     if(current_url.pathname == "/request")
@@ -68,7 +68,7 @@ describe("Testing http", function() {
 
     if(current_url.pathname == '/throwme') {
       resp.statusCode = HTTP_CODE_ERRR;
-      resp.end('Nop');
+      return resp.end('Nop');
     }
 
     if(current_url.pathname == "/timeout") {
@@ -81,17 +81,15 @@ describe("Testing http", function() {
 
     if(current_url.pathname == '/md5') {
       let payload = await drain(req);
-      resp.end(md5(payload));
+      return resp.end(md5(payload));
     }
 
     if(current_url.pathname == '/stream') {
       let result = '' + (await drain(req));
-      resp.end(result);
-      return;
+      return resp.end(result);
     }
 
-    resp.statusCode = HTTP_CODE_ERRR;
-    resp.end("bye");
+    resp.end();
   });
 
   it("should start a dummy http instance", async () => {
