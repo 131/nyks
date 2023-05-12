@@ -2,7 +2,7 @@
 
 //pipe a stream to another, streams might be promises
 
-function pipe(src, dest) {
+function pipe(src, dest, options = {}) {
 
   if(src.then) {
     return src.then(function(tmp) {
@@ -17,7 +17,7 @@ function pipe(src, dest) {
   }
 
   return new Promise(function(resolve, reject) {
-    src.pipe(dest);
+    src.pipe(dest, options);
     src.on('error', reject);
     if(!("fd" in dest))
       dest.on('finish', resolve);
