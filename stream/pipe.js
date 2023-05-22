@@ -18,10 +18,16 @@ function pipe(src, dest, options) {
 
   return new Promise(function(resolve, reject) {
     src.pipe(dest, options);
-    src.on('error', reject);
+
+    src.once('error', function(err) {
+      dest.removeListener('finish', resolve);
+      dest.removeListener('close', resolve);
+      reject(err);
+    });
+
     if(!("fd" in dest))
-      dest.on('finish', resolve);
-    dest.on('close', resolve);
+      dest.once('finish', resolve);
+    dest.once('close', resolve);
   });
 
 }
