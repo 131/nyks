@@ -5,13 +5,15 @@ const sprintf   = require('util').format;
 const forIn     = require('mout/object/forIn');
 const isArray   = require('mout/lang/isArray');
 const compact   = require('mout/array/compact');
+const formatArg = require('./formatArg');
 
 var fmt = (unix, k, v) => {
   if(v == undefined || v == null)
     return [];
   if(typeof v == "boolean" && v)
     return [sprintf("--%s", k)];
-  return unix ? [sprintf("--%s", k), String(v)] : [sprintf("--%s=%s", k, String(v))];
+  v = formatArg(String(v));
+  return unix ? [sprintf("--%s", k), v] : [sprintf("--%s=%s", k, v)];
 };
 
 module.exports = function(args, unix) {

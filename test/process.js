@@ -4,12 +4,20 @@
 const expect     = require('expect.js');
 
 const formatArgs = require('../process/formatArgs');
+const formatArg  = require('../process/formatArg');
 const parseArgs  = require('../process/parseArgs');
 const splitArgs  = require('../process/splitArgs');
 const trim = require('mout/string/trim');
 
 describe("Process functions", function() {
 
+
+
+  it("Should test formatArg", function() {
+    expect(formatArg("123")).to.eql("123");
+    expect(formatArg("")).to.eql('""');
+    expect(formatArg(`this \\"is`)).to.eql(`"this \\\\"is"`);
+  });
 
 
   it("Should test formatArgs", function() {
