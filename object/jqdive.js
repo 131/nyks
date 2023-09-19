@@ -9,7 +9,7 @@ const jqdive = function(obj, path) {
   if(path[0] == ".")
     return jqdive(obj, path.substr(1));
 
-  let rmatch  = new RegExp("^(?:\"([^\"]*)\"|'([^']*)'|([a-z0-9_]+)|\\[\"([^\"]*)\"\\]|\\['([^']*)'\\])", "i");
+  let rmatch  = new RegExp("^(?:\"([^\"]*)\"|'([^']*)'|([a-z0-9_-]+)|\\[\"([^\"]*)\"\\]|\\['([^']*)'\\])", "i");
 
   if(rmatch.test(path)) {
     let [all, ...matches] = rmatch.exec(path);
