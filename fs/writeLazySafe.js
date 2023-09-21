@@ -3,6 +3,7 @@
 const fs         = require('fs');
 const path       = require('path');
 
+const guid = require('mout/random/guid');
 const mkdirpsync = require('./mkdirpSync');
 const rename     = require('./rename');
 
@@ -14,7 +15,7 @@ var writeLazySafe = (file_path, body, cb) => {
   } catch(err) { }
 
   mkdirpsync(path.dirname(file_path));
-  var tmp_path = file_path + '.tmp';
+  var tmp_path = file_path + `.${guid()}`;
   fs.writeFileSync(tmp_path, body);
 
   /*istanbul ignore next*/
