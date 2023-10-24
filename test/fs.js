@@ -33,6 +33,7 @@ const createWriteStream     = require('../fs/createWriteStream');
 const rename                = require('../fs/rename');
 const readdir               = require('../fs/readdir');
 const hashFile              = require('../fs/hashFile');
+const writeAndCheck         = require('../fs/writeAndCheck');
 
 describe("FS functions", function() {
 
@@ -386,4 +387,30 @@ describe("FS functions", function() {
     });
   });
 
+  it("should test writeAndCheck", function(done) {
+    //same tests as writeLazySafeSync
+    var target = 'test/path/to/tash/me';
+    var str    = `some 
+    text
+    to
+    ${Date.now()}
+    write
+    `;
+    var once = writeAndCheck(target, str, 2);
+    expect(once).to.be.ok();
+    fs.writeFileSync(target, 'nope'); //alter file
+    var twice = writeAndCheck(target, str, 10);
+    expect(twice).to.be.ok();
+
+    expect(fs.existsSync(target + 'tmp')).to.be(false);
+    //var fileStats = fs.statSync(target);
+    setTimeout(() => {
+      writeAndCheck(target, str);
+      expect(fs.existsSync(target + 'tmp')).to.be(false);
+
+      expect(fs.readFileSync(target, 'utf-8')).to.eql(str);
+      fs.unlinkSync(target);
+      done();
+    }, 1000);
+  });
 });

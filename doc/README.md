@@ -57,6 +57,7 @@
   * [nyks/fs/sha1File](./fs.md#sha1File)                           - Callback version of a basic async sha1 file digest.
   * [nyks/fs/tmppath](./fs.md#tmppath)                             - Return a unique, self-deletable, file path in OS temp dir.
   * [nyks/fs/writeLazySafeSync](./fs.md#writeLazySafeSync)         - Like fs.writeFileSync, but check if it needs to be updated before doing it.
+  * [nyks/fs/writeAndCheck](./fs.md#writeAndCheck)                 - Like writeLazySafeSync, but check file integrity and retry if needed.
 
 * # Function
   * [nyks/function/cache](./function.md#cache)         - Protect a function, cache & debounce multiple calls with same parameter.

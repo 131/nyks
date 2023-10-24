@@ -370,3 +370,22 @@ writeLazySafeSync(file_name, "bar"); // this will not do anything, filemtime mig
 
 writeLazySafeSync(file_name, "Melon"); // this will act like fs.writeFileSync
 ```
+
+------
+
+<a name="writeAndCheck"></a>
+## writeAndCheck(path, body, retryMax) : Bool
+
+Like writeLazySafeSync, but check file integrity and retry if needed.
+
+```javascript
+const writeAndCheck = require('nyks/fs/writeAndCheck');
+
+let file_name = "foo";
+
+writeAndCheck(file_name, "bar", 10); // this will act like writeLazySafeSync
+
+writeAndCheck(file_name, "bar"); // this will not do anything, filemtime might not have change
+
+writeAndCheck(file_name, "Melon"); // this will act like writeLazySafeSync
+```
