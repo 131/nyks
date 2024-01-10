@@ -5,9 +5,10 @@ const mkdirpsync = require('./mkdirpSync');
 const path       = require('path');
 
 var writeLazySafeSync = (file_path, body) => {
+  var initialdata;
   try {
-    var data = fs.readFileSync(file_path, 'utf-8');
-    if(data == body)
+    initialdata = fs.readFileSync(file_path, 'utf-8');
+    if(initialdata == body)
       return false;
   } catch(err) { }
 
@@ -15,6 +16,17 @@ var writeLazySafeSync = (file_path, body) => {
   var tmp_path = file_path + '.tmp';
   fs.writeFileSync(tmp_path, body);
   fs.renameSync(tmp_path, file_path);
+
+  //make SURE data are written on disk before returning
+  var data = fs.readFileSync(file_path, 'utf-8');
+
+  /* eslint-disable-next-line */
+  if(data != body) {
+    if(initialdata !== undefined)
+      fs.writeFileSync(file_path, initialdata);
+    throw `Could not safely touch file ${file_path}, this should never happen`;
+  }
+
   return true;
 };
 
