@@ -16,14 +16,14 @@ if(process.platform === "win32") {
 
   rename = function(from, to, cb) {
 
-    var start = Date.now();
+    var start = process.uptime();
     var backoff = 0;
 
     fs.rename(from, to, function CB(err) {
       //retry later
       if(err
           && (err.code === "EACCES" || err.code === "EPERM")
-          && Date.now() - start < 60 * 1000) {
+          && process.uptime() - start < 60) {
 
         setTimeout(function() {
           fs.rename(from, to, CB); //retry

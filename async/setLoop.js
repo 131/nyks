@@ -5,7 +5,7 @@ const sleep = require('./sleep');
 const setLoop = async (task, delay, reject) => {
 
   do {
-    var start = Date.now();
+    var start = process.uptime();
     try {
       await task();
     } catch(err) {
@@ -13,7 +13,7 @@ const setLoop = async (task, delay, reject) => {
         throw err;
       reject(err);
     }
-    var duration = Date.now() - start;
+    var duration = (process.uptime() - start) * 1000;
 
     await sleep(Math.max(delay - duration, 200));
   } while(true);

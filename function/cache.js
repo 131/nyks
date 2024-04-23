@@ -4,15 +4,17 @@
 // cache only forward the 1st parameter
 
 
+const uptimems = () => process.uptime() * 1000;
+
 module.exports = function(fn, timeout = 3600 * 1000, gc_interval = 1) {
   var cache = {};
-  var last_call = Date.now();
+  var last_call = uptimems();
 
 
   return function(arg) {
 
-    if(Date.now() - last_call > timeout / gc_interval) {
-      last_call = Date.now();
+    if(uptimems() - last_call > timeout / gc_interval) {
+      last_call = uptimems();
       for(var k of Object.keys(cache)) {
         if(cache[k].expires < last_call)
           delete cache[k];
@@ -22,7 +24,7 @@ module.exports = function(fn, timeout = 3600 * 1000, gc_interval = 1) {
     if(arg in cache)
       return cache[arg].value;
 
-    cache[arg] = {expires : Date.now() + timeout, value : fn.apply(this, arguments)};
+    cache[arg] = {expires : uptimems() + timeout, value : fn.apply(this, arguments)};
 
     return cache[arg].value;
   };

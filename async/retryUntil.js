@@ -3,7 +3,7 @@
 const sleep = require('./sleep');
 
 const retryUntil = async function(thunk, timeout, delay, error) {
-  let stop = Date.now() + timeout;
+  let stop = process.uptime() + timeout / 1000;
 
   do {
     let res = await thunk();
@@ -11,7 +11,7 @@ const retryUntil = async function(thunk, timeout, delay, error) {
       return res;
     await sleep(delay);
 
-  } while(Date.now() < stop);
+  } while(process.uptime() < stop);
 
   throw (error || `Timeout`);
 };
