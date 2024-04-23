@@ -1,8 +1,10 @@
 'use strict';
 
-const fs         = require('fs');
-const mkdirpsync = require('./mkdirpSync');
-const path       = require('path');
+const fs            = require('fs');
+const path          = require('path');
+
+const mkdirpsync    = require('./mkdirpSync');
+const writeFileSync = require('./writeFileSync');
 
 var writeLazySafeSync = (file_path, body) => {
   try {
@@ -12,8 +14,10 @@ var writeLazySafeSync = (file_path, body) => {
   } catch(err) { }
 
   mkdirpsync(path.dirname(file_path));
+
   var tmp_path = file_path + '.tmp';
-  fs.writeFileSync(tmp_path, body);
+
+  writeFileSync(tmp_path, body);
   fs.renameSync(tmp_path, file_path);
   return true;
 };
