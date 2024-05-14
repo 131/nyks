@@ -15,8 +15,19 @@ const sprintf        = require('../string/sprintf');
 const stripEnd       = require('../string/stripEnd');
 const stripStart     = require('../string/stripStart');
 const truncate       = require('../string/truncate');
+const startest       = require('../string/startest');
 
 describe("strings functions", function() {
+
+
+  it("should test startest", function() { //for normal people
+    expect(startest("foo", "foo")).to.be(true);
+    expect(startest("foo", "foo*")).to.be(true);
+    expect(startest("foobar", "foo*")).to.be(true);
+    expect(startest("foo.bar", "*.bar")).to.be(true);
+    expect(startest(".bar", "test.bar")).to.be(false);
+  });
+
 
   it("should test prettyFileSize", function() { //for normal people
     expect(prettyFileSize(0)).to.eql("0B");
