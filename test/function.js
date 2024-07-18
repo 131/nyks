@@ -3,7 +3,9 @@
 
 const expect = require('expect.js');
 
+const sleep     = require('../async/sleep');
 const cache     = require('../function/cache');
+const cachenoParams = require('../function/cache/noParams');
 const detach    = require('../function/detach');
 const once      = require('../function/once');
 const thunk     = require('../function/thunk');
@@ -51,7 +53,7 @@ describe("Testing functions helpers", function() {
     }, 100);
   });
 
-  it("should test cache", async () => {
+  it("should test cache/noParams", async () => {
     var cost = 0;
 
     function reverse(str = "summer") { //heavy CPU intensive operation
@@ -59,7 +61,7 @@ describe("Testing functions helpers", function() {
       return str.toUpperCase();
     }
 
-    var creverse = cache(reverse);
+    var creverse = cachenoParams(reverse);
     expect(creverse()).to.eql("SUMMER");
     expect(creverse()).to.eql("SUMMER");
     expect(cost).to.eql(1);
@@ -74,6 +76,49 @@ describe("Testing functions helpers", function() {
     expect(creverse()).to.eql("SUMMER");
     expect(creverse()).to.eql("SUMMER");
     expect(cost).to.eql(4);
+
+  });
+
+  it("should test cache", async () => {
+    var cost = 0;
+
+    function reverse(str) { //heavy CPU intensive operation
+      cost++;
+      return str.toUpperCase();
+    }
+
+    var creverse = cache(reverse, 100);
+    expect(creverse("summer")).to.eql("SUMMER");
+    await sleep(50);
+    expect(creverse("summer")).to.eql("SUMMER");
+    expect(cost).to.eql(1);
+
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(cost).to.eql(2);
+
+    await sleep(50);
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(cost).to.eql(2);
+    expect(creverse("summer")).to.eql("SUMMER");
+    expect(cost).to.eql(3);
+
+
+    await sleep(100 * 2);
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(creverse("winter")).to.eql("WINTER");
+    expect(cost).to.eql(4);
+
+
+    var creverse2 = cache(reverse);
+
+    expect(creverse2("winter")).to.eql("WINTER");
+    expect(creverse2("winter")).to.eql("WINTER");
+    expect(creverse2("winter")).to.eql("WINTER");
+    expect(creverse2("winter")).to.eql("WINTER");
+    expect(cost).to.eql(5);
+
 
   });
 
