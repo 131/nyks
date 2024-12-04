@@ -94,7 +94,7 @@ describe("Testing http", function() {
 
   it("should start a dummy http instance", async () => {
     port = await new Promise((resolve) => {
-      server.listen(function() {
+      server.listen(0, '127.0.0.1', function() {
         resolve(server.address().port);
       });
     });

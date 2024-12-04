@@ -36,11 +36,11 @@ describe("Require functions", function() {
   });
 
   it("Should test Lookup throw", function() {
-    var toto_path = path.join(os.tmpdir(), "..", "..", "nop.js");
+    var toto_path = path.join(os.homedir(), "..", "..", "nop.js");
 
     try {
       let where = lookup(toto_path);
-      console.log(where);
+      console.log({where, toto_path});
       expect().fail(`Should NOT have found toto_path in ${where}`);
     } catch(err) {
       expect(err).to.be(`can't find ${toto_path} package`);

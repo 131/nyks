@@ -16,9 +16,42 @@ const stripEnd       = require('../string/stripEnd');
 const stripStart     = require('../string/stripStart');
 const truncate       = require('../string/truncate');
 const startest       = require('../string/startest');
+const replaceEnv     = require('../string/replaceEnv');
+
+
+
+
+describe("Testing replaceEnv", function() {
+
+  const body = "Hi $$name, $${env['color']} is great";
+
+
+  it("should do basic interpolation", async function() {
+    let env = { color : 'blue'};
+
+    let test = replaceEnv(body, {name : 'Joe', env});
+    expect(test).to.be("Hi Joe, blue is great");
+  });
+
+  it("should do incomplete interpolation", async function() {
+    let env = { color : 'blue'};
+
+    let test = replaceEnv(body, {env});
+    expect(test).to.be("Hi $$name, blue is great");
+  });
+
+  it("should full object remap", async function() {
+    let env = { color : 'blue'};
+    let test = replaceEnv("noize $$env noize", {env});
+    expect(test).to.eql(env);
+  });
+
+
+
+});
+
 
 describe("strings functions", function() {
-
 
   it("should test startest", function() { //for normal people
     expect(startest("foo", "foo")).to.be(true);
