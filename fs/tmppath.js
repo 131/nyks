@@ -14,7 +14,7 @@ function deleteOnExit(file_path) {
     process.on('fsgc', cleanupFilesSync); //force cleanup
 
     //makes sure exit is called event on sigint \o/
-    process.on('SIGINT', process.exit);
+    process.on('SIGINT', () => process.exit());
     exitListenerAttached = true;
   }
 
