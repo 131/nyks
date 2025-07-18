@@ -37,7 +37,7 @@ module.exports = function(thunk, workers = 1) {
   var out     = process; // better candidate than {}
   out.push    = process; // per compatibility
   out.unshift = unshift; // per compatibility
-  //out.getLength = () => { workerChain.length; };
+  out.getLength = () => { return workerChain.length; };
   //out.filter = (cb) => { workerChain = workerChain.filter(cb); };
   out.drain = Function.prototype;
 
