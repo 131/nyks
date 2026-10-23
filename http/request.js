@@ -62,13 +62,22 @@ const request = function(target, data) {
 
   var transport = query.protocol == 'https:' ? https : http;
 
-  let ti;
+  let ti, response;
   let timeout = query.reqtimeout || 60 * 1000;
 
   var defered = defer();
 
+  const clearTimer = () => clearTimeout(ti);
+  const fail = (err) => {
+    clearTimer();
+    defered.reject(err);
+  };
+
   var req = transport.request(query, function(res) {
-    clearTimeout(ti);
+    response = res;
+    res.once('end', clearTimer);
+    res.once('close', clearTimer);
+    res.once('error', fail);
 
     if(query.expect && query.expect !== res.statusCode) {
       let message = `Invalid status code '${res.statusCode}' for '${req.path}'`;
@@ -79,6 +88,7 @@ const request = function(target, data) {
     }
 
     if(query.followRedirect && [301, 302].includes(res.statusCode)) {
+      res.resume();
       if(query.redirectLimit-- < 0)
         return defered.reject("Too many redirections");
 
@@ -86,6 +96,7 @@ const request = function(target, data) {
       location = url.parse(url.resolve(url.format(query), location));
       location.followRedirect = query.followRedirect;
       location.redirectLimit = query.redirectLimit;
+      location.reqtimeout = timeout;
       return defered.resolve(request(location));
     }
 
@@ -93,18 +104,25 @@ const request = function(target, data) {
   });
 
   req.on('upgrade', (res, socket, upgradeHead) => {
+    clearTimer();
     defered.resolve({res, socket, upgradeHead});
   });
 
   req.on('finish', function() {
     // query has been sent, now we can wait for timeout
-    let msg = `http request timeout for ${url.format(query)}`;
-    ti = setTimeout(defered.reject, timeout, msg);
+    ti = setTimeout(() => {
+      const err = new Error(`http request timeout for ${url.format(query)}`);
+      err.code = 'ETIMEDOUT';
+      if(response)
+        response.destroy(err);
+      req.destroy(err);
+    }, timeout);
   });
 
-  req.once('error', defered.reject);
+  req.once('error', fail);
+  req.once('close', clearTimer);
   if(data && typeof data.pipe == "function") {
-    data.on('error', defered.reject);
+    data.once('error', (err) => req.destroy(err));
     data.pipe(req);
   } else {
     if(data)
