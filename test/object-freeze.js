@@ -7,8 +7,7 @@ describe('object/freeze', function() {
   it('freezes nested objects and arrays without cloning', function() {
     const obj = {nested : {value : 1}, items : [{value : 2}]};
     expect(freeze(obj)).to.be(obj);
-    for(const value of [obj, obj.nested, obj.items, obj.items[0]])
-      expect(Object.isFrozen(value)).to.be(true);
+    [obj, obj.nested, obj.items, obj.items[0]].forEach(value => expect(Object.isFrozen(value)).to.be(true));
     expect(() => { obj.nested.value = 3; }).to.throwException();
     expect(() => { obj.items.push({}); }).to.throwException();
     expect(() => { obj.extra = true; }).to.throwException();
@@ -16,8 +15,7 @@ describe('object/freeze', function() {
   });
 
   it('returns null and primitive values unchanged', function() {
-    for(const value of [null, undefined, false, true, 0, 'value', Symbol('value')])
-      expect(freeze(value)).to.be(value);
+    [null, undefined, false, true, 0, 'value', Symbol('value')].forEach(value => expect(freeze(value)).to.be(value));
   });
 
   it('preserves shared references and terminates on cycles', function() {
