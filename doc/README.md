@@ -85,6 +85,7 @@
   * [nyks/object/combine](./object.md#combine)       - Creates an object by using one array for keys and another for its values.
   * [nyks/object/dive](./object.md#dive)             - Dive down an object to a specific path.
   * [nyks/object/difference](./object.md#difference) - Create an Array of keys that are different between two objects.
+  * [nyks/object/freeze](./object.md#freeze)          - Recursively freeze an own data-property graph in place.
   * [nyks/object/indexOf](./object.md#indexOf)       - Return the matched key of an Object from the current value, return null if not found.
   * [nyks/object/jsonpath](./object.md#jsonpath)     - Return the value of an object through a specific path (with / as a separator).
   * [nyks/object/mask](./object.md#mask)             - Format a dictionnary to a mask sprintf(mask, k, v).
