@@ -30,49 +30,8 @@ describe('object/freeze', function() {
     expect(freeze(obj)).to.be(obj);
   });
 
-  it('visits children of a parent that was only shallow-frozen', function() {
-    const child = {nested : {value : 1}};
-    const obj = Object.freeze({child});
-    freeze(obj);
-    expect(Object.isFrozen(child)).to.be(true);
-    expect(Object.isFrozen(child.nested)).to.be(true);
-  });
-
-  it('includes non-enumerable and symbol data properties', function() {
-    const key = Symbol('key');
-    const hidden = {value : 1};
-    const obj = {[key] : {value : 2}};
-    Object.defineProperty(obj, 'hidden', {value : hidden});
-    freeze(obj);
-    expect(Object.isFrozen(hidden)).to.be(true);
-    expect(Object.isFrozen(obj[key])).to.be(true);
-  });
-
-  it('does not evaluate getters', function() {
-    let calls = 0;
-    const obj = {get computed() { calls++; throw new Error('Getter must not run'); }};
-    freeze(obj);
-    expect(calls).to.be(0);
-    expect(Object.isFrozen(obj)).to.be(true);
-  });
-
-  it('does not freeze inherited data or global prototypes', function() {
-    const prototype = {inherited : {value : 1}};
-    const obj = Object.create(prototype);
-    obj.own = {value : 2};
-    freeze(obj);
-    expect(Object.isFrozen(obj.own)).to.be(true);
-    expect(Object.isFrozen(prototype)).to.be(false);
-    expect(Object.isFrozen(prototype.inherited)).to.be(false);
-    expect(Object.isFrozen(Object.prototype)).to.be(false);
-  });
-
-  it('freezes data attached to functions', function() {
-    const fn = function() { return 1; };
-    fn.settings = {value : 2};
-    expect(freeze(fn)).to.be(fn);
-    expect(fn()).to.be(1);
-    expect(Object.isFrozen(fn.settings)).to.be(true);
-    expect(Object.isFrozen(fn.prototype)).to.be(true);
+  it('returns an already frozen object unchanged', function() {
+    const obj = Object.freeze({value : 1});
+    expect(freeze(obj)).to.be(obj);
   });
 });

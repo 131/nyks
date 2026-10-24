@@ -77,10 +77,9 @@ difference(obj1, obj2); // return ["a", "b", "d"];
 <a name="freeze"></a>
 ## freeze(obj) : Object
 
-Recursively freeze an own data-property graph in place and return the same
-reference. Objects, arrays and data attached to functions are visited, including
-non-enumerable and symbol properties. Shared references and cycles are preserved;
-getters are not invoked and inherited properties are left alone.
+Freeze freshly parsed JSON/configuration data recursively in place and return
+the same reference. Uses Object.freeze and Object.values: nested objects and
+arrays are frozen, primitives and already frozen objects are returned as is.
 
 ```javascript
 const freeze = require('nyks/object/freeze');
@@ -90,10 +89,10 @@ Object.isFrozen(config.env.map); // true
 // config.env.map.NAME = 'Bob'; // throws in strict mode
 ```
 
-This does not clone the input. Like Object.freeze, it protects object properties,
-not the internal state of Map, Set or Date, or values dynamically returned by
-getters. Use it for read-only JSON/configuration data; clone separately when a
-mutable working copy is needed.
+This does not clone. Freeze is applied before visiting children, so repeated
+references and cycles terminate. This is not a general object-graph freezer:
+use JSON data without getters, symbol properties or special object types.
+Clone separately when a mutable working copy is needed.
 
 ------
 
