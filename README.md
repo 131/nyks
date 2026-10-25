@@ -3,10 +3,6 @@
 [nyks](https://github.com/131/nyks) is a modular nodejs utilities collection ([mout](https://github.com/mout/mout) completion for (mostly) nodejs patterns).
 Module are exported in standard commonJS module format and written in pure ES5/ES6 strict format. (no transpilation required nor used).
 
-Node.js 16 or newer is supported. `nyks/object/structuredClone` uses the native
-function when available, otherwise a JSON round-trip fallback for JSON-compatible
-data (not a full structured-clone polyfill).
-
 Use browserify if you need nyks module in a browser environnement.
 
 [![Build Status](https://github.com/131/nyks/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/131/nyks/actions/workflows/test.yml)
