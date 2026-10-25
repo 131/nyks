@@ -15,3 +15,18 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+  go:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '24.x'
+    - uses: actions/setup-go@v5
+      with:
+        go-version-file: go.mod
+    - run: npm install --omit=dev --ignore-scripts --no-audit
+    - run: test -z "$(gofmt -l date object string internal polyglot_test.go)"
+    - run: go vet ./...
+    - run: go test -race ./...
+    - run: GOOS=windows GOARCH=amd64 go build ./...

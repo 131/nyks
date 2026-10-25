@@ -25,6 +25,34 @@ Use browserify if you need nyks module in a browser environnement.
  - be modular;
  - have unit tests for all modules;
 
+## Go helpers
+
+The Go module is `github.com/131/nyks/v6`. Its scope is limited to four helpers,
+with the existing CommonJS implementations as their behavioral references:
+
+| Import | Function | Contract |
+| --- | --- | --- |
+| `github.com/131/nyks/v6/string` (`stringutil`) | `ReplaceEnv(text, dict) any` | `$$key` / `$${key}` expansion; unknown references remain literal; object/null results replace the input |
+| `github.com/131/nyks/v6/object` | `Jqdive(value, paths...) (any, bool)` | Direct-key precedence, dotted and quoted paths; distinguishes missing from null |
+| `github.com/131/nyks/v6/object` | `Walk(value, processor) any` | Mutates map/slice values, processes strings, preserves keys/null/other scalars |
+| `github.com/131/nyks/v6/date` | `HumanDiff(seconds, max, format...) string` | Explicit max, default `FormatLight`, optional `FormatFull` |
+
+The object helpers operate on JSON-compatible Go trees (`map[string]any`,
+`[]any`, strings and scalars); lookup also accepts `map[string]string`.
+Go map iteration order is native, not JavaScript object insertion order.
+The module uses only the Go standard library and has no YAML dependency.
+This is not a port of the rest of nyks or mout.
+
+```bash
+go vet ./...
+go test -race ./...
+```
+
+Native tests work without Node. Differential tests compare against the JS
+files in this checkout and run when Node and npm dependencies are available;
+CI installs those prerequisites. Recursive expansion retains native failure
+on self-reference; tests do not intentionally exhaust the stack.
+
 ## Async APIs
  - Find more details about async APIs (async.js thought ES7 async/await) in a [dedicated readme](./README-async.md)
 
