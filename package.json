@@ -50,5 +50,8 @@
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/131/nyks/issues"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

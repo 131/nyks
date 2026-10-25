@@ -12,6 +12,7 @@ const jqdive     = require('../object/jqdive');
 const mask       = require('../object/mask');
 const sort       = require('../object/sort');
 const dive       = require('../object/dive');
+const structuredClone = require('../object/structuredClone');
 
 //I feel a little sorry for that
 describe("object functions", function() {
@@ -158,4 +159,21 @@ describe("object functions", function() {
     expect(jsonpath(values, "/italy/drink")).to.be(null);
   });
 
+});
+
+
+describe("structuredClone", function() {
+  it("clones frozen JSON data into an independent mutable value", function() {
+    const source = Object.freeze({env : Object.freeze({map : Object.freeze({VALUE : "original"})}), list : [null, true, 42]});
+    const copy = structuredClone(source);
+    expect(copy).to.eql(source);
+    copy.env.map.VALUE = "changed";
+    expect(source.env.map.VALUE).to.be("original");
+    expect(copy.env.map.VALUE).to.be("changed");
+  });
+
+  it("uses the native implementation when available", function() {
+    if(global.structuredClone)
+      expect(structuredClone).to.be(global.structuredClone);
+  });
 });

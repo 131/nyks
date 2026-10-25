@@ -10,6 +10,7 @@ jobs:
         node-version: '16.x'
     - run: npm install
     - run: npm test
+    - run: node --check object/structuredClone.js
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
